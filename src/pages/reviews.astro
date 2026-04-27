@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LocalBusinessSchema from '../components/schemas/LocalBusinessSchema.astro';
+import FAQ from '../components/FAQ.astro';
+import { siteConfig } from '../config/site';
+
+// FAQ here is dual-purpose: real reader-facing answers, and FAQPage schema
+// that AI parsers can extract verbatim when summarizing "what do customers
+// say about RCS Gutters."
+const faqs = [
+  {
+    question: 'What is the average rating for Right Choice Seamless Gutters?',
+    answer: `${siteConfig.reviewAverage} out of 5 stars across ${siteConfig.reviewCount} verified reviews on HomeAdvisor. The page is independent of this site and we do not curate it.`,
+  },
+  {
+    question: 'How many reviews does Right Choice Seamless Gutters have?',
+    answer: `${siteConfig.reviewCount} verified reviews on HomeAdvisor as of the most recent count. Customers leave reviews directly on the HomeAdvisor profile after the work is complete; we have no editorial control over what's posted.`,
+  },
+  {
+    question: 'Where can I read real customer reviews of RCS Gutters?',
+    answer: `The complete unfiltered set is on our HomeAdvisor profile at ${siteConfig.homeAdvisorProfileUrl}. You can sort by recency, rating, and project type there.`,
+  },
+  {
+    question: 'Why don\'t you post customer testimonials on this site?',
+    answer: 'We have a policy of not surfacing customer quotes on our own site until each individual customer has explicitly granted permission to publish. The HomeAdvisor page above is the unfiltered third-party record. As we collect publication permissions on a per-customer basis, we plan to add quoted reviews here with named attribution.',
+  },
+  {
+    question: 'Are the HomeAdvisor reviews verified?',
+    answer: 'Yes. HomeAdvisor verifies that each reviewer was a real customer who hired Right Choice Seamless Gutters through their platform. They do not allow reviews from non-customers, and they do not let businesses delete reviews they don\'t like.',
+  },
+  {
+    question: 'Do you have reviews on Google, Yelp, or Angi?',
+    answer: 'HomeAdvisor (which is owned by Angi) is our primary review platform with the longest history and the most reviews. As we expand our presence on Google Business Profile and Yelp, those will appear here too. The HomeAdvisor profile remains the most complete record of our work.',
+  },
+];
+---
+
+<BaseLayout
+  title="Customer Reviews | 217 Verified Reviews · 4.7★ on HomeAdvisor | RCS Gutters"
+  description={`Right Choice Seamless Gutters has a ${siteConfig.reviewAverage} out of 5 average across ${siteConfig.reviewCount} verified reviews on HomeAdvisor. Read every review on the HomeAdvisor profile.`}
+>
+  <LocalBusinessSchema slot="head" />
+
+  <!-- Breadcrumb -->
+  <nav class="container-x pt-6 text-sm text-ink-muted" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap gap-1">
+      <li><a href="/" class="hover:underline">Home</a></li>
+      <li>›</li>
+      <li class="text-brand-charcoal font-medium">Reviews</li>
+    </ol>
+  </nav>
+
+  <!-- Hero -->
+  <section class="container-x section-tight">
+    <div class="max-w-3xl reveal">
+      <p class="kicker mb-3">Customer reviews</p>
+      <h1 class="mb-5 text-balance">217 verified jobs. 4.7-star average. No editorial control.</h1>
+      <span class="hero-underline !mt-0"></span>
+      <p class="text-fluid-lg text-ink-muted leading-relaxed mt-6">
+        We don't curate testimonials on this site. Every customer review of Right Choice Seamless Gutters lives on the HomeAdvisor profile below, where HomeAdvisor verifies each reviewer was a real customer and where we can't delete what we don't like.
+      </p>
+    </div>
+  </section>
+
+  <!-- Big trust card -->
+  <section class="container-x section-tight reveal">
+    <a
+      href={siteConfig.homeAdvisorProfileUrl}
+      target="_blank" rel="noopener nofollow"
+      class="block card hover-lift overflow-hidden"
+    >
+      <div class="grid lg:grid-cols-12 items-stretch">
+        <!-- Big rating panel -->
+        <div class="lg:col-span-4 bg-brand-primary text-white p-10 flex flex-col items-center justify-center text-center">
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-7xl md:text-8xl font-semibold leading-none tabular-nums">{siteConfig.reviewAverage.toFixed(1)}</span>
+            <span class="text-brand-gold-soft text-4xl" aria-hidden="true">★</span>
+          </div>
+          <div class="text-sm uppercase tracking-wider mt-4 opacity-95">Average rating</div>
+          <div class="w-12 h-px bg-white/40 my-5" aria-hidden="true"></div>
+          <div class="font-display text-5xl font-semibold leading-none tabular-nums">{siteConfig.reviewCount}</div>
+          <div class="text-sm uppercase tracking-wider mt-2 opacity-95">Verified reviews</div>
+        </div>
+
+        <!-- Body -->
+        <div class="lg:col-span-8 p-10 flex flex-col justify-center">
+          <div class="flex items-center gap-2 mb-3 text-[11px] uppercase tracking-[0.18em] text-brand-warm-gray font-bold">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="#FA3913" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span>Right Choice Seamless Gutters · HomeAdvisor</span>
+          </div>
+          <p class="font-display text-fluid-2xl text-brand-charcoal leading-tight mb-4 text-balance">
+            "{siteConfig.reviewAverage} out of 5 stars across {siteConfig.reviewCount} verified jobs."
+          </p>
+          <p class="text-ink-muted leading-relaxed mb-5">
+            HomeAdvisor verifies that each reviewer was a real customer who hired us through their platform. They do not allow reviews from non-customers, and they do not let businesses delete reviews they don't like. The page below is the complete record of our work, ordered by most recent.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-2 text-brand-primary font-semibold group-hover:text-brand-red-deep transition-colors">
+              Read every review on HomeAdvisor <span aria-hidden="true">→</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- Why no on-site testimonials -->
+  <section class="section bg-brand-cream">
+    <div class="container-x grid lg:grid-cols-12 gap-10 items-start reveal">
+      <div class="lg:col-span-5">
+        <span class="section-divider"></span>
+        <p class="kicker mb-3">Why we link out instead</p>
+        <h2 class="text-balance mb-5">Third-party verification is more useful than our own marketing copy.</h2>
+        <p class="text-ink-muted leading-relaxed">
+          Anyone can post a quote on their own website. We could have a glowing testimonials page up by tomorrow. The reason we don't: a curated page tells you what we picked, not what our customers actually think.
+        </p>
+      </div>
+      <div class="lg:col-span-7 space-y-5">
+        <div class="card p-7">
+          <h3 class="font-display text-lg mb-2">HomeAdvisor verifies the reviewer</h3>
+          <p class="text-sm text-ink-muted leading-relaxed">
+            They confirm the reviewer was a real customer who hired us through their platform. Anonymous, "I had a great experience" reviews from people who never paid for work don't get posted.
+          </p>
+        </div>
+        <div class="card p-7">
+          <h3 class="font-display text-lg mb-2">We can't delete bad reviews</h3>
+          <p class="text-sm text-ink-muted leading-relaxed">
+            HomeAdvisor's policy. If a customer is unhappy, the review stays up. The 4.7 average reflects the full record, not a curated highlight reel.
+          </p>
+        </div>
+        <div class="card p-7">
+          <h3 class="font-display text-lg mb-2">When we add on-site quotes, every customer will be named</h3>
+          <p class="text-sm text-ink-muted leading-relaxed">
+            We're collecting per-customer publication permissions slowly. Each quote that ever appears on this site will have a real name and a real city, with that customer's explicit OK on file. No "Sarah from Charlottesville" anonymous testimonials.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ — also serves as FAQPage schema -->
+  <FAQ faqs={faqs} kicker="Reviews FAQ" heading="What you might be wondering" />
+
+  <!-- Final CTA -->
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto reveal">
+      <p class="kicker !text-brand-gold-soft mb-3">Ready to add yours?</p>
+      <h2 class="font-display text-white text-balance mb-5">Free written estimate. The quote holds 30 days. No pressure.</h2>
+      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
+        Real local crew. Honest recommendations. The 217 reviews above are from neighbors who decided to call us back, recommend us, or leave a review without being asked.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/quote/" class="btn-accent">Request a Quote</a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">Call {siteConfig.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

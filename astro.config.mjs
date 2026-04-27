@@ -5,7 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.rcsgutters.com',
+  // Match siteConfig.url. Will flip to 'https://www.rcsgutters.com' when the
+  // domain is pointed at this Vercel build.
+  site: 'https://rcs-website-justin-morris-projects-f0ac0487.vercel.app',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     mdx(),

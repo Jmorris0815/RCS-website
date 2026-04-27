@@ -11,6 +11,12 @@ const schema = {
   telephone: siteConfig.phoneDisplay,
   email: siteConfig.email,
   foundingDate: String(siteConfig.foundingYear),
+  description:
+    "Family-owned seamless gutter installer serving 9 Central Virginia counties. " +
+    "Authorized Leaf Solution dealer specializing in Xtreme, New Wave, and Evelyn's " +
+    "Leaf Solution gutter guards. .032 aluminum, hidden hangers standard.",
+  image: `${siteConfig.url}/images/jobs/truck-jobsite-barn.jpg`,
+  logo: `${siteConfig.url}/logo-mark.svg`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: siteConfig.address.street,
@@ -51,8 +57,23 @@ const schema = {
     },
   ],
   priceRange: '$$',
-  // Only include rating when we have real, verifiable review data.
-  // Do not fabricate aggregateRating values. Update once Search Console / GBP data confirms.
+
+  // Live aggregate from the HomeAdvisor profile. ratingValue rounded to one
+  // decimal for display; full precision (4.74) preserved here for parsers.
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: siteConfig.reviewAverage,
+    bestRating: 5,
+    worstRating: 1,
+    reviewCount: siteConfig.reviewCount,
+  },
+
+  // sameAs links the LocalBusiness entity across the web. AI parsers and
+  // schema validators use this for entity resolution. Add Google Business
+  // Profile, Yelp, Facebook, etc. here as URLs are confirmed.
+  sameAs: [
+    siteConfig.homeAdvisorProfileUrl,
+  ].filter(Boolean),
 };
 ---
 
