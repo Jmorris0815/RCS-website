@@ -22,7 +22,7 @@ export default {
         ink: {
           primary: '#171717',
           muted: '#4A5560',
-          subtle: '#7A8492',
+          subtle: '#5A6470',
         },
         line: {
           DEFAULT: '#E8E1DD',
