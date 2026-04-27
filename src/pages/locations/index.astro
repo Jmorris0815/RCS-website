@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const locations = (await getCollection('locations')).sort((a, b) =>
+  a.data.city.localeCompare(b.data.city)
+);
+---
+
+<BaseLayout
+  title="Service Area | Central Virginia Gutter Service Locations | RCS Gutters"
+  description="Eight Central Virginia counties we serve: Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, and Louisa. Each location page written from real local jobs."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Service Area</p>
+    <h1 class="mb-4">Eight Central Virginia counties we know by heart</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      We don't list cities for SEO. Each page below is written from the actual jobs we've done in that county — the homes, the trees, the patterns we see again and again. Same pricing, same crew, same standards across the entire service area.
+    </p>
+  </section>
+
+  <section class="container-x section">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {locations.map((loc) => (
+        <a href={`/locations/${loc.data.slug}/`} class="card p-7 block group">
+          <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2">
+            {loc.data.county} County
+          </div>
+          <h2 class="text-2xl font-bold mb-3 group-hover:text-brand-primary transition">
+            {loc.data.city}
+          </h2>
+          <p class="text-ink-muted text-sm line-clamp-3 mb-4">
+            {loc.data.populationContext}
+          </p>
+          <div class="text-xs text-ink-subtle">
+            ~{loc.data.responseTimeMinutes} min from our shop
+          </div>
+          <div class="text-brand-primary font-semibold text-sm mt-3">View {loc.data.city} →</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-brand-cream section">
+    <div class="container-x max-w-3xl">
+      <h2 class="mb-3">Outside our service area?</h2>
+      <p class="text-ink-muted">
+        We work within roughly 60 minutes of our Barboursville shop. If you're outside our standard service area but close to it, give us a call — we sometimes take work in adjacent counties when the project is the right fit.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const tierOrder = { economy: 0, standard: 1, premium: 2, luxury: 3 };
+const products = (await getCollection('products')).sort(
+  (a, b) => (tierOrder[a.data.priceTier] ?? 0) - (tierOrder[b.data.priceTier] ?? 0)
+);
+---
+
+<BaseLayout
+  title="Leaf Solution Gutter Guards | Authorized Dealer | RCS Gutters"
+  description="The three Leaf Solution gutter guard product lines we install: Xtreme stainless micro-mesh, New Wave punched aluminum, and Evelyn's Leaf Solution capillary-dip. Authorized dealer serving Central Virginia."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
+      Products · Leaf Solution Authorized Dealer
+    </p>
+    <h1 class="mb-4">Three gutter guard products. One that's right for your home.</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      We install the full Leaf Solution lineup — and we'll tell you straight which one fits your specific tree mix and budget. The most expensive product isn't always the best fit.
+    </p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="/configurator/" class="btn-primary">Try the Configurator Quiz</a>
+      <a href="/quote/" class="btn-secondary">Get a Free Quote</a>
+    </div>
+  </section>
+
+  <section class="container-x section">
+    <div class="grid lg:grid-cols-3 gap-6">
+      {products.map((p) => (
+        <a href={`/products/${p.data.slug}/`} class="card p-7 block group">
+          <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
+            {p.data.priceTier} tier
+          </div>
+          <h2 class="text-2xl font-bold mb-2 group-hover:text-brand-primary transition">
+            {p.data.title}
+          </h2>
+          <p class="text-ink-muted text-sm mb-5">{p.data.tagline}</p>
+          <div class="grid grid-cols-2 gap-2 text-xs text-ink-muted mb-5">
+            <div>
+              <span class="font-bold text-ink-primary">{p.data.gpmCapacity ?? '—'}</span> GPM
+            </div>
+            <div>
+              <span class="font-bold text-ink-primary">{p.data.warrantyYears ?? '—'}</span> yr warranty
+            </div>
+          </div>
+          <span class="text-brand-primary font-semibold text-sm">View product →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section bg-brand-cream">
+    <div class="container-x max-w-3xl">
+      <h2 class="mb-4">Why Leaf Solution?</h2>
+      <p class="text-ink-muted mb-3">
+        We chose Leaf Solution as our primary gutter guard partner for three reasons. <strong>First</strong>, the factory is in Rochelle, VA — about thirty minutes from our shop — so when there's a warranty question or a special-order color, we have a relationship rather than a 1-800 number. <strong>Second</strong>, they only sell to authorized contractors, which means installation quality stays consistent across their dealer network and customers don't get a DIY product slapped on by a handyman. <strong>Third</strong>, the products perform. We've installed enough of them across Central Virginia to know which ones survive which debris loads, and the failures we see in the market are almost always the cheaper non-Leaf Solution alternatives we end up tearing off.
+      </p>
+      <p class="text-ink-muted">
+        We don't have an exclusive arrangement with Leaf Solution — we just don't think the alternatives are worth selling.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

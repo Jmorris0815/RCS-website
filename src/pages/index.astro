@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import LocalBusinessSchema from '../components/schemas/LocalBusinessSchema.astro';
+import { siteConfig } from '../config/site';
+
+const services = (await getCollection('services'))
+  .sort((a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99))
+  .slice(0, 6)
+  .map((s) => ({ slug: s.data.slug, title: s.data.title, desc: s.data.tagline }));
+
+const cities = (await getCollection('locations'))
+  .sort((a, b) => a.data.city.localeCompare(b.data.city))
+  .map((l) => ({ slug: l.data.slug, name: l.data.city }));
+---
+
+<BaseLayout
+  title="Right Choice Seamless Gutters | Central Virginia Gutter Installation & Leaf Solution Guards"
+  description="Family-owned seamless gutter installer serving Charlottesville, Barboursville, and Central Virginia. Authorized Leaf Solution dealer specializing in Xtreme, New Wave, and Evelyn's Leaf Solution gutter guards."
+>
+  <LocalBusinessSchema slot="head" />
+
+  <Hero
+    eyebrow="Central Virginia · Family-Owned Since 2014"
+    headline="Gutters that last 30 years. Installed by people who'll still be here in 30 years."
+    subhead="Seamless gutters, Leaf Solution gutter guards, and honest cleaning service across Charlottesville, Barboursville, Madison, Orange, and the rest of Central VA."
+  />
+
+  <!-- Services strip -->
+  <section class="section container-x">
+    <div class="flex items-end justify-between mb-8 gap-4">
+      <div>
+        <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">What We Do</p>
+        <h2>Every gutter service, one local crew</h2>
+      </div>
+      <a href="/services/" class="hidden md:inline-flex text-brand-primary font-semibold hover:underline">
+        See all services →
+      </a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {services.map((s) => (
+        <a href={`/services/${s.slug}/`} class="card p-6 block">
+          <h3 class="text-xl font-bold mb-2">{s.title}</h3>
+          <p class="text-ink-muted text-sm">{s.desc}</p>
+          <div class="mt-4 text-brand-primary font-semibold text-sm">Learn more →</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Locations strip -->
+  <section class="section bg-brand-light">
+    <div class="container-x">
+      <div class="text-center mb-10 max-w-2xl mx-auto">
+        <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Service Area</p>
+        <h2>Eight Central VA cities and counties we know by heart</h2>
+        <p class="text-ink-muted mt-3">
+          We don't just list cities for SEO. Each page below is written from real jobs we've done in
+          that town — the homes, the trees, the typical gutter problems.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {cities.map((c) => (
+          <a
+            href={`/locations/${c.slug}/`}
+            class="card p-5 block text-center hover:border-brand-primary"
+          >
+            <div class="font-display font-bold text-lg">{c.name}</div>
+            <div class="text-xs text-ink-subtle mt-1">View local work</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="section container-x">
+    <div class="grid md:grid-cols-3 gap-6 text-center">
+      <div class="p-6">
+        <div class="text-4xl font-display font-bold text-brand-primary">2014</div>
+        <div class="text-sm text-ink-muted mt-1">Year Scott founded RCS</div>
+      </div>
+      <div class="p-6">
+        <div class="text-4xl font-display font-bold text-brand-primary">Leaf Solution</div>
+        <div class="text-sm text-ink-muted mt-1">Authorized Central VA dealer</div>
+      </div>
+      <div class="p-6">
+        <div class="text-4xl font-display font-bold text-brand-primary">100%</div>
+        <div class="text-sm text-ink-muted mt-1">Locally owned and operated</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto">
+      <h2 class="text-white">Ready for a quote?</h2>
+      <p class="text-white/80 text-fluid-lg mt-3 mb-6">
+        Free, no-pressure estimate at your home — usually scheduled within a week.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/quote/" class="btn-accent">Request Quote Online</a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
+          Call {siteConfig.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

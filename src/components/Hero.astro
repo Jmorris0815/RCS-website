@@ -1,0 +1,69 @@
+---
+import { siteConfig } from '../config/site';
+
+export interface Props {
+  eyebrow?: string;
+  headline: string;
+  subhead: string;
+  primaryCtaText?: string;
+  primaryCtaHref?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  trustChips?: string[];
+  imageSrc?: string;
+  imageAlt?: string;
+}
+const {
+  eyebrow,
+  headline,
+  subhead,
+  primaryCtaText = 'Get a Free Quote',
+  primaryCtaHref = '/quote/',
+  secondaryCtaText = `Call ${siteConfig.phoneDisplay}`,
+  secondaryCtaHref = `tel:${siteConfig.phoneRaw}`,
+  trustChips = ['Family-owned since 2014', 'Leaf Solution Authorized Dealer', 'Licensed & Insured'],
+  imageSrc,
+  imageAlt = '',
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-brand-light">
+  <div class="container-x section grid lg:grid-cols-2 gap-10 items-center">
+    <div>
+      {eyebrow && (
+        <div class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-3">
+          {eyebrow}
+        </div>
+      )}
+      <h1 class="text-fluid-3xl mb-4">{headline}</h1>
+      <p class="text-fluid-lg text-ink-muted max-w-xl mb-7">{subhead}</p>
+
+      <div class="flex flex-wrap gap-3">
+        <a href={primaryCtaHref} class="btn-primary">{primaryCtaText}</a>
+        <a href={secondaryCtaHref} class="btn-secondary">{secondaryCtaText}</a>
+      </div>
+
+      {trustChips.length > 0 && (
+        <ul class="mt-8 flex flex-wrap gap-2 text-xs">
+          {trustChips.map((chip) => (
+            <li class="bg-white border border-line rounded-full px-3 py-1.5 font-medium text-ink-muted">
+              {chip}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    {imageSrc && (
+      <div class="relative">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          class="w-full h-auto rounded-xl shadow-card object-cover aspect-[4/3]"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    )}
+  </div>
+</section>

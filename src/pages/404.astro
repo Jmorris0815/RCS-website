@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout
+  title="Page Not Found | RCS Gutters"
+  description="The page you're looking for doesn't exist."
+  noindex={true}
+>
+  <section class="container-x section text-center max-w-2xl mx-auto">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">404</p>
+    <h1 class="mb-4">That page doesn't exist.</h1>
+    <p class="text-fluid-lg text-ink-muted mb-8">
+      It might have moved, or the link might be broken. Try one of these:
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mb-8">
+      <a href="/" class="btn-primary">Home</a>
+      <a href="/services/" class="btn-secondary">Services</a>
+      <a href="/locations/" class="btn-secondary">Service Area</a>
+      <a href="/quote/" class="btn-secondary">Get a Quote</a>
+    </div>
+    <p class="text-sm text-ink-muted">
+      Or call us at <a href={`tel:${siteConfig.phoneRaw}`} class="text-brand-primary font-semibold">{siteConfig.phoneDisplay}</a>.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import { siteConfig } from '../config/site';
+---
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-line">
+  <div class="max-w-container mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-display font-bold text-brand-primary">
+      <img src="/logo.svg" alt="Right Choice Seamless Gutters" class="h-9 w-auto" />
+      <span class="hidden sm:inline">RCS Gutters</span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-7 text-sm font-medium">
+      <a href="/services/" class="hover:text-brand-primary">Services</a>
+      <a href="/products/" class="hover:text-brand-primary">Products</a>
+      <a href="/locations/" class="hover:text-brand-primary">Service Area</a>
+      <a href="/case-studies/" class="hover:text-brand-primary">Our Work</a>
+      <a href="/blog/" class="hover:text-brand-primary">Blog</a>
+      <a href="/about/" class="hover:text-brand-primary">About</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={`tel:${siteConfig.phoneRaw}`}
+        class="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary"
+      >
+        {siteConfig.phoneDisplay}
+      </a>
+      <a
+        href="/quote/"
+        class="inline-flex items-center bg-brand-primary text-white px-4 py-2 rounded font-semibold text-sm hover:bg-brand-dark transition"
+      >
+        Get a Quote
+      </a>
+    </div>
+  </div>
+</header>

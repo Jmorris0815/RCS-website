@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout
+  title="Warranty & Guarantees | Right Choice Seamless Gutters"
+  description="What we stand behind. Our workmanship warranty plus the manufacturer warranties on Leaf Solution gutter guard products."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Warranty</p>
+    <h1 class="mb-4">What we stand behind.</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      Two warranties cover most of what we install: our own workmanship warranty on labor and installation, and the Leaf Solution manufacturer warranties on guard products. Here's what each one covers in plain language.
+    </p>
+  </section>
+
+  <section class="container-x section">
+    <div class="grid md:grid-cols-2 gap-7">
+      <div class="card p-7 bg-white">
+        <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">RCS Workmanship Warranty</div>
+        <h2 class="text-2xl font-bold mb-3">5 years on labor and installation</h2>
+        <p class="text-sm text-ink-muted mb-3">
+          We stand behind the way we install your gutters. If a hanger we placed fails, a seam we sealed leaks, or a downspout we connected pulls loose due to our work, we come back and fix it at no charge.
+        </p>
+        <p class="text-sm text-ink-muted mb-3">
+          Covers: hanger pull, sealant failure at corners and end caps, downspout connections, miter cut quality, fascia installation if we did the fascia work.
+        </p>
+        <p class="text-sm text-ink-muted">
+          Doesn't cover: damage from impact (fallen branches, ladder strikes), damage from third-party work, ice and snow load events that exceed manufacturer specs, normal weathering, or work modified by someone else after our install.
+        </p>
+      </div>
+
+      <div class="card p-7 bg-white">
+        <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">Leaf Solution Product Warranty</div>
+        <h2 class="text-2xl font-bold mb-3">20 to 25 years on the gutter guard products</h2>
+        <p class="text-sm text-ink-muted mb-3">
+          Leaf Solution backs each of their gutter guard product lines with a transferable manufacturer warranty: 25 years on Xtreme and Evelyn's Leaf Solution stainless mesh products, 20 years on New Wave punched aluminum.
+        </p>
+        <p class="text-sm text-ink-muted mb-3">
+          Covers: defects in materials and manufacturing — corrosion of stainless mesh, structural failure of the aluminum frame, etc.
+        </p>
+        <p class="text-sm text-ink-muted">
+          Doesn't cover: damage from acts of God beyond reasonable spec (extreme hail, falling trees), debris accumulation (you still need occasional top-rinses), or alterations to the installed product.
+        </p>
+      </div>
+
+      <div class="card p-7 bg-brand-cream md:col-span-2">
+        <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">Aluminum gutter material warranty</div>
+        <h2 class="text-2xl font-bold mb-3">20-year prorated finish warranty (industry standard)</h2>
+        <p class="text-sm text-ink-muted mb-3">
+          The aluminum coil stock we use carries an industry-standard 20-year prorated finish warranty against fade, chalk, and adhesion failure. This is a manufacturer warranty separate from our workmanship and the guard product warranties.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-brand-cream section">
+    <div class="container-x max-w-3xl">
+      <h2 class="mb-4">If something goes wrong</h2>
+      <ol class="list-decimal list-inside space-y-3 text-ink-muted">
+        <li><strong>Call us first.</strong> {siteConfig.phoneDisplay}. We'd rather know about a problem and address it than have you wonder for months.</li>
+        <li><strong>We come out and look.</strong> If it's something we did, we fix it. If it's a manufacturer defect, we coordinate the warranty claim with Leaf Solution on your behalf.</li>
+        <li><strong>If it's third-party damage</strong> (storm, fallen tree, someone else's work), we'll still come give you an estimate to repair, but it's outside the warranty scope.</li>
+      </ol>
+      <p class="text-sm text-ink-muted mt-5">
+        We don't dodge warranty calls. A small gutter contractor that doesn't honor warranty work doesn't survive in a small market — our reputation depends on it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto">
+      <h2 class="text-white">Have a question about a previous install?</h2>
+      <p class="text-white/80 mt-3 mb-6">
+        Call us. We'll pull the records and figure it out.
+      </p>
+      <a href={`tel:${siteConfig.phoneRaw}`} class="btn-accent">
+        Call {siteConfig.phoneDisplay}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

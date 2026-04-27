@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Gutter Guard Configurator | Find Your Right Leaf Solution Product"
+  description="Four-question quiz to recommend the right Leaf Solution gutter guard for your Central VA home. Xtreme, New Wave, or Evelyn's Leaf Solution."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Configurator</p>
+    <h1 class="mb-4">Find the right gutter guard for your home</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      Four questions. Real recommendation. We'll match you to the Leaf Solution product that actually fits your tree mix and budget — not the most expensive one in the catalog.
+    </p>
+  </section>
+
+  <section class="container-x section">
+    <div id="configurator-app" class="card p-7 bg-white max-w-2xl">
+      <noscript>
+        <p class="text-ink-muted">
+          The interactive configurator requires JavaScript. To get a recommendation without it, <a href="/quote/" class="text-brand-primary underline">request a quote</a> and we'll match you to the right product based on a phone or in-person conversation.
+        </p>
+      </noscript>
+
+      <!-- Step 1: Tree mix -->
+      <fieldset id="step-1" class="step">
+        <legend class="text-sm font-bold uppercase text-brand-accent tracking-[0.18em]">Question 1 of 4</legend>
+        <h2 class="text-xl font-bold mt-2 mb-4">What kinds of trees are within 50 feet of your home?</h2>
+        <div class="space-y-2">
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="trees" value="pine" class="mr-2" />
+            <strong>Mostly pine</strong> (loblolly, white pine, Virginia pine, cedar)
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="trees" value="hardwood" class="mr-2" />
+            <strong>Mostly hardwood</strong> (oak, maple, tulip poplar, sycamore)
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="trees" value="mixed" class="mr-2" />
+            <strong>Mixed</strong> — both pine and hardwood within range
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="trees" value="open" class="mr-2" />
+            <strong>Open lot</strong> — no significant overhanging trees
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 2: Aesthetics -->
+      <fieldset id="step-2" class="step hidden">
+        <legend class="text-sm font-bold uppercase text-brand-accent tracking-[0.18em]">Question 2 of 4</legend>
+        <h2 class="text-xl font-bold mt-2 mb-4">How visible is the gutter line on your home?</h2>
+        <div class="space-y-2">
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="visibility" value="hidden" class="mr-2" />
+            <strong>Mostly hidden</strong> — two-story home, gutter line is up high and not visible from the street
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="visibility" value="visible" class="mr-2" />
+            <strong>Eye level / visible</strong> — single-story or important architectural feature where appearance matters
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="visibility" value="critical" class="mr-2" />
+            <strong>Critical</strong> — historic home, vineyard, architect-designed property where the guard cannot stand out
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 3: Budget -->
+      <fieldset id="step-3" class="step hidden">
+        <legend class="text-sm font-bold uppercase text-brand-accent tracking-[0.18em]">Question 3 of 4</legend>
+        <h2 class="text-xl font-bold mt-2 mb-4">What's most important in your budget priorities?</h2>
+        <div class="space-y-2">
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="budget" value="value" class="mr-2" />
+            <strong>Smart value</strong> — solid protection without paying for premium I don't need
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="budget" value="premium" class="mr-2" />
+            <strong>Premium performance</strong> — best long-term product even at higher cost
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="budget" value="luxury" class="mr-2" />
+            <strong>Luxury / architectural</strong> — appearance and color match are part of the value
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Step 4: Maintenance -->
+      <fieldset id="step-4" class="step hidden">
+        <legend class="text-sm font-bold uppercase text-brand-accent tracking-[0.18em]">Question 4 of 4</legend>
+        <h2 class="text-xl font-bold mt-2 mb-4">How much maintenance are you willing to do?</h2>
+        <div class="space-y-2">
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="maintenance" value="low" class="mr-2" />
+            <strong>As little as possible</strong> — willing to pay for the longest-lasting product
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="maintenance" value="annual" class="mr-2" />
+            <strong>Once a year is fine</strong> — willing to do an annual top-rinse or brief inspection
+          </label>
+          <label class="block card p-4 cursor-pointer hover:border-brand-primary">
+            <input type="radio" name="maintenance" value="some" class="mr-2" />
+            <strong>I'll do it myself</strong> — comfortable on a ladder for occasional cleanouts
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Result -->
+      <div id="result" class="hidden">
+        <p class="text-sm font-bold uppercase text-brand-accent tracking-[0.18em] mb-2">Our recommendation</p>
+        <h2 id="result-title" class="text-2xl font-bold mb-3"></h2>
+        <p id="result-reason" class="text-ink-muted mb-5"></p>
+        <div class="flex flex-wrap gap-3">
+          <a id="result-link" href="#" class="btn-primary">View product</a>
+          <a href="/quote/" class="btn-secondary">Request a quote</a>
+          <button id="restart" type="button" class="text-brand-primary font-semibold underline">Start over</button>
+        </div>
+        <p class="text-xs text-ink-subtle mt-5">
+          This is a starting recommendation. We'll confirm or adjust during an on-site walk-through — your specific roof shape, downspout layout, and existing gutter condition can shift the answer.
+        </p>
+      </div>
+
+      <!-- Nav -->
+      <div id="nav" class="flex items-center justify-between mt-7 pt-5 border-t border-line">
+        <button id="back" type="button" class="text-ink-muted hover:text-brand-primary">← Back</button>
+        <span id="progress" class="text-sm text-ink-subtle">Step 1 of 4</span>
+        <button id="next" type="button" class="btn-primary">Next →</button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var stepIndex = 0;
+    var steps = document.querySelectorAll('.step');
+    var resultEl = document.getElementById('result');
+    var nav = document.getElementById('nav');
+    var progress = document.getElementById('progress');
+    var nextBtn = document.getElementById('next');
+    var backBtn = document.getElementById('back');
+    var restartBtn = document.getElementById('restart');
+
+    function show(i) {
+      steps.forEach(function (s, idx) {
+        s.classList.toggle('hidden', idx !== i);
+      });
+      progress.textContent = 'Step ' + (i + 1) + ' of ' + steps.length;
+      backBtn.style.visibility = i === 0 ? 'hidden' : 'visible';
+      nextBtn.textContent = i === steps.length - 1 ? 'See recommendation' : 'Next →';
+    }
+
+    function getValue(stepEl) {
+      var checked = stepEl.querySelector('input[type=radio]:checked');
+      return checked ? checked.value : null;
+    }
+
+    function recommend(answers) {
+      var product = 'xtreme';
+      var reason = '';
+
+      if (answers.trees === 'open') {
+        product = 'none';
+        reason = "With no significant overhanging trees, you probably don't need gutter guards at all. Save the money and book an annual cleaning. If you want guards anyway, New Wave is the most economical option.";
+      } else if (answers.trees === 'pine') {
+        product = (answers.budget === 'luxury' || answers.visibility === 'critical') ? 'evelyns' : 'xtreme';
+        reason = 'Pine debris demands stainless steel micro-mesh — the only product type that consistently sheds pine needles instead of trapping them.';
+      } else if (answers.trees === 'mixed') {
+        product = (answers.budget === 'luxury' || answers.visibility === 'critical') ? 'evelyns' : 'xtreme';
+        reason = 'A mixed tree canopy needs stainless micro-mesh to handle the full debris range. Xtreme is the workhorse pick; Evelyns adds color matching when appearance is critical.';
+      } else {
+        // hardwood
+        if (answers.budget === 'luxury' || answers.visibility === 'critical') {
+          product = 'evelyns';
+          reason = 'Hardwood debris is well-handled by either micro-mesh or punched aluminum. With your visibility and budget priorities, Evelyns Leaf Solution gives you architectural color matching and the longest warranty.';
+        } else if (answers.budget === 'value') {
+          product = 'newwave';
+          reason = 'Hardwood debris is well-handled by punched aluminum. New Wave is the smart-value pick when pine is not in the mix and stainless mesh is more product than the home actually needs.';
+        } else {
+          product = 'xtreme';
+          reason = 'Hardwood debris with premium-performance priorities makes Xtreme the right call — finest debris handling, longest warranty.';
+        }
+      }
+
+      var titles = {
+        xtreme: 'Xtreme Gutter Guard (stainless steel micro-mesh)',
+        newwave: 'New Wave Gutter Guard (punched aluminum)',
+        evelyns: "Evelyn's Leaf Solution (capillary-dip micro-mesh)",
+        none: "No guards needed — annual cleaning is the right answer",
+      };
+      var links = {
+        xtreme: '/products/xtreme-gutter-guard/',
+        newwave: '/products/new-wave-gutter-guard/',
+        evelyns: '/products/evelyns-leaf-solution/',
+        none: '/services/gutter-cleaning/',
+      };
+
+      document.getElementById('result-title').textContent = titles[product];
+      document.getElementById('result-reason').textContent = reason;
+      document.getElementById('result-link').href = links[product];
+      document.getElementById('result-link').textContent =
+        product === 'none' ? 'See cleaning service →' : 'View product →';
+
+      steps.forEach(function (s) { s.classList.add('hidden'); });
+      nav.classList.add('hidden');
+      resultEl.classList.remove('hidden');
+    }
+
+    nextBtn.addEventListener('click', function () {
+      var current = steps[stepIndex];
+      var v = getValue(current);
+      if (!v) {
+        current.querySelector('h2').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (stepIndex === steps.length - 1) {
+        var answers = {
+          trees: getValue(steps[0]),
+          visibility: getValue(steps[1]),
+          budget: getValue(steps[2]),
+          maintenance: getValue(steps[3]),
+        };
+        recommend(answers);
+        return;
+      }
+      stepIndex++;
+      show(stepIndex);
+    });
+
+    backBtn.addEventListener('click', function () {
+      if (stepIndex > 0) {
+        stepIndex--;
+        show(stepIndex);
+      }
+    });
+
+    restartBtn.addEventListener('click', function () {
+      stepIndex = 0;
+      resultEl.classList.add('hidden');
+      nav.classList.remove('hidden');
+      document.querySelectorAll('input[type=radio]').forEach(function (r) { r.checked = false; });
+      show(stepIndex);
+    });
+
+    show(0);
+  })();
+</script>

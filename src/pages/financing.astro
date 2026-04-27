@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout
+  title="Financing Options | Right Choice Seamless Gutters"
+  description="Financing options for gutter installation, gutter guards, and larger projects across Central Virginia. Pay over time on qualifying installations."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Financing</p>
+    <h1 class="mb-4">Pay over time, on qualifying installations.</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      For larger projects — full gutter replacements, gutter guard installations, copper half-round restorations, and multi-building work — we partner with home-improvement financing companies that let you spread the cost over months or years instead of paying in full at install.
+    </p>
+  </section>
+
+  <section class="container-x section">
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card p-6">
+        <h3 class="font-bold mb-2">Quick approval</h3>
+        <p class="text-sm text-ink-muted">
+          Most applications get a credit decision within minutes. We can run the application during the estimate visit if you want.
+        </p>
+      </div>
+      <div class="card p-6">
+        <h3 class="font-bold mb-2">Promotional periods</h3>
+        <p class="text-sm text-ink-muted">
+          Some plans offer 6- or 12-month no-interest promotional periods on qualifying installations. Ask during the quote — terms vary.
+        </p>
+      </div>
+      <div class="card p-6">
+        <h3 class="font-bold mb-2">Standard terms</h3>
+        <p class="text-sm text-ink-muted">
+          Longer-term financing available with standard interest rates for projects that don't fit a promotional plan or for customers who prefer fixed-rate terms.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-brand-cream section">
+    <div class="container-x max-w-3xl">
+      <h2 class="mb-4">Honest talk about financing</h2>
+      <p class="text-ink-muted mb-3">
+        Financing is a tool. For some homeowners, paying for a $4,000 gutter and guard installation in 12 monthly payments instead of one is the difference between getting it done now and waiting six months. For other homeowners, financing fees aren't worth the cash-flow flexibility.
+      </p>
+      <p class="text-ink-muted mb-3">
+        We don't push financing. We don't get bonuses based on signed financing applications. The financing partners we work with offer real terms that don't try to bury fees. If you want to apply, we'll help; if you'd rather pay at completion, that's fine too.
+      </p>
+      <p class="text-ink-muted">
+        Tell us during the quote conversation if financing is a yes/no for the project. We'll fold the answer into the timeline and the paperwork from the start.
+      </p>
+    </div>
+  </section>
+
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto">
+      <h2 class="text-white">Ready to talk numbers?</h2>
+      <p class="text-white/80 mt-3 mb-6">
+        Get a free quote first. We'll discuss financing options once you know the project scope and price.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/quote/" class="btn-accent">Request a Quote</a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
+          Call {siteConfig.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LocalBusinessSchema from '../components/schemas/LocalBusinessSchema.astro';
+import { siteConfig } from '../config/site';
+---
+
+<BaseLayout
+  title="About Right Choice Seamless Gutters | Family-Owned Central VA Gutter Company"
+  description="Family-owned and operated seamless gutter installer in Barboursville, VA. Authorized Leaf Solution dealer serving Charlottesville and surrounding counties. Meet Scott and the RCS crew."
+>
+  <LocalBusinessSchema slot="head" />
+
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
+      About RCS
+    </p>
+    <h1 class="mb-4">Family-owned. Locally rooted. Built for the long run.</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      We're a small Central Virginia gutter company that has been doing this work the right way since {siteConfig.foundingYear}. No franchise pressure, no commission-driven sales, no products we wouldn't put on our own homes.
+    </p>
+  </section>
+
+  <section class="container-x section grid lg:grid-cols-2 gap-10 items-center">
+    <div class="prose-rcs">
+      <h2>Who runs RCS</h2>
+      <p>
+        Scott runs the company. He's been on roof edges and gutter trucks every day since he started RCS in {siteConfig.foundingYear} as a one-person crew with a single truck. The crew has grown — we now have a full team — but Scott still walks every estimate above $5,000 and signs every quote that goes out the door.
+      </p>
+      <p>
+        We're based in Barboursville, in the small village that gives us our shop address. Most of us live within a thirty-minute drive of the shop. When we tell you we're "local," we mean we run into our customers at the gas station, at the school carpool line, and at the coffee shop downtown. That accountability is the whole reason a small gutter company can compete with the national franchises that throw bigger ad budgets at the market.
+      </p>
+      <h2>What we do — and don't</h2>
+      <p>
+        We install seamless gutters. We clean gutters. We install Leaf Solution gutter guards as authorized dealers. We do fascia and soffit work because most gutter jobs need it. We design and install the drainage that takes water away from your foundation. We do half-round and copper restoration on historic homes. We do commercial work on retail, agricultural, and church properties.
+      </p>
+      <p>
+        We don't do roofs. We don't do siding. We don't subcontract our gutter work to anyone else. We don't sell extended warranties for $3,000 that nobody ever uses. We don't run "today only" pricing scams. We don't install foam inserts or reverse-curve gutter guards because we've torn out too many of them.
+      </p>
+    </div>
+    <div class="space-y-5">
+      <div class="card p-6 bg-brand-cream">
+        <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">By the numbers</div>
+        <ul class="space-y-3 text-sm">
+          <li class="flex justify-between">
+            <span class="text-ink-muted">Founded</span>
+            <span class="font-bold">{siteConfig.foundingYear}</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-ink-muted">Service counties</span>
+            <span class="font-bold">8 Central VA counties</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-ink-muted">Leaf Solution dealer status</span>
+            <span class="font-bold">Authorized</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-ink-muted">Default install spec</span>
+            <span class="font-bold">.032 aluminum, hidden hangers</span>
+          </li>
+          <li class="flex justify-between">
+            <span class="text-ink-muted">Where Scott is on big jobs</span>
+            <span class="font-bold">On site, every time</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card p-6 bg-white">
+        <div class="text-xs font-bold uppercase text-ink-subtle tracking-[0.18em] mb-3">Where to reach us</div>
+        <p class="text-sm text-ink-muted mb-2">
+          {siteConfig.address.street}<br />
+          {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
+        </p>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="block text-brand-primary font-semibold mt-3">
+          {siteConfig.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-brand-cream section">
+    <div class="container-x max-w-3xl">
+      <h2 class="mb-6">Our standards (the short list)</h2>
+      <div class="space-y-5">
+        <div>
+          <h3 class="text-lg font-bold mb-1">.032-gauge aluminum, every install.</h3>
+          <p class="text-ink-muted">No .027 lightweight material. The cost difference is small; the durability difference is permanent.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-1">Hidden hangers, every install.</h3>
+          <p class="text-ink-muted">Anchored to the rafter tail at 24 inches (or tighter for snow-load homes). No spike-and-ferrule.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-1">Honest gutter guard recommendations.</h3>
+          <p class="text-ink-muted">We carry Leaf Solution products. We recommend the right one for your tree mix — not the most expensive one in the catalog.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-1">Real drainage planning.</h3>
+          <p class="text-ink-muted">If the splash block isn't enough, we'll tell you why and what to do instead. Foundation moisture is a real cost; we don't ignore it.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-1">Documented work.</h3>
+          <p class="text-ink-muted">Photos before, during, and after on every install and cleaning. Sent to the customer. Documents what we did and what we found.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto">
+      <h2 class="text-white">Want us to come look at your house?</h2>
+      <p class="text-white/80 mt-3 mb-6">
+        Free estimate. Honest recommendations. No pressure.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/quote/" class="btn-accent">Request a Quote</a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
+          Call {siteConfig.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

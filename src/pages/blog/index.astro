@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf()
+);
+
+const cornerstones = posts.filter((p) => p.data.isCornerstone);
+const recent = posts.filter((p) => !p.data.isCornerstone);
+---
+
+<BaseLayout
+  title="Gutter Blog | Central Virginia Gutter Tips, Guides & Local Insight"
+  description="Honest gutter content from a Central Virginia contractor. Buyer's guides, maintenance schedules, comparisons, and case studies — written by Scott and the RCS crew."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Blog</p>
+    <h1 class="mb-4">Gutter expertise, written by people who actually do the work</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      No fluff, no AI-generated filler. Real guides and observations from a contractor who has been on Central Virginia roofs since 2014.
+    </p>
+  </section>
+
+  {cornerstones.length > 0 && (
+    <section class="container-x section">
+      <h2 class="mb-6">Cornerstone guides</h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        {cornerstones.map((post) => (
+          <a href={`/blog/${post.data.slug}/`} class="card p-7 block group">
+            <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
+              {post.data.category}
+            </div>
+            <h3 class="text-xl font-bold mb-3 group-hover:text-brand-primary transition">
+              {post.data.title}
+            </h3>
+            <p class="text-ink-muted text-sm mb-4">{post.data.excerpt}</p>
+            <span class="text-brand-primary font-semibold text-sm">Read →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {recent.length > 0 && (
+    <section class="container-x section bg-brand-cream">
+      <h2 class="mb-6">Recent posts</h2>
+      <div class="grid md:grid-cols-3 gap-5">
+        {recent.map((post) => (
+          <a href={`/blog/${post.data.slug}/`} class="card p-6 block bg-white group">
+            <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
+              {post.data.category}
+            </div>
+            <h3 class="text-lg font-bold mb-2 group-hover:text-brand-primary transition">
+              {post.data.title}
+            </h3>
+            <p class="text-ink-muted text-sm">{post.data.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>

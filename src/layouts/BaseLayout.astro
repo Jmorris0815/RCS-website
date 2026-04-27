@@ -1,0 +1,78 @@
+---
+import { SEO } from 'astro-seo';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.jpg',
+  canonical,
+  noindex = false,
+} = Astro.props;
+
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL(image, Astro.site).toString();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#D72027" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonicalUrl}
+      noindex={noindex}
+      openGraph={{
+        basic: {
+          title,
+          type: 'website',
+          image: ogImage,
+          url: canonicalUrl,
+        },
+        optional: {
+          description,
+          siteName: 'Right Choice Seamless Gutters',
+          locale: 'en_US',
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title,
+        description,
+        image: ogImage,
+      }}
+    />
+
+    <slot name="head" />
+  </head>
+  <body class="bg-white text-ink-primary font-sans antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:z-50"
+      >Skip to content</a
+    >
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <slot name="end-of-body" />
+  </body>
+</html>

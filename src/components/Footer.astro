@@ -1,0 +1,66 @@
+---
+import { siteConfig } from '../config/site';
+---
+
+<footer class="bg-brand-dark text-white mt-20">
+  <div class="max-w-container mx-auto px-4 lg:px-8 py-14 grid gap-10 md:grid-cols-4">
+    <div>
+      <div class="font-display font-bold text-lg mb-3">Right Choice Seamless Gutters</div>
+      <p class="text-sm text-white/70 leading-relaxed">
+        Family-owned seamless gutter installation, cleaning, and Leaf Solution gutter guard
+        specialists serving Central Virginia since {siteConfig.foundingYear}.
+      </p>
+      <div class="mt-4 text-sm">
+        <div>{siteConfig.address.street}</div>
+        <div>{siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}</div>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="block mt-2 text-white font-semibold underline-offset-4 hover:underline"
+          >{siteConfig.phoneDisplay}</a
+        >
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-semibold uppercase tracking-wider text-xs text-white/60 mb-3">Services</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/services/seamless-gutter-installation/" class="hover:underline">Seamless Gutter Installation</a></li>
+        <li><a href="/services/gutter-guards/" class="hover:underline">Gutter Guards</a></li>
+        <li><a href="/services/gutter-cleaning/" class="hover:underline">Gutter Cleaning</a></li>
+        <li><a href="/services/half-round-gutters/" class="hover:underline">Half-Round Gutters</a></li>
+        <li><a href="/services/commercial-gutters/" class="hover:underline">Commercial Gutters</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-semibold uppercase tracking-wider text-xs text-white/60 mb-3">Service Area</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/locations/barboursville/" class="hover:underline">Barboursville</a></li>
+        <li><a href="/locations/charlottesville/" class="hover:underline">Charlottesville</a></li>
+        <li><a href="/locations/orange/" class="hover:underline">Orange</a></li>
+        <li><a href="/locations/madison/" class="hover:underline">Madison</a></li>
+        <li><a href="/locations/greene/" class="hover:underline">Greene</a></li>
+        <li><a href="/locations/" class="hover:underline">All locations →</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-semibold uppercase tracking-wider text-xs text-white/60 mb-3">Company</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/about/" class="hover:underline">About Scott</a></li>
+        <li><a href="/case-studies/" class="hover:underline">Recent Projects</a></li>
+        <li><a href="/blog/" class="hover:underline">Blog</a></li>
+        <li><a href="/financing/" class="hover:underline">Financing</a></li>
+        <li><a href="/warranty/" class="hover:underline">Warranty</a></li>
+        <li><a href="/contact/" class="hover:underline">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="max-w-container mx-auto px-4 lg:px-8 py-5 text-xs text-white/50 flex flex-wrap items-center justify-between gap-2"
+    >
+      <div>© {new Date().getFullYear()} Right Choice Seamless Gutters. All rights reserved.</div>
+      <div>Licensed and insured · Virginia · {siteConfig.licenseNumber || 'License coming soon'}</div>
+    </div>
+  </div>
+</footer>

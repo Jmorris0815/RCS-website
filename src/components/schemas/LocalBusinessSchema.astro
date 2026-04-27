@@ -1,0 +1,57 @@
+---
+import { siteConfig } from '../../config/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'RoofingContractor',
+  '@id': `${siteConfig.url}/#business`,
+  name: siteConfig.name,
+  alternateName: siteConfig.shortName,
+  url: siteConfig.url,
+  telephone: siteConfig.phoneDisplay,
+  email: siteConfig.email,
+  foundingDate: String(siteConfig.foundingYear),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: siteConfig.address.street,
+    addressLocality: siteConfig.address.city,
+    addressRegion: siteConfig.address.state,
+    postalCode: siteConfig.address.zip,
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: siteConfig.serviceCenterCoords.lat,
+    longitude: siteConfig.serviceCenterCoords.lng,
+  },
+  areaServed: [
+    'Barboursville, VA',
+    'Charlottesville, VA',
+    'Orange, VA',
+    'Madison, VA',
+    'Greene County, VA',
+    'Fluvanna County, VA',
+    'Louisa County, VA',
+    'Albemarle County, VA',
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '17:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '12:00',
+    },
+  ],
+  priceRange: '$$',
+  // Only include rating when we have real, verifiable review data.
+  // Do not fabricate aggregateRating values. Update once Search Console / GBP data confirms.
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

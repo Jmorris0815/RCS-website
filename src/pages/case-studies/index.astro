@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const studies = (await getCollection('caseStudies')).sort(
+  (a, b) => b.data.dateCompleted.valueOf() - a.data.dateCompleted.valueOf()
+);
+---
+
+<BaseLayout
+  title="Recent Projects | Real Gutter Case Studies | RCS Gutters"
+  description="Real projects across Central Virginia. Tear-offs, restorations, drainage, gutter guards. The actual jobs we've completed — what we found, what we did, how it turned out."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">Our Work</p>
+    <h1 class="mb-4">Real projects, written up plainly</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      Pictures and walkthroughs of what we actually do. Each case study covers what was wrong before we got there, what we did about it, and how it turned out.
+    </p>
+  </section>
+
+  <section class="container-x section">
+    <div class="grid md:grid-cols-2 gap-6">
+      {studies.map((cs) => (
+        <a href={`/case-studies/${cs.data.slug}/`} class="card p-7 block group">
+          <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2">
+            {cs.data.customerCity} · {cs.data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+          </div>
+          <h2 class="text-xl font-bold mb-3 group-hover:text-brand-primary transition">
+            {cs.data.title}
+          </h2>
+          <p class="text-ink-muted text-sm line-clamp-3 mb-4">
+            {cs.data.problem}
+          </p>
+          <span class="text-brand-primary font-semibold text-sm">Read the full case study →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99)
+);
+---
+
+<BaseLayout
+  title="Gutter Services in Central Virginia | RCS Gutters"
+  description="Every gutter service one local crew handles: seamless installation, Leaf Solution gutter guards, cleaning, half-round, commercial, fascia and soffit, and drainage. Charlottesville and surrounding counties."
+>
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
+      Services
+    </p>
+    <h1 class="mb-4">Every gutter service, one local crew</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+      We do gutters and the things directly around them. We don't subcontract, we don't do roofs, and we don't hand you off. Same pricing across our entire 8-county Central Virginia service area.
+    </p>
+  </section>
+
+  <section class="container-x section">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {services.map((s) => (
+        <a href={`/services/${s.data.slug}/`} class="card p-7 block group">
+          <h2 class="text-2xl font-bold mb-2 group-hover:text-brand-primary transition">
+            {s.data.title}
+          </h2>
+          <p class="text-ink-muted text-sm mb-4">{s.data.tagline}</p>
+          <span class="text-brand-primary font-semibold text-sm">Learn more →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section bg-brand-cream">
+    <div class="container-x grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="mb-3">Don't see your need?</h2>
+        <p class="text-ink-muted">
+          We do the gutter and the things adjacent to it: drip edge, kickout flashing, downspout extensions, drainage pipe under driveways, ice and water shield repair at the gutter line. If it's gutter-related, ask. If we don't do it, we'll tell you who does.
+        </p>
+      </div>
+      <div class="text-right md:justify-self-end">
+        <a href="/quote/" class="btn-primary">Get a Free Quote</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

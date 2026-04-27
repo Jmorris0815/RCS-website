@@ -1,0 +1,93 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../config/site';
+
+export async function getStaticPaths() {
+  const studies = await getCollection('caseStudies');
+  return studies.map((cs) => ({ params: { slug: cs.data.slug }, props: { study: cs } }));
+}
+
+const { study } = Astro.props;
+const { Content } = await study.render();
+const data = study.data;
+const author = await getEntry(data.author);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+    { '@type': 'ListItem', position: 2, name: 'Our Work', item: `${siteConfig.url}/case-studies/` },
+    { '@type': 'ListItem', position: 3, name: data.title, item: `${siteConfig.url}/case-studies/${data.slug}/` },
+  ],
+};
+---
+
+<BaseLayout
+  title={data.seoTitle ?? `${data.title} | RCS Gutters`}
+  description={data.seoDescription ?? data.problem.slice(0, 160)}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <nav class="container-x pt-6 text-sm text-ink-muted" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap gap-1">
+      <li><a href="/" class="hover:underline">Home</a></li>
+      <li>›</li>
+      <li><a href="/case-studies/" class="hover:underline">Our Work</a></li>
+      <li>›</li>
+      <li class="text-ink-primary font-medium truncate">{data.title}</li>
+    </ol>
+  </nav>
+
+  <article class="container-x section-tight">
+    <div class="max-w-3xl">
+      <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
+        {data.customerCity}{data.customerCounty ? `, ${data.customerCounty} County` : ''} · {data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+      </p>
+      <h1 class="mb-5">{data.title}</h1>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-10 mt-2">
+      <div class="lg:col-span-2 prose-rcs">
+        <h2>The problem</h2>
+        <p>{data.problem}</p>
+        <h2>What we did</h2>
+        <p>{data.solution}</p>
+        <h2>How it turned out</h2>
+        <p>{data.outcome}</p>
+        <Content />
+        {data.customerQuote && data.permissionGranted && (
+          <blockquote class="border-l-4 border-brand-primary pl-5 italic my-7">
+            <p>"{data.customerQuote}"</p>
+            {data.customerName && <cite class="block mt-2 text-sm text-ink-muted not-italic">— {data.customerName}, {data.customerCity}</cite>}
+          </blockquote>
+        )}
+      </div>
+      <aside class="space-y-5">
+        <div class="card p-6 bg-brand-cream">
+          <h3 class="font-bold mb-2">Project facts</h3>
+          <dl class="text-sm space-y-2">
+            <div>
+              <dt class="text-ink-subtle text-xs uppercase tracking-wider">Location</dt>
+              <dd>{data.customerCity}, VA</dd>
+            </div>
+            <div>
+              <dt class="text-ink-subtle text-xs uppercase tracking-wider">Completed</dt>
+              <dd>{data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card p-6 bg-white">
+          <h3 class="font-bold mb-2">Want similar work?</h3>
+          <p class="text-sm text-ink-muted mb-4">
+            Every house is different. Get a free quote and we'll walk yours.
+          </p>
+          <a href="/quote/" class="btn-primary w-full text-center">Request Quote</a>
+        </div>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>

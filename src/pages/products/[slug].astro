@@ -1,0 +1,138 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../config/site';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((p) => ({ params: { slug: p.data.slug }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render();
+const data = product.data;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+    { '@type': 'ListItem', position: 2, name: 'Products', item: `${siteConfig.url}/products/` },
+    { '@type': 'ListItem', position: 3, name: data.title, item: `${siteConfig.url}/products/${data.slug}/` },
+  ],
+};
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: data.title,
+  description: data.description,
+  brand: { '@type': 'Brand', name: data.manufacturer },
+  category: 'Gutter Guard',
+};
+---
+
+<BaseLayout
+  title={data.seoTitle ?? `${data.title} | RCS Gutters`}
+  description={data.seoDescription ?? data.description}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  </Fragment>
+
+  <nav class="container-x pt-6 text-sm text-ink-muted" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap gap-1">
+      <li><a href="/" class="hover:underline">Home</a></li>
+      <li>›</li>
+      <li><a href="/products/" class="hover:underline">Products</a></li>
+      <li>›</li>
+      <li class="text-ink-primary font-medium">{data.title}</li>
+    </ol>
+  </nav>
+
+  <section class="container-x section-tight">
+    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
+      {data.manufacturer} · Gutter Guard
+    </p>
+    <h1 class="mb-4">{data.title}</h1>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
+
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-3xl">
+      <div class="card p-4 text-center">
+        <div class="text-3xl font-display font-bold text-brand-primary">{data.gpmCapacity ?? '—'}</div>
+        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">GPM throughput</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl font-display font-bold text-brand-primary">{data.warrantyYears ?? '—'}</div>
+        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Year warranty</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-2xl font-display font-bold text-brand-primary capitalize">{data.priceTier}</div>
+        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Price tier</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-2xl font-display font-bold text-brand-primary">{data.colors.length}</div>
+        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">{data.colors.length === 1 ? 'Color' : 'Colors'}</div>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="/quote/" class="btn-primary">Get a Free Quote</a>
+      <a href="/configurator/" class="btn-secondary">Try the Configurator Quiz</a>
+    </div>
+  </section>
+
+  <section class="bg-brand-cream section">
+    <div class="container-x grid lg:grid-cols-3 gap-10">
+      <article class="lg:col-span-2 prose-rcs">
+        <Content />
+      </article>
+      <aside class="space-y-5">
+        {data.idealFor.length > 0 && (
+          <div class="card p-5 bg-white">
+            <div class="text-xs font-bold uppercase text-accent-success tracking-wider mb-2">Ideal for</div>
+            <ul class="text-sm space-y-1.5 text-ink-muted">
+              {data.idealFor.map((item) => <li>· {item}</li>)}
+            </ul>
+          </div>
+        )}
+        {data.notIdealFor.length > 0 && (
+          <div class="card p-5 bg-white">
+            <div class="text-xs font-bold uppercase text-accent-danger tracking-wider mb-2">Not the best fit for</div>
+            <ul class="text-sm space-y-1.5 text-ink-muted">
+              {data.notIdealFor.map((item) => <li>· {item}</li>)}
+            </ul>
+          </div>
+        )}
+        <div class="card p-5 bg-white">
+          <div class="text-xs font-bold uppercase text-ink-subtle tracking-wider mb-2">Material</div>
+          <p class="text-sm text-ink-muted">{data.materialType}</p>
+        </div>
+        {data.colors.length > 0 && (
+          <div class="card p-5 bg-white">
+            <div class="text-xs font-bold uppercase text-ink-subtle tracking-wider mb-2">Colors available</div>
+            <ul class="text-sm space-y-1 text-ink-muted">
+              {data.colors.map((c) => <li>{c}</li>)}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto">
+      <h2 class="text-white">Want this on your home?</h2>
+      <p class="text-white/80 mt-3 mb-6">
+        Free written estimate. We'll walk your property and tell you if {data.title} is actually the right pick — or if a different option fits better.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/quote/" class="btn-accent">Request a Quote</a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
+          {siteConfig.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

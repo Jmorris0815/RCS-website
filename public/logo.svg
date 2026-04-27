@@ -1,0 +1,15 @@
+<!--
+  PLACEHOLDER LOGO — drop in the real wordmark when available.
+  This is a minimal SVG so the build doesn't 404 on logo.svg references.
+  Replace this entire file with the real vector logo.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" role="img" aria-label="Right Choice Seamless Gutters">
+  <defs>
+    <style>
+      .check { fill: #D72027; }
+      .word { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 700; fill: #D72027; }
+    </style>
+  </defs>
+  <path class="check" d="M6 32 L20 46 L48 14" stroke="#D72027" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="60" y="42" class="word" font-size="28">Right Choice Seamless Gutters</text>
+</svg>
