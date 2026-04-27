@@ -14,7 +14,7 @@ const { svc } = Astro.props;
 const { Content } = await svc.render();
 const data = svc.data;
 
-// Slug → hero photo. Only where we have an honest match.
+// Slug → hero photo. Every service has one (real or tangentially relevant).
 const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
   'seamless-gutter-installation': {
     src: '/images/jobs/install-downspout-sage-clapboard.jpg',
@@ -30,7 +30,19 @@ const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
   },
   'fascia-and-soffit': {
     src: '/images/jobs/rotted-roof-deck.jpg',
-    alt: 'Rotted roof deck and ceiling joists viewed from below. Typical fascia-failure damage',
+    alt: 'Rotted roof deck and ceiling joists viewed from below — typical fascia-failure damage',
+  },
+  'half-round-gutters': {
+    src: '/images/jobs/install-copper-federal-brick.jpg',
+    alt: 'Federal-style red-brick three-story home with newly installed copper half-round gutters and downspouts',
+  },
+  'commercial-gutters': {
+    src: '/images/jobs/truck-commercial-flatroof.jpg',
+    alt: 'RCS truck on a commercial flat-roof job, new aluminum K-style gutter run installed along the roofline',
+  },
+  'drainage-solutions': {
+    src: '/images/jobs/install-downspout-sage-clapboard.jpg',
+    alt: 'White downspout discharging cleanly down the side of a new-construction home — the gutter is half the answer; what happens to the water after the downspout is the other half',
   },
 };
 const hero = HERO_PHOTOS[svc.slug];

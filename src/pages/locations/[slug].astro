@@ -60,14 +60,25 @@ const serviceSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   </Fragment>
 
-  <!-- Hero with decorative AI-slot background -->
+  <!-- Hero — designed dark block, city name in serif Fraunces, red accent line -->
   <section class="relative isolate overflow-hidden bg-brand-charcoal text-white">
-    <div class="absolute inset-0 ai-slot opacity-90"></div>
-    <div class="absolute inset-0 bg-gradient-to-tr from-brand-charcoal/95 via-brand-charcoal/70 to-brand-charcoal/40"></div>
-    <span class="ai-slot-label !bottom-4 !right-4 !z-20">Decorative · TODO replace with {data.city} hero photo</span>
+    <!-- Subtle dot/noise pattern for depth -->
+    <div
+      class="absolute inset-0 opacity-[0.07] pointer-events-none"
+      style="background-image: radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0); background-size: 22px 22px;"
+      aria-hidden="true"
+    ></div>
+    <!-- Soft red glow at top-right and gold glow at bottom-left -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background:
+        radial-gradient(ellipse at 90% 0%, rgba(215,32,39,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 0% 100%, rgba(200,151,58,0.10) 0%, transparent 55%);"
+      aria-hidden="true"
+    ></div>
 
-    <div class="relative container-x py-[clamp(72px,10vw,140px)]">
-      <nav class="text-sm text-white/70 mb-6" aria-label="Breadcrumb">
+    <div class="relative container-x py-[clamp(80px,12vw,160px)]">
+      <nav class="text-sm text-white/70 mb-7" aria-label="Breadcrumb">
         <ol class="flex flex-wrap gap-1">
           <li><a href="/" class="hover:text-white">Home</a></li>
           <li>›</li>
@@ -78,11 +89,14 @@ const serviceSchema = {
       </nav>
 
       <p class="kicker !text-brand-gold-soft mb-3">{data.county} County · Virginia</p>
-      <h1 class="text-white text-balance max-w-4xl">
-        Gutter installation, cleaning &amp; Leaf Solution guards in {data.city}
+      <h1 class="font-display text-white text-balance leading-[1.02] text-[clamp(3rem,7vw,6rem)] max-w-4xl">
+        {data.city}
       </h1>
-      <span class="hero-underline mt-5"></span>
-      <p class="text-white/90 text-fluid-lg max-w-3xl mt-7 leading-relaxed">{data.populationContext}</p>
+      <span class="block h-[5px] w-[120px] bg-brand-primary rounded-full mt-5 mb-7" aria-hidden="true"></span>
+      <p class="font-display text-fluid-2xl text-white/90 max-w-3xl leading-tight mb-6">
+        Gutter installation, cleaning &amp; Leaf Solution guards.
+      </p>
+      <p class="text-white/85 text-fluid-base max-w-3xl leading-relaxed">{data.populationContext}</p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href={`/quote/?city=${encodeURIComponent(data.city)}`} class="btn-primary">
           Get a Free Quote in {data.city}

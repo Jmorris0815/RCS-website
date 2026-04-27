@@ -1,0 +1,81 @@
+---
+// Designed slot used when no real photograph is available. Renders an
+// intentional brand-color block with a centered Lucide-style icon and a
+// display-font title — never tries to fake being a photograph.
+//
+// kinds:
+//   'red'      — solid brand-red, white icon. For service / category labels.
+//   'charcoal' — solid brand-charcoal, gold-soft icon. For commercial / dark contexts.
+//   'cream'    — warm cream with red icon. For lighter / process-step contexts.
+
+export interface Props {
+  kind?: 'red' | 'charcoal' | 'cream';
+  icon: 'wrench' | 'building' | 'droplets' | 'shield' | 'file-text' | 'calendar'
+      | 'hammer' | 'camera' | 'sparkles' | 'award' | 'truck' | 'home' | 'clipboard'
+      | 'trees' | 'leaf' | 'map-pin';
+  title: string;
+  subtitle?: string;
+  class?: string;
+}
+
+const { kind = 'red', icon, title, subtitle, class: className = '' } = Astro.props;
+
+const styleByKind: Record<string, string> = {
+  red: 'bg-brand-primary text-white',
+  charcoal: 'bg-brand-charcoal text-white',
+  cream: 'bg-brand-cream text-brand-charcoal',
+};
+const accentByKind: Record<string, string> = {
+  red: 'bg-white/30',
+  charcoal: 'bg-brand-gold-soft/60',
+  cream: 'bg-brand-primary/40',
+};
+const iconColorByKind: Record<string, string> = {
+  red: 'text-white',
+  charcoal: 'text-brand-gold-soft',
+  cream: 'text-brand-primary',
+};
+---
+
+<div
+  class={`relative overflow-hidden ${styleByKind[kind]} ${className}`}
+  role="img"
+  aria-label={subtitle ? `${title} — ${subtitle}` : title}
+>
+  <!-- Subtle dot/noise overlay for depth (no library) -->
+  <div
+    class="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
+    style="background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0); background-size: 18px 18px;"
+    aria-hidden="true"
+  ></div>
+  <!-- Soft radial accent -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style={`background: radial-gradient(ellipse at 30% 20%, ${kind === 'cream' ? 'rgba(215,32,39,0.10)' : 'rgba(255,255,255,0.10)'} 0%, transparent 60%);`}
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative h-full w-full flex flex-col items-center justify-center p-6 text-center">
+    <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class={`${iconColorByKind[kind]} mb-4`} aria-hidden="true">
+      {icon === 'wrench' && <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>}
+      {icon === 'building' && <><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></>}
+      {icon === 'droplets' && <><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></>}
+      {icon === 'shield' && <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>}
+      {icon === 'file-text' && <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></>}
+      {icon === 'calendar' && <><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>}
+      {icon === 'hammer' && <><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8v0l3 3h1.172a2 2 0 0 1 1.414.586L19.5 13.5"/></>}
+      {icon === 'camera' && <><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></>}
+      {icon === 'sparkles' && <><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></>}
+      {icon === 'award' && <><circle cx="12" cy="8" r="6"/><polyline points="15.477 12.89 17 22 12 19 7 22 8.523 12.89"/></>}
+      {icon === 'truck' && <><path d="M5 18H3c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1h10c.6 0 1 .4 1 1v11"/><path d="M14 9h4l4 4v4c0 .6-.4 1-1 1h-2"/><circle cx="7" cy="18" r="2"/><path d="M15 18H9"/><circle cx="17" cy="18" r="2"/></>}
+      {icon === 'home' && <><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></>}
+      {icon === 'clipboard' && <><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></>}
+      {icon === 'trees' && <><path d="M10 10v.2A3 3 0 0 1 8.9 16v0H5v0h0a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6"/><path d="M13 19h6"/><path d="M17 16v6"/><path d="M17 3a3 3 0 1 0-6 0v.2A3 3 0 0 0 12 9h0v6h6v0a3 3 0 0 0-1-5.8V9a3 3 0 0 0-1-2.2z"/></>}
+      {icon === 'leaf' && <><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19.2 2.96c1.4 2 2 6 2 9 0 6.94-3.94 12.04-10.2 12.04Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></>}
+      {icon === 'map-pin' && <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>}
+    </svg>
+    <span class={`block w-12 h-[2px] mb-4 ${accentByKind[kind]} rounded-full`} aria-hidden="true"></span>
+    <h3 class="font-display text-2xl leading-tight max-w-xs">{title}</h3>
+    {subtitle && <p class="font-sans text-sm opacity-85 mt-2 max-w-xs">{subtitle}</p>}
+  </div>
+</div>

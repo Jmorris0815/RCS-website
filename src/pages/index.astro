@@ -6,6 +6,7 @@ import FAQ from '../components/FAQ.astro';
 import Lightbox from '../components/Lightbox.astro';
 import PictureHero from '../components/PictureHero.astro';
 import Picture from '../components/Picture.astro';
+import DesignedBlock from '../components/DesignedBlock.astro';
 import { siteConfig } from '../config/site';
 
 const HERO_IMG = '/images/jobs/truck-jobsite-barn.jpg';
@@ -48,11 +49,11 @@ const tiles = [
     blurb: 'Twice-a-year service tuned to your tree zone. Hand cleaned, flushed, photo-documented.',
     img: '/images/jobs/clogged-leaves.jpg', large: false },
   { slug: 'half-round-gutters', title: 'Half-Round',
-    blurb: 'For historic homes and high-end new builds where K-style is wrong.',
-    img: null, large: false, aiSlot: 'half-round detail' },
+    blurb: 'Aluminum and copper half-round for historic homes and high-end new builds where K-style is wrong.',
+    img: '/images/jobs/install-copper-federal-brick.jpg', large: false },
   { slug: 'commercial-gutters', title: 'Commercial',
     blurb: 'Box gutters, scuppers, and oversized K-style for retail, ag, and church properties.',
-    img: null, large: false, aiSlot: 'commercial gutter' },
+    img: '/images/jobs/truck-commercial-flatroof.jpg', large: false },
   { slug: 'fascia-and-soffit', title: 'Fascia & Soffit',
     blurb: 'Wrap, repair, or replace. The trim work that keeps water out of your walls.',
     img: '/images/jobs/rotted-roof-deck.jpg', large: false },
@@ -66,12 +67,12 @@ const steps = [
     icon: 'clipboard' },
   { n: 2, title: 'Written quote within 24 hours',
     body: "You get a clear written quote either on the spot or by the next business day. Line items broken out. Gutter, downspouts, accessories, fascia repair. So you can see exactly what you're paying for. The price holds for 30+ days.",
-    img: null, alt: '', aiSlot: 'illustration of a written quote document',
-    icon: 'file-text' },
+    img: null, alt: '', icon: 'file-text',
+    designedKind: 'cream', designedTitle: 'Written quote · 24 hours', designedSubtitle: 'On-site or by next business day' },
   { n: 3, title: 'Schedule (usually within a week)',
     body: "Most jobs in our service area get scheduled within 5 to 7 days of approval. We confirm by phone or text the day before, give you a tight arrival window, and show up with the truck and crew.",
-    img: null, alt: '', aiSlot: 'illustration of a calendar week',
-    icon: 'calendar' },
+    img: null, alt: '', icon: 'calendar',
+    designedKind: 'red', designedTitle: 'On the books · 5–7 days', designedSubtitle: 'Confirmed by phone or text the day before' },
   { n: 4, title: 'Install in one day',
     body: "Most single-family homes are a single day's work. Teardown, on-site extrusion, hanger placement, gutter hanging, downspouts, and cleanup. We protect your landscaping, sweep the work zone, and haul off the old material.",
     img: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg', alt: 'Newly installed seamless gutter with corner miter on a Central Virginia home',
@@ -205,13 +206,13 @@ const steps = [
                   class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[4/3]"
                   loading="lazy" width={1200} height={900} />
               ) : (
-                <div class="ai-slot rounded-2xl shadow-soft aspect-[4/3] flex items-center justify-center border border-line">
-                  <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.4" class="text-brand-primary/35" aria-hidden="true">
-                    {s.icon === 'file-text' && <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></>}
-                    {s.icon === 'calendar' && <><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>}
-                  </svg>
-                  <span class="ai-slot-label">Decorative slot · TODO replace with real photo</span>
-                </div>
+                <DesignedBlock
+                  kind={s.designedKind as any}
+                  icon={s.icon as any}
+                  title={s.designedTitle ?? s.title}
+                  subtitle={s.designedSubtitle}
+                  class="rounded-2xl shadow-card aspect-[4/3]"
+                />
               )}
             </div>
             <div class={`lg:col-span-6 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
@@ -272,13 +273,9 @@ const steps = [
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         {tiles.filter(t => !t.large).map((t) => (
           <a href={`/services/${t.slug}/`} class="group relative block overflow-hidden rounded-xl aspect-[4/5] bg-brand-warm-gray ring-1 ring-white/10">
-            {t.img ? (
+            {t.img && (
               <Picture src={t.img} alt="" loading="lazy" width={600} height={750}
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            ) : (
-              <div class="absolute inset-0 ai-slot">
-                <span class="ai-slot-label">{t.aiSlot} · TODO</span>
-              </div>
             )}
             <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal/95 via-brand-charcoal/40 to-transparent"></div>
             <div class="absolute inset-x-0 bottom-0 p-4">
@@ -478,21 +475,21 @@ const steps = [
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.55 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.05l3.67 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
           </svg>
           <span class="font-semibold text-brand-charcoal">Google Business</span>
-          <span class="text-xs text-brand-warm-gray">,  TODO link</span>
+          <span class="text-xs text-brand-warm-gray">Read reviews →</span>
         </a>
         <a href="#" class="card px-6 py-4 flex items-center gap-3 hover-lift" rel="noopener">
           <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="#D32323">
             <path d="M12 2c-2.5 0-4.7 1-6.4 2.6C3.9 6.3 3 8.5 3 11s.9 4.7 2.6 6.4C7.3 19.1 9.5 20 12 20s4.7-.9 6.4-2.6C20.1 15.7 21 13.5 21 11s-.9-4.7-2.6-6.4C16.7 3 14.5 2 12 2zm-1 5h2v6h-2V7zm0 8h2v2h-2v-2z"/>
           </svg>
           <span class="font-semibold text-brand-charcoal">Yelp</span>
-          <span class="text-xs text-brand-warm-gray">,  TODO link</span>
+          <span class="text-xs text-brand-warm-gray">Read reviews →</span>
         </a>
         <a href="#" class="card px-6 py-4 flex items-center gap-3 hover-lift" rel="noopener">
           <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="#FA3913">
             <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
           </svg>
           <span class="font-semibold text-brand-charcoal">Angi (HomeAdvisor)</span>
-          <span class="text-xs text-brand-warm-gray">,  TODO link</span>
+          <span class="text-xs text-brand-warm-gray">Read reviews →</span>
         </a>
       </div>
     </div>

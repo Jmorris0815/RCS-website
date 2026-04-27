@@ -214,22 +214,6 @@
     line-height: 1.7;
   }
 
-  /* AI placeholder slot — never pretends to be a real photo */
-  .ai-slot {
-    @apply relative overflow-hidden bg-gradient-to-br from-brand-cream via-white to-brand-light;
-  }
-  .ai-slot::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 30%, rgb(215 32 39 / 0.08) 0%, transparent 45%),
-      radial-gradient(circle at 80% 70%, rgb(200 151 58 / 0.10) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .ai-slot-label {
-    @apply absolute bottom-3 right-3 text-[10px] uppercase tracking-wider text-brand-warm-gray
-           bg-white/80 backdrop-blur rounded px-2 py-1 font-medium;
-  }
 }
 
 /* ── Utilities ────────────────────────────────────────────────────────── */

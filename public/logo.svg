@@ -1,8 +1,6 @@
-<!--
-  PLACEHOLDER LOGO — drop in the real wordmark when available.
-  This is a minimal SVG so the build doesn't 404 on logo.svg references.
-  Replace this entire file with the real vector logo.
--->
+<!-- RCS Gutters wordmark — red checkmark + italic serif. Replace with Scott's
+     vector wordmark when available; this is an honest stand-in matching the
+     branding visible on the box truck. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" role="img" aria-label="Right Choice Seamless Gutters">
   <defs>
     <style>

@@ -25,8 +25,9 @@ The site currently uses 5 cropped jobsite photos (extracted from Scott's old Rhi
 
 - [x] ~~**Scott's portrait**~~ — wired. Lives at `public/images/team/scott.{jpg,webp,avif}` and renders in the homepage owner-intro section.
 - [x] ~~**RCS-branded parts diagram**~~ — wired. Lives at `public/images/products/rcs-parts-diagram.{jpg,webp,avif}` and renders in a labeled-house section on the `/products/` hub. (Note: the diagram itself is AI-generated; it's a clearly-illustrated reference, not a real photograph. Replace later if Scott commissions a vector version.)
-- [x] ~~**Truck photos**~~ — both wired. `truck-jobsite-barn.{jpg,webp,avif}` is the home hero. `truck-commercial-flatroof.{jpg,webp,avif}` is the about-page hero.
+- [x] ~~**Truck photos**~~ — both wired. `truck-jobsite-barn.{jpg,webp,avif}` is the home hero. `truck-commercial-flatroof.{jpg,webp,avif}` is the about-page hero (also doubles as the home Commercial service tile + Commercial service-page hero).
 - [x] ~~**Inbox sort**~~ — `public/images/Inbox/` is now empty. 13 photos sorted into permanent locations, 1 (Screenshot) skipped. See `scripts/sort-inbox.mjs` for the explicit name → destination map.
+- [x] ~~**Empty image slots**~~ — every visible photo slot is now filled. Home Half-Round and Commercial tiles got real photos (copper-federal-brick + truck-commercial-flatroof). Process steps 2 + 3 got designed brand-cream/red blocks with Lucide icons (intentional, not posing as photos). Service-page heroes added for half-round, commercial, drainage. Albemarle vineyard case study got a hero. Location-page heroes redesigned as dark-charcoal blocks with city name in serif Fraunces + red accent line — no photo needed. The `.ai-slot` CSS class has been deleted entirely from `global.css`.
 
 Photos still wanted (no slot present):
 
