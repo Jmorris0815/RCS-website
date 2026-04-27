@@ -16,9 +16,11 @@ export interface Props {
   title: string;
   subtitle?: string;
   class?: string;
+  /** Path to a photo to use as a heavily-faded background texture (gives depth) */
+  texture?: string;
 }
 
-const { kind = 'red', icon, title, subtitle, class: className = '' } = Astro.props;
+const { kind = 'red', icon, title, subtitle, class: className = '', texture } = Astro.props;
 
 const styleByKind: Record<string, string> = {
   red: 'bg-brand-primary text-white',
@@ -42,10 +44,24 @@ const iconColorByKind: Record<string, string> = {
   role="img"
   aria-label={subtitle ? `${title} — ${subtitle}` : title}
 >
+  <!-- Optional heavily-faded photo texture layer (gives visual depth) -->
+  {texture && (
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style={`background-image: url(${texture}); background-size: cover; background-position: center; opacity: ${kind === 'cream' ? 0.18 : 0.14}; filter: ${kind === 'cream' ? 'grayscale(40%) contrast(0.9)' : 'grayscale(30%)'};`}
+      aria-hidden="true"
+    ></div>
+  )}
   <!-- Subtle dot/noise overlay for depth (no library) -->
   <div
     class="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
     style="background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0); background-size: 18px 18px;"
+    aria-hidden="true"
+  ></div>
+  <!-- Diagonal shingle-suggestive lines (low opacity) -->
+  <div
+    class="absolute inset-0 opacity-[0.08] pointer-events-none"
+    style="background-image: repeating-linear-gradient(135deg, currentColor 0, currentColor 1px, transparent 1px, transparent 12px);"
     aria-hidden="true"
   ></div>
   <!-- Soft radial accent -->

@@ -5,7 +5,7 @@ Living list. Tackle top-down. Keep entries terse — link to the relevant file o
 ## Blockers (must do before public launch)
 
 - [ ] **Disable Vercel Deployment Protection.** Settings → Deployment Protection → Vercel Authentication: **Disabled** for Production. Until that's flipped, the `*.vercel.app` URL returns HTTP 401 and no anonymous visitor (or external Lighthouse run) can reach the site.
-- [ ] **Email Leaf Solution to confirm dealer-asset rights** for the photos and panel-line diagrams pulled from leafsolution.com (`public/images/products/`). RCS is an authorized dealer so use is likely permitted, but get it in writing before launch.
+- [ ] **Email Leaf Solution to confirm dealer-asset rights** for the photos and panel-line diagrams pulled from leafsolution.com (`public/images/products/` and `public/images/products/leafsolution/`). RCS is an authorized dealer so use is likely permitted, but get it in writing before launch. The latest pull (per-product hero shots and bronze system diagrams under `leafsolution/{xtreme,new-wave,evelyns}/`) was used to fix a product/photo mismatch — every product page now shows its actual product.
 - [ ] **Web3Forms access key** — `src/pages/quote.astro` and `src/components/Footer.astro` (newsletter) both reference `value="REPLACE_WITH_WEB3FORMS_KEY"`. Sign up at web3forms.com (free), paste the key, both forms start delivering.
 
 ## Confirm with Scott

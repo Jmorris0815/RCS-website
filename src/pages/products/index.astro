@@ -1,11 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picture from '../../components/Picture.astro';
 
 const tierOrder = { economy: 0, standard: 1, premium: 2, luxury: 3 };
 const products = (await getCollection('products')).sort(
   (a, b) => (tierOrder[a.data.priceTier] ?? 0) - (tierOrder[b.data.priceTier] ?? 0)
 );
+
+// Per-product card thumbnail. Mirrors the hero map in /products/[slug].astro
+// so the image and the destination page agree on which product is which.
+const PRODUCT_THUMBS: Record<string, { src: string; alt: string }> = {
+  'xtreme-gutter-guard': {
+    src: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg',
+    alt: 'Xtreme stainless micro-mesh installed at a corner miter',
+  },
+  'new-wave-gutter-guard': {
+    src: '/images/products/leafsolution/new-wave/installed-fall-wide.jpg',
+    alt: 'New Wave punched-aluminum guard installed on a shingle roof',
+  },
+  'evelyns-leaf-solution': {
+    src: '/images/products/leafsolution/evelyns/installed-fall-hero.jpg',
+    alt: "Evelyn's Leaf Solution panel installed on a shingle roof in fall",
+  },
+};
 ---
 
 <BaseLayout
@@ -54,26 +72,42 @@ const products = (await getCollection('products')).sort(
 
   <section class="container-x section">
     <div class="grid lg:grid-cols-3 gap-6">
-      {products.map((p) => (
-        <a href={`/products/${p.slug}/`} class="card p-7 block group">
-          <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
-            {p.data.priceTier} tier
-          </div>
-          <h2 class="text-2xl font-bold mb-2 group-hover:text-brand-primary transition">
-            {p.data.title}
-          </h2>
-          <p class="text-ink-muted text-sm mb-5">{p.data.tagline}</p>
-          <div class="grid grid-cols-2 gap-2 text-xs text-ink-muted mb-5">
-            <div>
-              <span class="font-bold text-ink-primary">{p.data.gpmCapacity ?? '—'}</span> GPM
+      {products.map((p) => {
+        const thumb = PRODUCT_THUMBS[p.slug];
+        return (
+          <a href={`/products/${p.slug}/`} class="card overflow-hidden block group flex flex-col">
+            {thumb && (
+              <div class="relative overflow-hidden aspect-[16/10] bg-brand-warm-gray">
+                <Picture
+                  src={thumb.src}
+                  alt={thumb.alt}
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  width={800} height={500}
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="p-7 flex-1 flex flex-col">
+              <div class="text-xs font-bold uppercase text-brand-primary tracking-wider mb-2 capitalize">
+                {p.data.priceTier} tier
+              </div>
+              <h2 class="text-2xl font-bold mb-2 group-hover:text-brand-primary transition">
+                {p.data.title}
+              </h2>
+              <p class="text-ink-muted text-sm mb-5 flex-1">{p.data.tagline}</p>
+              <div class="grid grid-cols-2 gap-2 text-xs text-ink-muted mb-5">
+                <div>
+                  <span class="font-bold text-ink-primary tabular-nums">{p.data.gpmCapacity ?? '—'}</span> GPM
+                </div>
+                <div>
+                  <span class="font-bold text-ink-primary tabular-nums">{p.data.warrantyYears ?? '—'}</span> yr warranty
+                </div>
+              </div>
+              <span class="text-brand-primary font-semibold text-sm">View product →</span>
             </div>
-            <div>
-              <span class="font-bold text-ink-primary">{p.data.warrantyYears ?? '—'}</span> yr warranty
-            </div>
-          </div>
-          <span class="text-brand-primary font-semibold text-sm">View product →</span>
-        </a>
-      ))}
+          </a>
+        );
+      })}
     </div>
   </section>
 

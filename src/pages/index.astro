@@ -68,11 +68,14 @@ const steps = [
   { n: 2, title: 'Written quote within 24 hours',
     body: "You get a clear written quote either on the spot or by the next business day. Line items broken out. Gutter, downspouts, accessories, fascia repair. So you can see exactly what you're paying for. The price holds for 30+ days.",
     img: null, alt: '', icon: 'file-text',
-    designedKind: 'cream', designedTitle: 'Written quote · 24 hours', designedSubtitle: 'On-site or by next business day' },
+    designedKind: 'cream', designedTitle: 'Written quote · 24 hours',
+    designedSubtitle: 'On-site or by next business day',
+    designedTexture: '/images/jobs/clogged-leaves.jpg' },
   { n: 3, title: 'Schedule (usually within a week)',
     body: "Most jobs in our service area get scheduled within 5 to 7 days of approval. We confirm by phone or text the day before, give you a tight arrival window, and show up with the truck and crew.",
-    img: null, alt: '', icon: 'calendar',
-    designedKind: 'red', designedTitle: 'On the books · 5–7 days', designedSubtitle: 'Confirmed by phone or text the day before' },
+    img: '/images/jobs/truck-jobsite-barn.jpg',
+    alt: 'The RCS truck arrived at a Central Virginia job site, parked in front of a red-roof barn ready to start the install',
+    icon: 'calendar' },
   { n: 4, title: 'Install in one day',
     body: "Most single-family homes are a single day's work. Teardown, on-site extrusion, hanger placement, gutter hanging, downspouts, and cleanup. We protect your landscaping, sweep the work zone, and haul off the old material.",
     img: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg', alt: 'Newly installed seamless gutter with corner miter on a Central Virginia home',
@@ -211,6 +214,7 @@ const steps = [
                   icon={s.icon as any}
                   title={s.designedTitle ?? s.title}
                   subtitle={s.designedSubtitle}
+                  texture={s.designedTexture}
                   class="rounded-2xl shadow-card aspect-[4/3]"
                 />
               )}
