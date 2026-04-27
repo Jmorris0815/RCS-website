@@ -23,7 +23,19 @@ Living list. Tackle top-down. Keep entries terse — link to the relevant file o
 
 The site currently uses 5 cropped jobsite photos (extracted from Scott's old Rhino-era ads — Scott was on the Rhino crew, all branding stripped) plus 6 Leaf Solution dealer assets. Where no honest photo fit, decorative AI-slots are used and clearly labeled:
 
-- [ ] **Scott's portrait** — owner-intro section uses an `ai-slot` with a generic icon. Drop in a real headshot at `public/images/team/scott.jpg` and replace the slot in `src/pages/index.astro` § 8.
+- [x] ~~**Scott's portrait**~~ — wired. Real headshot lives at `public/images/team/scott.{jpg,webp,avif}` and renders in the homepage owner-intro section.
+- [ ] **RCS-branded parts diagram** — slot expected at `public/images/products/rcs-parts-diagram.jpg`, intended to replace the Leaf Solution panel-line diagrams on the products hub and the gutter-guards service page. File not present in repo as of this commit; product pages still show the Leaf Solution dealer diagrams.
+- [ ] **Truck + jobsite photos** — slots expected at `public/images/jobs/truck-jobsite-barn.jpg` (home hero or about hero) and `public/images/jobs/truck-shop.jpg` (about secondary or homepage trust strip). Neither file is present yet, so the home hero still uses the Leaf Solution corner-miter shot and the about page has no hero photo.
+
+### Raw photo inbox (gitignored — review and rename before wiring)
+
+There's a local `public/images/Inbox/` directory with raw photos staged for review (gitignored, so they don't ship to Vercel until moved). Candidates I noticed:
+- `gutters box truck.jpg` — likely fits the `truck-jobsite-barn.jpg` slot
+- `Right choice gutters.jpg` — may be the RCS brand asset / parts diagram source
+- `man-cleaning-gutter.jpg`, `downspouts.jpg`, several `copper-gutter-installation*.jpg` and `new-home-gutter-installation*.jpg` shots
+- A couple of generated/screenshot images that probably shouldn't ship
+
+To use any of these: rename + crop to the slot's expected filename, drop into the appropriate `public/images/` subfolder (which is tracked), and re-run the build. The `scripts/generate-hero-formats.mjs` script will produce AVIF/WebP variants.
 - [ ] **Per-location hero photos.** All 8 location pages currently use a decorative `ai-slot` background. As Scott shoots one signature job per city — Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, Louisa — drop the photo into `public/images/jobs/locations/` and replace the slot in `src/pages/locations/[slug].astro` (the hero section's first `<div class="absolute inset-0 ai-slot">`).
 - [ ] **Two service-tile slots** on the home page — Half-Round and Commercial currently render as `ai-slot` because we have no clean photos. Tiles in `src/pages/index.astro` `tiles` array, `aiSlot` prop.
 - [ ] **Process steps 2 + 3** (Written quote, Schedule) — currently `ai-slot` with calendar/document icons. Could remain as-is (they're abstract concepts) or get real photos of Scott handing a quote, etc.

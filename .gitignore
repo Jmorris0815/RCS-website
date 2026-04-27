@@ -32,3 +32,7 @@ pnpm-debug.log*
 
 # image extraction scratch (PDF page renders + crop candidates kept local only)
 public/images/source/
+
+# raw photo inbox — review and move to /jobs, /products, /team before committing
+public/images/Inbox/
+public/images/inbox/

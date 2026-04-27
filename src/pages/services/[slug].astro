@@ -30,7 +30,7 @@ const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
   },
   'fascia-and-soffit': {
     src: '/images/jobs/rotted-roof-deck.jpg',
-    alt: 'Rotted roof deck and ceiling joists viewed from below — typical fascia-failure damage',
+    alt: 'Rotted roof deck and ceiling joists viewed from below. Typical fascia-failure damage',
   },
 };
 const hero = HERO_PHOTOS[svc.slug];
@@ -41,14 +41,14 @@ const PROCESSES: Record<string, { title: string; steps: { h: string; b: string }
     title: 'How we install',
     steps: [
       { h: 'Walk + measure', b: 'We walk every roof edge, measure runs and corners, count downspouts, and inspect fascia underneath. You get a written quote on site or within 24 hours.' },
-      { h: 'On-site extrusion', b: 'We extrude every gutter on site to the exact length of your roof line — no field seams except at corners. .032 aluminum, hidden hangers at 24-inch spacing.' },
-      { h: 'Walk-through + photo report', b: "We walk the finished job with you — pull on hangers, check pitch, verify discharge — and email a photo report so you've got documentation." },
+      { h: 'On-site extrusion', b: 'We extrude every gutter on site to the exact length of your roof line. No field seams except at corners. .032 aluminum, hidden hangers at 24-inch spacing.' },
+      { h: 'Walk-through + photo report', b: "We walk the finished job with you. Pull on hangers, check pitch, verify discharge. And email a photo report so you've got documentation." },
     ],
   },
   'gutter-cleaning': {
     title: 'How we clean',
     steps: [
-      { h: 'Hand cleanout', b: 'Two-person crew hand-clears every gutter run from the ladder. We bag the debris and haul it off — nothing dumped on your lawn or beds.' },
+      { h: 'Hand cleanout', b: 'Two-person crew hand-clears every gutter run from the ladder. We bag the debris and haul it off. Nothing dumped on your lawn or beds.' },
       { h: 'Flush-test downspouts', b: 'Every downspout gets garden-hose flushed to confirm flow. Any clog gets cleared at the elbow before we leave the property.' },
       { h: 'Photo documentation', b: "Before-and-after photos of every gutter run and every downspout, emailed to you the same day. You see exactly what was done." },
     ],
@@ -57,15 +57,15 @@ const PROCESSES: Record<string, { title: string; steps: { h: string; b: string }
     title: 'How we install guards',
     steps: [
       { h: 'Tree-mix walk-through', b: "We walk the property and identify the dominant trees within 50 feet of your home. That determines whether Xtreme, New Wave, or Evelyn's is the right product." },
-      { h: 'Existing system audit', b: "Guards only work on properly-sized, properly-pitched gutters. If the underlying system is undersized or sagging, we fix that first — or quote replacement." },
+      { h: 'Existing system audit', b: "Guards only work on properly-sized, properly-pitched gutters. If the underlying system is undersized or sagging, we fix that first. Or quote replacement." },
       { h: 'Install + warranty paperwork', b: "Panel installation typically takes a half-day for a single-family home. You get the manufacturer warranty paperwork plus our install warranty before we leave." },
     ],
   },
   'half-round-gutters': {
     title: 'How we install half-round',
     steps: [
-      { h: 'Material consultation', b: 'Aluminum, copper, or galvanized — material choice depends on architecture, budget, and how the gutters will weather over decades.' },
-      { h: 'Custom fabrication', b: 'Half-round runs fabricated to your roof-line lengths. Hangers spec\'d for the material — copper needs different hangers than aluminum.' },
+      { h: 'Material consultation', b: 'Aluminum, copper, or galvanized. Material choice depends on architecture, budget, and how the gutters will weather over decades.' },
+      { h: 'Custom fabrication', b: 'Half-round runs fabricated to your roof-line lengths. Hangers spec\'d for the material. Copper needs different hangers than aluminum.' },
       { h: 'Detail finishing', b: "End caps and miters are riveted and sealed by hand. We work slower than K-style installers because half-round is a detail-craft product." },
     ],
   },
@@ -80,9 +80,9 @@ const PROCESSES: Record<string, { title: string; steps: { h: string; b: string }
   'fascia-and-soffit': {
     title: 'How we approach fascia work',
     steps: [
-      { h: 'Find the cause', b: "Most rotted fascia is a symptom — water sneaking behind a failing gutter, or missing drip-edge flashing. We diagnose the cause, not just the visible damage." },
+      { h: 'Find the cause', b: "Most rotted fascia is a symptom. Water sneaking behind a failing gutter, or missing drip-edge flashing. We diagnose the cause, not just the visible damage." },
       { h: 'Replace + flash properly', b: "Pressure-treated and primed pine, painted to match. Drip-edge / gutter-apron flashing installed if missing. Corners scribed and sealed." },
-      { h: 'Re-hang gutters', b: 'New gutters or re-hang of existing system into clean fascia. Hidden hangers always — no spike-and-ferrule into fresh wood.' },
+      { h: 'Re-hang gutters', b: 'New gutters or re-hang of existing system into clean fascia. Hidden hangers always. No spike-and-ferrule into fresh wood.' },
     ],
   },
   'drainage-solutions': {
@@ -96,15 +96,15 @@ const PROCESSES: Record<string, { title: string; steps: { h: string; b: string }
 };
 const proc = PROCESSES[svc.slug];
 
-// Pricing transparency — broad ranges Scott can live with
+// Pricing transparency. Broad ranges Scott can live with
 const PRICING: Record<string, string> = {
-  'seamless-gutter-installation': "Most full-home installs in our service area run **$1,800–$4,200** depending on linear footage, downspout count, and color. Larger or multi-story homes can run higher.",
-  'gutter-cleaning': "Standard residential cleanings run **$175–$425** depending on home size and roof complexity. Properties with heavy tree cover or two-story access price toward the upper end.",
-  'gutter-guards': "Installed Leaf Solution guards typically run **$1,500–$3,500** for an average single-family home, depending on linear footage and which product line fits. Larger or steeper homes price higher.",
-  'half-round-gutters': "Aluminum half-round runs **$3,200–$6,500** installed. Copper is significantly more — usually **$8,000–$18,000** depending on linear footage, gauge, and corner count.",
+  'seamless-gutter-installation': "Most full-home installs in our service area run **$1,800-$4,200** depending on linear footage, downspout count, and color. Larger or multi-story homes can run higher.",
+  'gutter-cleaning': "Standard residential cleanings run **$175-$425** depending on home size and roof complexity. Properties with heavy tree cover or two-story access price toward the upper end.",
+  'gutter-guards': "Installed Leaf Solution guards typically run **$1,500-$3,500** for an average single-family home, depending on linear footage and which product line fits. Larger or steeper homes price higher.",
+  'half-round-gutters': "Aluminum half-round runs **$3,200-$6,500** installed. Copper is significantly more. Usually **$8,000-$18,000** depending on linear footage, gauge, and corner count.",
   'commercial-gutters': "Commercial scopes are quoted per-job. Box-gutter and scupper systems for retail or ag buildings typically start around **$4,500** and scale with roof area.",
-  'fascia-and-soffit': "Fascia replacement runs **$25–$45 per linear foot** including primed pine, paint, and proper drip-edge flashing. Soffit work priced separately based on extent.",
-  'drainage-solutions': "Buried discharge runs typically cost **$650–$1,400** per downspout for 12-foot runs to a daylight or pop-up. Longer runs, multi-downspout coordination, and obstacles price higher.",
+  'fascia-and-soffit': "Fascia replacement runs **$25-$45 per linear foot** including primed pine, paint, and proper drip-edge flashing. Soffit work priced separately based on extent.",
+  'drainage-solutions': "Buried discharge runs typically cost **$650-$1,400** per downspout for 12-foot runs to a daylight or pop-up. Longer runs, multi-downspout coordination, and obstacles price higher.",
 };
 const priceRange = PRICING[svc.slug];
 
@@ -221,7 +221,7 @@ const serviceSchema = {
           <div class="card p-6 bg-brand-cream">
             <p class="kicker-charcoal mb-3">Typical pricing</p>
             <p class="text-sm leading-relaxed text-brand-charcoal" set:html={priceRange.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-brand-primary font-bold">$1</strong>')}></p>
-            <p class="text-[11px] text-ink-subtle mt-3">Ranges, not guarantees — actual pricing depends on the on-site walk.</p>
+            <p class="text-[11px] text-ink-subtle mt-3">Ranges, not guarantees. Actual pricing depends on the on-site walk.</p>
           </div>
         )}
         <div class="card p-6">
@@ -242,7 +242,7 @@ const serviceSchema = {
   </section>
 
   <!-- FAQ -->
-  <FAQ faqs={data.faqs} kicker="Frequently asked" heading={`${data.title} — what people ask`} />
+  <FAQ faqs={data.faqs} kicker="Frequently asked" heading={`${data.title}. What people ask`} />
 
   <!-- Final CTA -->
   <section class="section bg-brand-primary text-white">

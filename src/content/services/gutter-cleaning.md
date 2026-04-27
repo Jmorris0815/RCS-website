@@ -8,13 +8,13 @@ faqs:
   - question: "How often should I have my gutters cleaned?"
     answer: "Depends on your tree mix. Heavy pine, cedar, or oak coverage calls for twice a year (spring and fall). Light coverage with mostly deciduous trees can usually go to annual. Lots with no overhanging trees may stretch to every other year. We assess on the first visit and tell you straight."
   - question: "What's included in a cleaning?"
-    answer: "We hand-remove all debris from the gutters into bags or buckets (we haul it away — we don't just blow it onto your lawn). We flush each downspout with water to confirm it's clear. We inspect the system top to bottom and report any issues we see. We send before-and-after photos of every gutter run."
+    answer: "We hand-remove all debris from the gutters into bags or buckets (we haul it away. We don't just blow it onto your lawn). We flush each downspout with water to confirm it's clear. We inspect the system top to bottom and report any issues we see. We send before-and-after photos of every gutter run."
   - question: "How much does a cleaning cost?"
-    answer: "Most single-family homes in our service area run $150–$300 depending on roof complexity, height, and degree of debris. Two-story homes, steep pitches, walkout basements, and badly-overgrown systems are at the higher end. We quote in advance — no surprises."
+    answer: "Most single-family homes in our service area run $150-$300 depending on roof complexity, height, and degree of debris. Two-story homes, steep pitches, walkout basements, and badly-overgrown systems are at the higher end. We quote in advance. No surprises."
   - question: "Do you clean gutters that have guards on them?"
     answer: "Yes. Even the best guards accumulate pollen, sap film, fine particulate, and small debris on top over time. We clean the guard surface, flush the system, and inspect underneath. The cleaning is faster and cheaper than on bare gutters because there's less debris to remove."
   - question: "Can you clean gutters when we're not home?"
-    answer: "Yes. Many of our cleaning customers — especially weekend-place owners at Lake Anna and Lake Monticello — never meet us in person. We do the work, send photo documentation, and bill afterward. Works fine."
+    answer: "Yes. Many of our cleaning customers. Especially weekend-place owners at Lake Anna and Lake Monticello. Never meet us in person. We do the work, send photo documentation, and bill afterward. Works fine."
 seoTitle: "Gutter Cleaning Charlottesville & Central VA | Right Choice Seamless Gutters"
 seoDescription: "Professional twice-yearly gutter cleaning across Central Virginia. Hand-cleaned, flushed, documented with photos. Serving Charlottesville, Barboursville, Madison, Orange, Greene, and Lake Anna / Lake Monticello."
 ---
@@ -24,9 +24,9 @@ seoDescription: "Professional twice-yearly gutter cleaning across Central Virgin
 Gutter cleaning is one of those services where the cheap version isn't worth the money. The pattern we see when we're called in to fix a botched job:
 
 - Debris blown onto the roof or scattered across the lawn instead of bagged.
-- Downspouts not flushed — debris compacted into the elbow waiting to clog at the next storm.
-- No inspection — homeowner doesn't know there's a separated seam or a rotted fascia behind the gutter.
-- No documentation — homeowner has no proof anything was actually done.
+- Downspouts not flushed. Debris compacted into the elbow waiting to clog at the next storm.
+- No inspection. Homeowner doesn't know there's a separated seam or a rotted fascia behind the gutter.
+- No documentation. Homeowner has no proof anything was actually done.
 
 Here's what's in every cleaning we run:
 
@@ -53,7 +53,7 @@ This is the question every homeowner wants a straight answer on. Here's how we t
 
 **Once a year (typically late fall):**
 - Moderate deciduous coverage.
-- Light pine — a few trees but not a forest.
+- Light pine. A few trees but not a forest.
 - Modern homes with properly sized gutters and downspouts.
 
 **Every other year or as needed:**
@@ -83,6 +83,6 @@ A lot of our cleaning customers prefer a scheduled twice-a-year service. We put 
 
 ## Related work
 
-- [Gutter guards](/services/gutter-guards/) — significantly reduce cleaning frequency.
-- [Seamless gutter installation](/services/seamless-gutter-installation/) — when cleaning isn't enough and the system needs replacing.
-- [Drainage solutions](/services/drainage-solutions/) — when the cleaning's done but the water still won't go anywhere it should.
+- [Gutter guards](/services/gutter-guards/). Significantly reduce cleaning frequency.
+- [Seamless gutter installation](/services/seamless-gutter-installation/). When cleaning isn't enough and the system needs replacing.
+- [Drainage solutions](/services/drainage-solutions/). When the cleaning's done but the water still won't go anywhere it should.

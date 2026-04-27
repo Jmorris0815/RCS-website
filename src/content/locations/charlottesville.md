@@ -4,7 +4,7 @@ county: "Albemarle"
 slug: "charlottesville"
 lat: 38.0293
 lng: -78.4767
-populationContext: "Charlottesville's mix of UVA-era brick colonials, post-war ranches in Belmont, and newer construction up on Pantops gives us three completely different gutter conversations on most weeks. The city's aggressive shade canopy — especially the tulip poplars and white oaks that line so many streets — keeps us busier here than anywhere else we work."
+populationContext: "Charlottesville's mix of UVA-era brick colonials, post-war ranches in Belmont, and newer construction up on Pantops gives us three completely different gutter conversations on most weeks. The city's aggressive shade canopy. Especially the tulip poplars and white oaks that line so many streets. Keeps us busier here than anywhere else we work."
 climateNotes: "Charlottesville averages 45+ inches of rain a year, with summer thunderstorms that can drop an inch in 20 minutes. Add ice storms in January and February and you have the full menu of gutter stress in one zip code."
 neighborhoods:
   - "Downtown Mall / North Downtown"
@@ -38,9 +38,9 @@ commonProblems:
     recommendation: "Twice-yearly cleaning required; gutter guards alone won't solve a shedding-roof problem"
 localFaqs:
   - question: "Do you charge more for jobs inside Charlottesville city limits?"
-    answer: "No — we have a flat travel charge for our entire service area, and Charlottesville is one of our most-served cities, so it's effectively no extra cost. Same pricing as Barboursville or Crozet."
+    answer: "No. We have a flat travel charge for our entire service area, and Charlottesville is one of our most-served cities, so it's effectively no extra cost. Same pricing as Barboursville or Crozet."
   - question: "Can you work on the historic homes downtown without damaging brick or trim?"
-    answer: "Yes. We use hidden hangers anchored into the rafter tail rather than face-mounted spikes that punch through historic fascia. For copper or half-round upgrades on older homes, we have a separate process — call and we'll walk it through."
+    answer: "Yes. We use hidden hangers anchored into the rafter tail rather than face-mounted spikes that punch through historic fascia. For copper or half-round upgrades on older homes, we have a separate process. Call and we'll walk it through."
   - question: "What's the best gutter guard for our Pantops or Forest Lakes home with all those oaks?"
     answer: "Xtreme micro-mesh wins for big oak debris and acorn season. New Wave is also strong for oak coverage and costs a bit less. We'll spec the right one based on your roof pitch and tree mix."
 featuredCaseStudies: []
@@ -63,10 +63,10 @@ When we quote a Charlottesville job, here's what we're actually looking at:
 
 ## Most common service requests we get from Charlottesville
 
-1. **Existing gutters cleaned and inspected** — almost always overdue, often with rotted fascia behind them.
-2. **Gutter guard upgrade** — most callers want to stop climbing ladders. Xtreme is our most-requested for Charlottesville's tulip-poplar / oak mix.
-3. **Full gutter replacement** — when the existing system is sectional, sagging, or undersized for the roof.
-4. **Half-round gutter installation** — popular on the historic homes and the architect-designed new builds out toward Ivy and Free Union.
+1. **Existing gutters cleaned and inspected**. Almost always overdue, often with rotted fascia behind them.
+2. **Gutter guard upgrade**. Most callers want to stop climbing ladders. Xtreme is our most-requested for Charlottesville's tulip-poplar / oak mix.
+3. **Full gutter replacement**. When the existing system is sectional, sagging, or undersized for the roof.
+4. **Half-round gutter installation**. Popular on the historic homes and the architect-designed new builds out toward Ivy and Free Union.
 
 ## Local response time
 

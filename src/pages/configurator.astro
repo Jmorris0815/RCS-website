@@ -10,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="kicker mb-2">Configurator</p>
     <h1 class="mb-4">Find the right gutter guard for your home</h1>
     <p class="text-fluid-lg text-ink-muted max-w-3xl">
-      Four questions. Real recommendation. We'll match you to the Leaf Solution product that actually fits your tree mix and budget — not the most expensive one in the catalog.
+      Four questions. Real recommendation. We'll match you to the Leaf Solution product that actually fits your tree mix and budget. Not the most expensive one in the catalog.
     </p>
   </section>
 
@@ -37,11 +37,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="trees" value="mixed" class="mr-2" />
-            <strong>Mixed</strong> — both pine and hardwood within range
+            <strong>Mixed</strong>. Both pine and hardwood within range
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="trees" value="open" class="mr-2" />
-            <strong>Open lot</strong> — no significant overhanging trees
+            <strong>Open lot</strong>. No significant overhanging trees
           </label>
         </div>
       </fieldset>
@@ -53,15 +53,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="space-y-2">
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="visibility" value="hidden" class="mr-2" />
-            <strong>Mostly hidden</strong> — two-story home, gutter line is up high and not visible from the street
+            <strong>Mostly hidden</strong>. Two-story home, gutter line is up high and not visible from the street
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="visibility" value="visible" class="mr-2" />
-            <strong>Eye level / visible</strong> — single-story or important architectural feature where appearance matters
+            <strong>Eye level / visible</strong>. Single-story or important architectural feature where appearance matters
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="visibility" value="critical" class="mr-2" />
-            <strong>Critical</strong> — historic home, vineyard, architect-designed property where the guard cannot stand out
+            <strong>Critical</strong>. Historic home, vineyard, architect-designed property where the guard cannot stand out
           </label>
         </div>
       </fieldset>
@@ -73,15 +73,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="space-y-2">
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="budget" value="value" class="mr-2" />
-            <strong>Smart value</strong> — solid protection without paying for premium I don't need
+            <strong>Smart value</strong>. Solid protection without paying for premium I don't need
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="budget" value="premium" class="mr-2" />
-            <strong>Premium performance</strong> — best long-term product even at higher cost
+            <strong>Premium performance</strong>. Best long-term product even at higher cost
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="budget" value="luxury" class="mr-2" />
-            <strong>Luxury / architectural</strong> — appearance and color match are part of the value
+            <strong>Luxury / architectural</strong>. Appearance and color match are part of the value
           </label>
         </div>
       </fieldset>
@@ -93,15 +93,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="space-y-2">
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="maintenance" value="low" class="mr-2" />
-            <strong>As little as possible</strong> — willing to pay for the longest-lasting product
+            <strong>As little as possible</strong>. Willing to pay for the longest-lasting product
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="maintenance" value="annual" class="mr-2" />
-            <strong>Once a year is fine</strong> — willing to do an annual top-rinse or brief inspection
+            <strong>Once a year is fine</strong>. Willing to do an annual top-rinse or brief inspection
           </label>
           <label class="block card p-4 cursor-pointer hover:border-brand-primary">
             <input type="radio" name="maintenance" value="some" class="mr-2" />
-            <strong>I'll do it myself</strong> — comfortable on a ladder for occasional cleanouts
+            <strong>I'll do it myself</strong>. Comfortable on a ladder for occasional cleanouts
           </label>
         </div>
       </fieldset>
@@ -117,7 +117,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <button id="restart" type="button" class="text-brand-primary font-semibold underline">Start over</button>
         </div>
         <p class="text-xs text-ink-subtle mt-5">
-          This is a starting recommendation. We'll confirm or adjust during an on-site walk-through — your specific roof shape, downspout layout, and existing gutter condition can shift the answer.
+          This is a starting recommendation. We'll confirm or adjust during an on-site walk-through. Your specific roof shape, downspout layout, and existing gutter condition can shift the answer.
         </p>
       </div>
 
@@ -165,7 +165,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         reason = "With no significant overhanging trees, you probably don't need gutter guards at all. Save the money and book an annual cleaning. If you want guards anyway, New Wave is the most economical option.";
       } else if (answers.trees === 'pine') {
         product = (answers.budget === 'luxury' || answers.visibility === 'critical') ? 'evelyns' : 'xtreme';
-        reason = 'Pine debris demands stainless steel micro-mesh — the only product type that consistently sheds pine needles instead of trapping them.';
+        reason = 'Pine debris demands stainless steel micro-mesh. The only product type that consistently sheds pine needles instead of trapping them.';
       } else if (answers.trees === 'mixed') {
         product = (answers.budget === 'luxury' || answers.visibility === 'critical') ? 'evelyns' : 'xtreme';
         reason = 'A mixed tree canopy needs stainless micro-mesh to handle the full debris range. Xtreme is the workhorse pick; Evelyns adds color matching when appearance is critical.';
@@ -179,7 +179,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           reason = 'Hardwood debris is well-handled by punched aluminum. New Wave is the smart-value pick when pine is not in the mix and stainless mesh is more product than the home actually needs.';
         } else {
           product = 'xtreme';
-          reason = 'Hardwood debris with premium-performance priorities makes Xtreme the right call — finest debris handling, longest warranty.';
+          reason = 'Hardwood debris with premium-performance priorities makes Xtreme the right call. Finest debris handling, longest warranty.';
         }
       }
 
@@ -187,7 +187,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         xtreme: 'Xtreme Gutter Guard (stainless steel micro-mesh)',
         newwave: 'New Wave Gutter Guard (punched aluminum)',
         evelyns: "Evelyn's Leaf Solution (capillary-dip micro-mesh)",
-        none: "No guards needed — annual cleaning is the right answer",
+        none: "No guards needed. Annual cleaning is the right answer",
       };
       var links = {
         xtreme: '/products/xtreme-gutter-guard/',

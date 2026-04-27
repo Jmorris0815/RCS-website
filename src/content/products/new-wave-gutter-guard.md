@@ -15,8 +15,8 @@ idealFor:
   - "Customers wanting solid protection at a moderate price"
   - "Bronze-trim homes where the bronze finish blends in"
 notIdealFor:
-  - "Heavy pine debris — needs Xtreme's finer micro-mesh"
-  - "Sycamore bark plate properties — needs micro-mesh"
+  - "Heavy pine debris. Needs Xtreme's finer micro-mesh"
+  - "Sycamore bark plate properties. Needs micro-mesh"
   - "Architecturally visible installs requiring color match (Bronze only)"
 colors:
   - "Bronze"
@@ -26,23 +26,23 @@ seoDescription: "Authorized Leaf Solution dealer for New Wave punched aluminum g
 
 ## Why New Wave matters in our lineup
 
-If [Xtreme](/products/xtreme-gutter-guard/) is our default for heavy-debris homes, New Wave is our default for everything else. It's the punched-aluminum option in the Leaf Solution lineup — designed to handle leaves, twigs, and animals at a more accessible price point than the stainless micro-mesh systems.
+If [Xtreme](/products/xtreme-gutter-guard/) is our default for heavy-debris homes, New Wave is our default for everything else. It's the punched-aluminum option in the Leaf Solution lineup. Designed to handle leaves, twigs, and animals at a more accessible price point than the stainless micro-mesh systems.
 
 We install a lot of New Wave on the modern subdivisions across our service area where the tree mix is moderate: oak, maple, tulip poplar, redbud. Properties where the pine concentration is low to nonexistent. Homes where the customer wants real protection at a more accessible price than premium micro-mesh.
 
 ## What New Wave actually is
 
-The product is a punched aluminum panel — picture a sheet of aluminum with thousands of small raindrop-shaped openings stamped through it. The raindrop shape is intentional: it directs water flow into the gutter while channeling debris off the front edge.
+The product is a punched aluminum panel. Picture a sheet of aluminum with thousands of small raindrop-shaped openings stamped through it. The raindrop shape is intentional: it directs water flow into the gutter while channeling debris off the front edge.
 
 **Punched aluminum (not screen).** Different from a wire mesh. Aluminum panel construction makes it rigid, snow-load tolerant, and free of the corrosion issues that destroy aluminum mesh products.
 
-**Raindrop openings.** The geometry handles 40 gallons per minute — well above any residential roof's actual peak generation rate. Water enters; leaves and twigs are guided off.
+**Raindrop openings.** The geometry handles 40 gallons per minute. Well above any residential roof's actual peak generation rate. Water enters; leaves and twigs are guided off.
 
 **Bronze finish.** New Wave is available in bronze only. On homes with bronze or dark trim, the guard visually disappears. On homes with white or pastel trim, the bronze is visible but acceptable from typical viewing angles. We bring samples and show you what it looks like before you decide.
 
 ## What New Wave does NOT handle as well as Xtreme
 
-Pine needles. Sycamore bark plates. Sap film accumulation. Anything that's smaller than the punched aperture passes through onto the gutter floor over time. For pine-heavy properties — most of Greene County, the wooded sections of Lake Monticello and Lake Anna, certain Madison and Albemarle properties — we steer customers to [Xtreme](/products/xtreme-gutter-guard/) instead.
+Pine needles. Sycamore bark plates. Sap film accumulation. Anything that's smaller than the punched aperture passes through onto the gutter floor over time. For pine-heavy properties. Most of Greene County, the wooded sections of Lake Monticello and Lake Anna, certain Madison and Albemarle properties. We steer customers to [Xtreme](/products/xtreme-gutter-guard/) instead.
 
 We're explicit about this in the estimate. We don't quote New Wave on a property where it's not the right product just to make a sale.
 
@@ -58,7 +58,7 @@ We're explicit about this in the estimate. We don't quote New Wave on a property
 
 ## What it costs
 
-Typical New Wave installation runs $1,000 to $2,500 for an average single-family home — usually 25-30% less than Xtreme on the same job. The cost differential is the material, not the labor; install time is similar.
+Typical New Wave installation runs $1,000 to $2,500 for an average single-family home. Usually 25-30% less than Xtreme on the same job. The cost differential is the material, not the labor; install time is similar.
 
 ## Warranty
 
@@ -77,6 +77,6 @@ Use our [configurator quiz](/configurator/) for a starting recommendation, or ha
 ## Related work
 
 - [Gutter guards (overview)](/services/gutter-guards/)
-- [Xtreme Gutter Guard](/products/xtreme-gutter-guard/) — the next-tier-up product.
-- [Evelyn's Leaf Solution](/products/evelyns-leaf-solution/) — the premium architectural alternative.
-- [Seamless gutter installation](/services/seamless-gutter-installation/) — frequently combined.
+- [Xtreme Gutter Guard](/products/xtreme-gutter-guard/). The next-tier-up product.
+- [Evelyn's Leaf Solution](/products/evelyns-leaf-solution/). The premium architectural alternative.
+- [Seamless gutter installation](/services/seamless-gutter-installation/). Frequently combined.

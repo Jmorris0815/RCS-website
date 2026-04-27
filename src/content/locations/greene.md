@@ -4,8 +4,8 @@ county: "Greene"
 slug: "greene"
 lat: 38.2768
 lng: -78.4406
-populationContext: "Greene County is small, only about 20,000 residents, and the county seat — Stanardsville — is a single quiet downtown that hasn't changed shape much in fifty years. The county runs from Ruckersville at its southern end (heavily commuter-oriented to Charlottesville) up into the Blue Ridge foothills toward Shenandoah National Park. The defining feature here is pine — large planted stands of loblolly and Virginia pine across the county leave their fingerprint on every gutter system."
-climateNotes: "Greene's elevation range — from 400 feet at Ruckersville up past 1,500 feet on the Blue Ridge slope — means microclimates inside one county. Higher properties get longer ice seasons and more dramatic temperature swings. Wind events coming over the ridge can be severe; we've seen cottage-size wind gusts strip flashing and gutter sections in one storm."
+populationContext: "Greene County is small, only about 20,000 residents, and the county seat. Stanardsville. Is a single quiet downtown that hasn't changed shape much in fifty years. The county runs from Ruckersville at its southern end (heavily commuter-oriented to Charlottesville) up into the Blue Ridge foothills toward Shenandoah National Park. The defining feature here is pine. Large planted stands of loblolly and Virginia pine across the county leave their fingerprint on every gutter system."
+climateNotes: "Greene's elevation range. From 400 feet at Ruckersville up past 1,500 feet on the Blue Ridge slope. Means microclimates inside one county. Higher properties get longer ice seasons and more dramatic temperature swings. Wind events coming over the ridge can be severe; we've seen cottage-size wind gusts strip flashing and gutter sections in one storm."
 neighborhoods:
   - "Stanardsville"
   - "Ruckersville"
@@ -29,12 +29,12 @@ commonProblems:
     recommendation: "Tighten hanger spacing to 18 inches; add gable-end wind blocks to gutter ends"
   - problem: "Sap and pollen film coating the inside of gutters"
     cause: "Loblolly pine sap and spring pollen create a sticky film that traps small particulate against gutter walls"
-    recommendation: "Annual or semi-annual maintenance flush with mild detergent — micro-mesh stays cleaner but isn't a no-maintenance product despite the marketing"
+    recommendation: "Annual or semi-annual maintenance flush with mild detergent. Micro-mesh stays cleaner but isn't a no-maintenance product despite the marketing"
   - problem: "Older Stanardsville historic homes with rusted-through galvanized gutters"
     cause: "Gutters from the 1950s-1970s were often galvanized steel that rusts from the inside out and fails dramatically"
     recommendation: "Full replacement to seamless aluminum; we discount when removing-and-recycling old galvanized in volume"
 localFaqs:
-  - question: "We're up toward Dyke / Wyatt Mountain — is that too far?"
+  - question: "We're up toward Dyke / Wyatt Mountain. Is that too far?"
     answer: "No. We service all of Greene County. Higher-elevation properties up Dyke Road and around the Shenandoah National Park edge are about an hour's drive for us. We almost always batch those into a single trip with neighboring jobs to keep travel cost reasonable."
   - question: "Why do gutter guards matter so much in Greene?"
     answer: "Pine. Greene County has more pine acreage per capita than anywhere else we work. Pine needles destroy screen-style and foam-style guards within a season or two. They're also the worst debris to clean by hand because of the matting effect. A micro-mesh guard pays for itself in three to four cleaning skips on a heavily-treed Greene property."
@@ -48,13 +48,13 @@ seoDescription: "Pine-resistant gutter guards, seamless installation, and cleani
 
 ## What makes Greene different: pine, pine, and more pine
 
-You can't have an honest gutter conversation in Greene County without talking about pine trees. Loblolly, Virginia, and white pine cover huge swaths of the county — planted as timber crops decades ago, regenerated naturally on old pasture, or kept as windbreaks around farmhouses. Their needles fall continuously, bypass standard screen guards, and form a wet mat at the bottom of any gutter without a real solution in place.
+You can't have an honest gutter conversation in Greene County without talking about pine trees. Loblolly, Virginia, and white pine cover huge swaths of the county. Planted as timber crops decades ago, regenerated naturally on old pasture, or kept as windbreaks around farmhouses. Their needles fall continuously, bypass standard screen guards, and form a wet mat at the bottom of any gutter without a real solution in place.
 
-Most Greene homeowners we meet have already tried something — foam inserts, drop-in screens, brush guards — and watched it fail within a season or two. Their next call is usually to us.
+Most Greene homeowners we meet have already tried something. Foam inserts, drop-in screens, brush guards. And watched it fail within a season or two. Their next call is usually to us.
 
-**Our standard recommendation in Greene** is stainless steel micro-mesh — Xtreme is our most-installed product here for that reason. The mesh is fine enough to shed pine needles instead of trapping them, and the stainless construction handles the corrosive sap film better than aluminum mesh.
+**Our standard recommendation in Greene** is stainless steel micro-mesh. Xtreme is our most-installed product here for that reason. The mesh is fine enough to shed pine needles instead of trapping them, and the stainless construction handles the corrosive sap film better than aluminum mesh.
 
-**For ridgeline properties** above 1,200 feet — the Wyatt Mountain area, the southwest edge of Shenandoah National Park — we tighten hanger spacing from 24 inches to 18, and we add gable-end wind blocks. The wind on those properties is a different animal than down in Ruckersville.
+**For ridgeline properties** above 1,200 feet. The Wyatt Mountain area, the southwest edge of Shenandoah National Park. We tighten hanger spacing from 24 inches to 18, and we add gable-end wind blocks. The wind on those properties is a different animal than down in Ruckersville.
 
 **For the older Stanardsville district homes** with original galvanized steel gutters from the 1950s and 1960s, we do full removal and replacement. There's no patching the inside of a rusted-out galvanized gutter; the rust is already in the structural metal.
 

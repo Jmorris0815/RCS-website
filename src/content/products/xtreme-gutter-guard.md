@@ -36,9 +36,9 @@ The product is straightforward in concept: surgical-grade stainless steel micro-
 
 **Surgical-grade aperture.** The mesh openings are calibrated precisely. Too coarse and small debris gets through. Too fine and water tension prevents flow. Xtreme's apertures hit a sweet spot tested across years of field installations.
 
-**Aluminum frame.** Adds rigidity to the mesh. Critical for snow load — a loose mesh sags under the weight of snow buildup, eventually deforming. The frame keeps the mesh flat and properly positioned across the gutter trough.
+**Aluminum frame.** Adds rigidity to the mesh. Critical for snow load. A loose mesh sags under the weight of snow buildup, eventually deforming. The frame keeps the mesh flat and properly positioned across the gutter trough.
 
-**60 GPM throughput.** The number matters during heavy summer thunderstorms. A roof can dump water onto a gutter at rates that exceed what cheaper guards can pass — water sheets over the top, missing the gutter entirely. 60 GPM is well above what any residential roof in our service area generates.
+**60 GPM throughput.** The number matters during heavy summer thunderstorms. A roof can dump water onto a gutter at rates that exceed what cheaper guards can pass. Water sheets over the top, missing the gutter entirely. 60 GPM is well above what any residential roof in our service area generates.
 
 ## Where we install it most
 
@@ -63,20 +63,20 @@ Xtreme reduces gutter maintenance significantly but doesn't eliminate it. Realis
 - **Pine sap film** can build up on the mesh surface over time. An annual top-rinse (we offer this) keeps flow rates high.
 - **Pollen film** in spring can temporarily reduce flow. Self-clears with the next rain in most cases.
 - **Roof grit** from asphalt shingle wear accumulates on top of the mesh. Light sweeping or rinsing once a year keeps it clean.
-- **No more hand cleanouts** of the gutter trough itself — that's the headline benefit.
+- **No more hand cleanouts** of the gutter trough itself. That's the headline benefit.
 
 ## How it compares to the other Leaf Solution products
 
-**Xtreme vs [New Wave](/products/new-wave-gutter-guard/):** New Wave is punched aluminum with raindrop-shaped openings — handles up to 40 GPM, more affordable, ideal for moderate-debris lots. Xtreme is more expensive but handles heavier debris and finer particulate; the right pick when pine or sycamore is part of the mix.
+**Xtreme vs [New Wave](/products/new-wave-gutter-guard/):** New Wave is punched aluminum with raindrop-shaped openings. Handles up to 40 GPM, more affordable, ideal for moderate-debris lots. Xtreme is more expensive but handles heavier debris and finer particulate; the right pick when pine or sycamore is part of the mix.
 
-**Xtreme vs [Evelyn's Leaf Solution](/products/evelyns-leaf-solution/):** Evelyn's uses a capillary-dip design — extremely advanced debris shedding, available in six colors for architectural blending. Comparable cost; pick Evelyn's when appearance matters and the home has heavy aesthetic constraints.
+**Xtreme vs [Evelyn's Leaf Solution](/products/evelyns-leaf-solution/):** Evelyn's uses a capillary-dip design. Extremely advanced debris shedding, available in six colors for architectural blending. Comparable cost; pick Evelyn's when appearance matters and the home has heavy aesthetic constraints.
 
 ## How to know if Xtreme is right for your home
 
-Try our [4-question gutter guard configurator](/configurator/) — gives you a starting recommendation. Or call us for a free estimate; we'll walk your property and tell you which product fits. We don't push the most expensive option — we recommend what your specific debris mix actually needs.
+Try our [4-question gutter guard configurator](/configurator/). Gives you a starting recommendation. Or call us for a free estimate; we'll walk your property and tell you which product fits. We don't push the most expensive option. We recommend what your specific debris mix actually needs.
 
 ## Related work
 
 - [Gutter guards (overview)](/services/gutter-guards/)
-- [Seamless gutter installation](/services/seamless-gutter-installation/) — Xtreme is best installed onto correctly-sized seamless gutters; we often replace and add guards in one job.
-- [Gutter cleaning](/services/gutter-cleaning/) — annual top-rinse maintenance for Xtreme installs.
+- [Seamless gutter installation](/services/seamless-gutter-installation/). Xtreme is best installed onto correctly-sized seamless gutters; we often replace and add guards in one job.
+- [Gutter cleaning](/services/gutter-cleaning/). Annual top-rinse maintenance for Xtreme installs.

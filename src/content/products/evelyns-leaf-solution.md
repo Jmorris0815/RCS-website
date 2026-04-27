@@ -30,7 +30,7 @@ seoDescription: "Authorized Leaf Solution dealer for Evelyn's Leaf Solution capi
 
 ## What makes Evelyn's different
 
-Evelyn's Leaf Solution is the flagship product in the Leaf Solution lineup. It uses an advanced capillary-action design — a series of precision dips along the leading edge of the mesh that capture water through surface tension while shedding even the smallest debris off the front edge.
+Evelyn's Leaf Solution is the flagship product in the Leaf Solution lineup. It uses an advanced capillary-action design. A series of precision dips along the leading edge of the mesh that capture water through surface tension while shedding even the smallest debris off the front edge.
 
 The technology is more advanced than what's on standard micro-mesh products, and the result shows up in performance: Evelyn's handles fine debris (pollen, roof grit, very small seeds) better than [Xtreme](/products/xtreme-gutter-guard/) does. The structural design is also engineered for snow load and high-wind environments.
 
@@ -38,17 +38,17 @@ The single biggest reason customers pick Evelyn's over Xtreme, though, is color.
 
 ## When Evelyn's is the right product
 
-**Architectural visibility.** If your roof line is at eye level — for example, a single-story home where guests walking up the front path see the gutter line — color matters. Evelyn's lets the guard visually disappear.
+**Architectural visibility.** If your roof line is at eye level. For example, a single-story home where guests walking up the front path see the gutter line. Color matters. Evelyn's lets the guard visually disappear.
 
 **High-end and luxury installations.** Custom homes, architect-designed properties, vineyards and event venues, premium remodels. The price differential between Xtreme and Evelyn's is real but small relative to the total project cost on these jobs, and the appearance integration is worth it.
 
 **Heavy aesthetic constraints.** Some HOAs or design review boards push back on visible silver mesh products. Evelyn's color-matched options sidestep that conversation.
 
-**Special performance requirements.** Customers who want the absolute best fine-debris shedding — for example, properties under heavy spring pollen exposure — sometimes pick Evelyn's specifically for its performance edge over standard micro-mesh.
+**Special performance requirements.** Customers who want the absolute best fine-debris shedding. For example, properties under heavy spring pollen exposure. Sometimes pick Evelyn's specifically for its performance edge over standard micro-mesh.
 
 ## When it's not the right product
 
-For most of our installs, the honest answer is that [Xtreme](/products/xtreme-gutter-guard/) handles the debris equally well at a lower cost. We don't recommend Evelyn's just because it's the highest-margin product. We recommend it when the use case demands it — appearance, snow load, fine debris — and we recommend Xtreme or [New Wave](/products/new-wave-gutter-guard/) when those demands aren't present.
+For most of our installs, the honest answer is that [Xtreme](/products/xtreme-gutter-guard/) handles the debris equally well at a lower cost. We don't recommend Evelyn's just because it's the highest-margin product. We recommend it when the use case demands it. Appearance, snow load, fine debris. And we recommend Xtreme or [New Wave](/products/new-wave-gutter-guard/) when those demands aren't present.
 
 ## Where we install it most
 
@@ -72,12 +72,12 @@ Pricing on Evelyn's runs 15-25% above Xtreme on the same job. Typical full-home 
 
 Six standard colors cover the vast majority of Central VA homes:
 
-- **Mill (silver)** — same as standard Xtreme.
-- **Black** — pairs with black or dark bronze gutters and trim.
-- **Bronze** — pairs with bronze or terratone gutters.
-- **Brown** — pairs with royal brown or dark brown gutters.
-- **White** — pairs with white gutters and trim, hides on white-trim homes.
-- **Custom** — special order for specific color matches; longer lead time.
+- **Mill (silver)**. Same as standard Xtreme.
+- **Black**. Pairs with black or dark bronze gutters and trim.
+- **Bronze**. Pairs with bronze or terratone gutters.
+- **Brown**. Pairs with royal brown or dark brown gutters.
+- **White**. Pairs with white gutters and trim, hides on white-trim homes.
+- **Custom**. Special order for specific color matches; longer lead time.
 
 We bring color samples to the estimate and hold them up against your existing gutters and trim before locking in the choice.
 
@@ -94,6 +94,6 @@ Our [4-question gutter guard configurator](/configurator/) gives you a starting 
 ## Related work
 
 - [Gutter guards (overview)](/services/gutter-guards/)
-- [Xtreme Gutter Guard](/products/xtreme-gutter-guard/) — the workhorse stainless mesh product.
-- [New Wave Gutter Guard](/products/new-wave-gutter-guard/) — the punched-aluminum value option.
-- [Half-round gutters](/services/half-round-gutters/) — Evelyn's pairs well with high-end half-round installations.
+- [Xtreme Gutter Guard](/products/xtreme-gutter-guard/). The workhorse stainless mesh product.
+- [New Wave Gutter Guard](/products/new-wave-gutter-guard/). The punched-aluminum value option.
+- [Half-round gutters](/services/half-round-gutters/). Evelyn's pairs well with high-end half-round installations.

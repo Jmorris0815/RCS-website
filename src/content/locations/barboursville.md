@@ -4,8 +4,8 @@ county: "Orange"
 slug: "barboursville"
 lat: 38.1518
 lng: -78.2789
-populationContext: "Barboursville is home base. Our shop sits off Greenwood Farms Court, ten minutes from the Barboursville Vineyards and the Madison-Orange-Greene corner that defines the rolling country we work in every day. The village has under 200 households inside the unincorporated boundary, but the surrounding rural Orange County zip code stretches into thousands of homes — old farmhouses, new subdivisions on what used to be tobacco land, and weekend places owned by Charlottesville and Northern Virginia families."
-climateNotes: "Sitting in the Southwest Mountains foothills, Barboursville catches the same heavy summer storms that hit Charlottesville but with less of the urban heat island effect. Winters bring real ice — the kind that rips ungrounded gutter sections off in a single night. Spring oak pollen coats everything for three weeks in April."
+populationContext: "Barboursville is home base. Our shop sits off Greenwood Farms Court, ten minutes from the Barboursville Vineyards and the Madison-Orange-Greene corner that defines the rolling country we work in every day. The village has under 200 households inside the unincorporated boundary, but the surrounding rural Orange County zip code stretches into thousands of homes. Old farmhouses, new subdivisions on what used to be tobacco land, and weekend places owned by Charlottesville and Northern Virginia families."
+climateNotes: "Sitting in the Southwest Mountains foothills, Barboursville catches the same heavy summer storms that hit Charlottesville but with less of the urban heat island effect. Winters bring real ice. The kind that rips ungrounded gutter sections off in a single night. Spring oak pollen coats everything for three weeks in April."
 neighborhoods:
   - "Village of Barboursville"
   - "Spring Hill / Old Mountain Track"
@@ -33,10 +33,10 @@ commonProblems:
     cause: "Pole barns and converted carriage houses often span 60+ feet without intermediate support"
     recommendation: "Add expansion joints every 40 feet and use heavier-gauge .032 aluminum, never the .027 the box stores sell"
 localFaqs:
-  - question: "We're right down the road — can you stop by today?"
+  - question: "We're right down the road. Can you stop by today?"
     answer: "Most weeks, yes. Barboursville is our home base, so emergency calls within five miles of the shop usually get same-day or next-day attention. Call (434) 202-5666 and ask for Scott."
   - question: "Do you work on the older farmhouses with original wood gutters or built-in box gutters?"
-    answer: "Yes — that's a specialty for us. Built-in (also called box or yankee) gutters are integrated into the cornice and require copper or membrane lining work, not standard aluminum. We've restored several historic Orange County farmhouses; we walk you through whether to restore the original or modernize."
+    answer: "Yes. That's a specialty for us. Built-in (also called box or yankee) gutters are integrated into the cornice and require copper or membrane lining work, not standard aluminum. We've restored several historic Orange County farmhouses; we walk you through whether to restore the original or modernize."
   - question: "How does weather on the ridge affect gutter sizing?"
     answer: "On exposed hilltop lots above 500 feet, we usually upsize from 5-inch K-style to 6-inch K-style and increase downspout count by one per side. The wind-driven rain on a Blue Ridge thunderstorm hits gutters at a different angle than rain in a sheltered subdivision."
 featuredCaseStudies: []
@@ -47,19 +47,19 @@ seoDescription: "Right Choice Seamless Gutters is based in Barboursville, VA. Sa
 
 ## Our home shop, our hometown work
 
-Barboursville isn't just a service area for us — it's where we wake up, where the truck gets loaded each morning, and where we know which roofs were installed in 1985 and which were redone in 2015. When a homeowner here calls, we usually know the road name and sometimes the house. That changes how we estimate, how fast we can be on site, and how much we trust our memory of what's underneath the existing fascia.
+Barboursville isn't just a service area for us. It's where we wake up, where the truck gets loaded each morning, and where we know which roofs were installed in 1985 and which were redone in 2015. When a homeowner here calls, we usually know the road name and sometimes the house. That changes how we estimate, how fast we can be on site, and how much we trust our memory of what's underneath the existing fascia.
 
 Most Barboursville jobs fall into one of three buckets:
 
 **The 1970s and 1980s ranches** that dominate the older subdivisions are getting their first real gutter replacement now. Original .027 aluminum lasted longer than anyone expected, but it's done. We replace with .032 and add downspouts where the original installer skimped.
 
-**The 2000s-and-newer builds** along the Route 33 corridor were thrown up fast during the Charlottesville-area growth wave. Many came with sectional gutters and nail-through spikes that have already pulled. These are upgrades to seamless with hidden hangers — usually a one-day job per house.
+**The 2000s-and-newer builds** along the Route 33 corridor were thrown up fast during the Charlottesville-area growth wave. Many came with sectional gutters and nail-through spikes that have already pulled. These are upgrades to seamless with hidden hangers. Usually a one-day job per house.
 
-**The historic Orange County farmhouses** out toward the vineyard and along Burnley Road need a different conversation. Built-in box gutters, copper drip edges, and proprietary pitched cornice work — none of that is a Home Depot job. We walk every estimate at a historic home and tell you straight when it's worth restoring vs. modernizing.
+**The historic Orange County farmhouses** out toward the vineyard and along Burnley Road need a different conversation. Built-in box gutters, copper drip edges, and proprietary pitched cornice work. None of that is a Home Depot job. We walk every estimate at a historic home and tell you straight when it's worth restoring vs. modernizing.
 
 ## What we recommend for new Barboursville installs
 
-For most Barboursville homes — based on the tree mix and storm patterns we see — our default spec is 6-inch K-style aluminum in .032 gauge with hidden hangers at 24 inches, four downspouts per typical ranch (six per two-story), and Xtreme micro-mesh gutter guards over the entire run. The walnut, oak, and cedar debris in this zip code is not friendly to foam inserts or screen guards. We've had to replace too many of those for customers who paid the wrong contractor first.
+For most Barboursville homes. Based on the tree mix and storm patterns we see. Our default spec is 6-inch K-style aluminum in .032 gauge with hidden hangers at 24 inches, four downspouts per typical ranch (six per two-story), and Xtreme micro-mesh gutter guards over the entire run. The walnut, oak, and cedar debris in this zip code is not friendly to foam inserts or screen guards. We've had to replace too many of those for customers who paid the wrong contractor first.
 
 ## Local response time
 

@@ -6,13 +6,13 @@ description: "Fascia and soffit repair, replacement, and aluminum-wrap services 
 featuredOrder: 6
 faqs:
   - question: "What's the difference between fascia and soffit?"
-    answer: "Fascia is the vertical board that runs along the roof edge — it's what your gutters mount to. Soffit is the horizontal underside of the roof overhang, between the fascia and the wall. Both are part of the trim and ventilation system. When fascia rots, gutters fail. When soffit fails, attic ventilation breaks down."
+    answer: "Fascia is the vertical board that runs along the roof edge. It's what your gutters mount to. Soffit is the horizontal underside of the roof overhang, between the fascia and the wall. Both are part of the trim and ventilation system. When fascia rots, gutters fail. When soffit fails, attic ventilation breaks down."
   - question: "Do I need to replace fascia before new gutters?"
-    answer: "If the fascia is rotted, yes. We won't hang new gutters on rotten wood — the new gutters would pull within a few years. We pull the old gutters, replace the bad fascia sections (or wrap them in aluminum), then hang the new gutter system."
+    answer: "If the fascia is rotted, yes. We won't hang new gutters on rotten wood. The new gutters would pull within a few years. We pull the old gutters, replace the bad fascia sections (or wrap them in aluminum), then hang the new gutter system."
   - question: "What's aluminum fascia wrap?"
-    answer: "A thin aluminum cladding (typically .019-gauge) that wraps over existing wood fascia, sealing it from weather. It's the most common modern approach because it eliminates ongoing wood maintenance — no painting, no rotting. Color-matched to the gutters or to the trim."
+    answer: "A thin aluminum cladding (typically .019-gauge) that wraps over existing wood fascia, sealing it from weather. It's the most common modern approach because it eliminates ongoing wood maintenance. No painting, no rotting. Color-matched to the gutters or to the trim."
   - question: "Will my soffit need replacement too?"
-    answer: "Sometimes. Soffit problems usually show up as visible rot, sagging, or evidence of insect damage. Soffits also have ventilation requirements — proper attic ventilation depends on intake at the soffit. If your home's soffits are damaged or were originally non-vented (some older homes), that becomes part of the conversation."
+    answer: "Sometimes. Soffit problems usually show up as visible rot, sagging, or evidence of insect damage. Soffits also have ventilation requirements. Proper attic ventilation depends on intake at the soffit. If your home's soffits are damaged or were originally non-vented (some older homes), that becomes part of the conversation."
   - question: "Can you match my home's existing trim color?"
     answer: "Yes. Aluminum fascia wrap and soffit panels come in standard colors that match most trim and gutter color lines. We bring samples to the estimate and hold them up against your existing trim. Custom colors can be ordered with longer lead times."
 seoTitle: "Fascia & Soffit Repair Central VA | Right Choice Seamless Gutters"
@@ -30,13 +30,13 @@ We won't hang new gutters on rotten wood. The new system fails inside of three y
 ## Three approaches to fascia
 
 ### 1. Repair what's repairable
-If most of the fascia is sound and only certain runs have rot — usually corners and below valleys where water has been concentrated — we cut out the bad sections, sister in new pressure-treated or primed pine, and prime/paint to match. This is the cheapest option and the right answer for partial damage.
+If most of the fascia is sound and only certain runs have rot. Usually corners and below valleys where water has been concentrated. We cut out the bad sections, sister in new pressure-treated or primed pine, and prime/paint to match. This is the cheapest option and the right answer for partial damage.
 
 ### 2. Aluminum fascia wrap
 The most popular modern approach: clad the existing wood fascia with .019-gauge aluminum trim coil in your chosen color. The wood is sealed from weather (any small movement issues get hidden) and you eliminate future painting and maintenance. Visually clean, lasts decades, color-matched to gutters.
 
 ### 3. Full replacement
-Sometimes the wood is too far gone to wrap or repair — extensive rot, insect damage, or water-saturated soft wood. Full replacement involves pulling all the existing fascia, replacing with new (PVC trim, fiber cement, or pressure-treated wood depending on your preference), and either painting or wrapping the new trim. This is the most expensive option and the right answer when the existing material is unsalvageable.
+Sometimes the wood is too far gone to wrap or repair. Extensive rot, insect damage, or water-saturated soft wood. Full replacement involves pulling all the existing fascia, replacing with new (PVC trim, fiber cement, or pressure-treated wood depending on your preference), and either painting or wrapping the new trim. This is the most expensive option and the right answer when the existing material is unsalvageable.
 
 ## Soffit work
 
@@ -56,7 +56,7 @@ For most of our seamless gutter installations, fascia work shows up as a separat
 
 ## When fascia work is its own job
 
-Sometimes a customer calls specifically about fascia or soffit problems — usually because they've noticed sagging, paint failure, or visible damage from the ground. We do this work as a standalone job. The pricing is per linear foot of fascia plus square footage of soffit, with material color and access difficulty as the main variables.
+Sometimes a customer calls specifically about fascia or soffit problems. Usually because they've noticed sagging, paint failure, or visible damage from the ground. We do this work as a standalone job. The pricing is per linear foot of fascia plus square footage of soffit, with material color and access difficulty as the main variables.
 
 ## Where we work
 
@@ -64,6 +64,6 @@ All eight counties: [Charlottesville](/locations/charlottesville/), [Albemarle](
 
 ## Related work
 
-- [Seamless gutter installation](/services/seamless-gutter-installation/) — almost always paired.
-- [Half-round gutters](/services/half-round-gutters/) — historic restorations frequently include fascia/cornice work.
-- [Gutter cleaning](/services/gutter-cleaning/) — our cleaning inspections often surface fascia issues.
+- [Seamless gutter installation](/services/seamless-gutter-installation/). Almost always paired.
+- [Half-round gutters](/services/half-round-gutters/). Historic restorations frequently include fascia/cornice work.
+- [Gutter cleaning](/services/gutter-cleaning/). Our cleaning inspections often surface fascia issues.

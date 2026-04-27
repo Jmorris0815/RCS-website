@@ -7,11 +7,11 @@ featuredOrder: 5
 faqs:
   - question: "How is commercial gutter work different from residential?"
     answer: "Bigger water volumes, longer runs, larger profiles, and almost always a coordinated drainage component. Commercial roofs often drain to a single corner or scupper with cumulative water volumes far higher than any single residential gutter handles. We use 6-inch or 7-inch K-style as a baseline, often box gutter or commercial scupper systems, and we size discharge accordingly."
-  - question: "Do you do agricultural buildings — barns, run-in sheds, equipment storage?"
-    answer: "Yes. Quite a bit of our commercial work is agricultural — horse farms in Orange County, cattle operations in Madison and Louisa, equestrian properties in Albemarle. Single-pitch outbuildings concentrate huge water volumes onto one gutter line, so the engineering matters."
+  - question: "Do you do agricultural buildings. Barns, run-in sheds, equipment storage?"
+    answer: "Yes. Quite a bit of our commercial work is agricultural. Horse farms in Orange County, cattle operations in Madison and Louisa, equestrian properties in Albemarle. Single-pitch outbuildings concentrate huge water volumes onto one gutter line, so the engineering matters."
   - question: "Can you handle multi-building properties?"
     answer: "Yes. HOA common areas, vineyard / winery properties with main building plus tasting room plus outbuildings, and church campuses are common for us. We treat these as coordinated drainage projects, not just gutter swaps."
-  - question: "What about scheduling — can commercial work happen outside business hours?"
+  - question: "What about scheduling. Can commercial work happen outside business hours?"
     answer: "When required. We've done early morning, weekend, and after-hours commercial installs to avoid disrupting operations. Tell us your constraints up front and we'll plan around them."
   - question: "Are commercial jobs bondable / do you carry the right insurance?"
     answer: "Yes. We carry general liability and workers comp at commercial-appropriate levels. For projects requiring formal performance or payment bonds we'll arrange them. Tell us the requirement during the bid process."
@@ -21,13 +21,13 @@ seoDescription: "Commercial gutter installation, box gutters, and scuppers for r
 
 ## What commercial gutter work actually involves
 
-Most "commercial" gutter work is closer to specialty residential than to true commercial roofing — but the differences matter, and contractors who only do residential get them wrong.
+Most "commercial" gutter work is closer to specialty residential than to true commercial roofing. But the differences matter, and contractors who only do residential get them wrong.
 
-**Water volumes are bigger.** A church roof with 5,000 square feet draining to one corner moves water at a rate that overwhelms standard 5-inch K-style. Commercial work usually starts at 6-inch K-style and goes up — 7-inch, custom-fabricated box gutter, or true scupper systems where roof water exits through wall openings instead of edge-of-roof gutters.
+**Water volumes are bigger.** A church roof with 5,000 square feet draining to one corner moves water at a rate that overwhelms standard 5-inch K-style. Commercial work usually starts at 6-inch K-style and goes up. 7-inch, custom-fabricated box gutter, or true scupper systems where roof water exits through wall openings instead of edge-of-roof gutters.
 
 **Runs are longer.** A 60-foot residential gutter is a long run. A commercial run on a strip retail building can be 200 feet. Thermal expansion alone moves a 200-foot aluminum gutter by several inches across the seasons. Expansion joints aren't optional at that scale.
 
-**Discharge planning is critical.** Where roof water from a commercial building goes is often a code-driven question. Storm sewer connections, retention ponds, dry wells, or daylight-to-grade — each has implications for permits, sizing, and long-term maintenance.
+**Discharge planning is critical.** Where roof water from a commercial building goes is often a code-driven question. Storm sewer connections, retention ponds, dry wells, or daylight-to-grade. Each has implications for permits, sizing, and long-term maintenance.
 
 **Hangers and brackets are heavier.** Commercial spec hangers are stamped from heavier-gauge stock, spaced tighter, and rated for higher load. We don't substitute residential hangers because the price difference is small and the failure cost is large.
 
@@ -43,7 +43,7 @@ Most "commercial" gutter work is closer to specialty residential than to true co
 
 **HOA and common-area.** Pool houses, clubhouses, gatehouses, maintenance buildings. We coordinate with HOA boards on color matching and submission requirements.
 
-**Vineyards, wineries, and event venues.** Several wineries in Albemarle and Orange Counties are RCS customers. The work is often on older buildings repurposed into tasting rooms with new water loads — we treat the gutter conversation as part of the building's adaptive reuse plan.
+**Vineyards, wineries, and event venues.** Several wineries in Albemarle and Orange Counties are RCS customers. The work is often on older buildings repurposed into tasting rooms with new water loads. We treat the gutter conversation as part of the building's adaptive reuse plan.
 
 ## Box gutters and scuppers
 
@@ -64,7 +64,7 @@ For commercial work we usually:
 4. Provide a written bid with itemized line items.
 5. Coordinate scheduling around operational constraints.
 
-We're happy to bid against other contractors. The right comparison isn't always lowest dollar — ask each bidder what gauge of metal they're using, what hanger spacing, and how they're handling drainage discharge. Apples-to-apples often shifts the math.
+We're happy to bid against other contractors. The right comparison isn't always lowest dollar. Ask each bidder what gauge of metal they're using, what hanger spacing, and how they're handling drainage discharge. Apples-to-apples often shifts the math.
 
 ## Where we do commercial work
 
@@ -72,6 +72,6 @@ All eight counties in our service area: [Charlottesville](/locations/charlottesv
 
 ## Related work
 
-- [Drainage solutions](/services/drainage-solutions/) — almost always part of a commercial install.
-- [Fascia and soffit work](/services/fascia-and-soffit/) — older commercial buildings often need repair before new gutters.
-- [Half-round gutters](/services/half-round-gutters/) — for historic commercial restorations.
+- [Drainage solutions](/services/drainage-solutions/). Almost always part of a commercial install.
+- [Fascia and soffit work](/services/fascia-and-soffit/). Older commercial buildings often need repair before new gutters.
+- [Half-round gutters](/services/half-round-gutters/). For historic commercial restorations.
