@@ -29,7 +29,7 @@ const products = (await getCollection('products')).sort(
   <section class="container-x section">
     <div class="grid lg:grid-cols-3 gap-6">
       {products.map((p) => (
-        <a href={`/products/${p.data.slug}/`} class="card p-7 block group">
+        <a href={`/products/${p.slug}/`} class="card p-7 block group">
           <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
             {p.data.priceTier} tier
           </div>

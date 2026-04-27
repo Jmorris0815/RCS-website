@@ -24,7 +24,7 @@ const services = (await getCollection('services')).sort(
   <section class="container-x section">
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {services.map((s) => (
-        <a href={`/services/${s.data.slug}/`} class="card p-7 block group">
+        <a href={`/services/${s.slug}/`} class="card p-7 block group">
           <h2 class="text-2xl font-bold mb-2 group-hover:text-brand-primary transition">
             {s.data.title}
           </h2>

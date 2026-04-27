@@ -27,7 +27,7 @@ const recent = posts.filter((p) => !p.data.isCornerstone);
       <h2 class="mb-6">Cornerstone guides</h2>
       <div class="grid md:grid-cols-2 gap-5">
         {cornerstones.map((post) => (
-          <a href={`/blog/${post.data.slug}/`} class="card p-7 block group">
+          <a href={`/blog/${post.slug}/`} class="card p-7 block group">
             <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
               {post.data.category}
             </div>
@@ -47,7 +47,7 @@ const recent = posts.filter((p) => !p.data.isCornerstone);
       <h2 class="mb-6">Recent posts</h2>
       <div class="grid md:grid-cols-3 gap-5">
         {recent.map((post) => (
-          <a href={`/blog/${post.data.slug}/`} class="card p-6 block bg-white group">
+          <a href={`/blog/${post.slug}/`} class="card p-6 block bg-white group">
             <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2 capitalize">
               {post.data.category}
             </div>

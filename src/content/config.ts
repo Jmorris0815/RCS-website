@@ -8,7 +8,6 @@ const services = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      slug: z.string(),
       tagline: z.string(),
       description: z.string(),
       hero: image().optional(),
@@ -39,7 +38,6 @@ const locations = defineCollection({
     z.object({
       city: z.string(),
       county: z.string(),
-      slug: z.string(),
       lat: z.number(),
       lng: z.number(),
       hero: image().optional(),
@@ -80,7 +78,6 @@ const products = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      slug: z.string(),
       manufacturer: z.string().default('Leaf Solution'),
       hero: image().optional(),
       heroAlt: z.string().optional(),
@@ -107,7 +104,6 @@ const caseStudies = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      slug: z.string(),
       customerCity: z.string(),
       customerCounty: z.string().optional(),
       dateCompleted: z.coerce.date(),
@@ -135,7 +131,6 @@ const posts = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      slug: z.string(),
       publishedDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       author: reference('authors'),

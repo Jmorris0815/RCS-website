@@ -22,7 +22,7 @@ const locations = (await getCollection('locations')).sort((a, b) =>
   <section class="container-x section">
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {locations.map((loc) => (
-        <a href={`/locations/${loc.data.slug}/`} class="card p-7 block group">
+        <a href={`/locations/${loc.slug}/`} class="card p-7 block group">
           <div class="text-xs font-bold uppercase text-brand-accent tracking-wider mb-2">
             {loc.data.county} County
           </div>

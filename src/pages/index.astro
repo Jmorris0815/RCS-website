@@ -8,11 +8,11 @@ import { siteConfig } from '../config/site';
 const services = (await getCollection('services'))
   .sort((a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99))
   .slice(0, 6)
-  .map((s) => ({ slug: s.data.slug, title: s.data.title, desc: s.data.tagline }));
+  .map((s) => ({ slug: s.slug, title: s.data.title, desc: s.data.tagline }));
 
 const cities = (await getCollection('locations'))
   .sort((a, b) => a.data.city.localeCompare(b.data.city))
-  .map((l) => ({ slug: l.data.slug, name: l.data.city }));
+  .map((l) => ({ slug: l.slug, name: l.data.city }));
 ---
 
 <BaseLayout
