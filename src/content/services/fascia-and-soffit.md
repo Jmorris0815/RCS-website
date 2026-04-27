@@ -60,7 +60,7 @@ Sometimes a customer calls specifically about fascia or soffit problems. Usually
 
 ## Where we work
 
-All eight counties: [Charlottesville](/locations/charlottesville/), [Albemarle](/locations/albemarle/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), and [Louisa](/locations/louisa/).
+All nine counties: [Charlottesville](/locations/charlottesville/), [Albemarle](/locations/albemarle/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), [Louisa](/locations/louisa/), and [Culpeper](/locations/culpeper/).
 
 ## Related work
 

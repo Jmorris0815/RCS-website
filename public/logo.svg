@@ -1,13 +1,24 @@
-<!-- RCS Gutters wordmark — red checkmark + italic serif. Replace with Scott's
-     vector wordmark when available; this is an honest stand-in matching the
-     branding visible on the box truck. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" role="img" aria-label="Right Choice Seamless Gutters">
-  <defs>
-    <style>
-      .check { fill: #D72027; }
-      .word { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: 700; fill: #D72027; }
-    </style>
-  </defs>
-  <path class="check" d="M6 32 L20 46 L48 14" stroke="#D72027" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <text x="60" y="42" class="word" font-size="28">Right Choice Seamless Gutters</text>
+<!-- RCS Gutters wordmark — stacked. Red checkmark + Fraunces serif wordmark.
+     Interim Claude Code design; commission a real designer for the final mark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img"
+     aria-label="Right Choice Seamless Gutters">
+  <!-- Bold geometric checkmark in brand red -->
+  <g transform="translate(8 8)">
+    <path d="M 4 34 L 22 52 L 56 12"
+          fill="none" stroke="#D72027" stroke-width="10"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Vertical divider -->
+  <line x1="80" y1="18" x2="80" y2="62" stroke="#D72027" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Wordmark stacked -->
+  <text x="94" y="40"
+        font-family="'Fraunces Variable', Fraunces, 'Times New Roman', Georgia, serif"
+        font-weight="700" font-size="22" fill="#1A1A1A"
+        letter-spacing="0.02em">RIGHT CHOICE</text>
+  <text x="94" y="62"
+        font-family="'Fraunces Variable', Fraunces, 'Times New Roman', Georgia, serif"
+        font-weight="500" font-size="11.5" fill="#4A5560"
+        letter-spacing="0.32em">SEAMLESS&#160;GUTTERS</text>
 </svg>

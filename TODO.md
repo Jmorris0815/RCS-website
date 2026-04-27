@@ -35,14 +35,14 @@ Photos still wanted (no slot present):
 - [ ] **Real cleaning crew photo.** The current `cleaning-hand-removal.jpg` is a decade-old low-res reference shot (300x227); flagged as "older reference photo" in the gallery caption.
 - [ ] **Albemarle vineyard case study** still has no hero photo wired.
 - [ ] **OG default image.** Still no `/og-default.jpg`. The strongest candidate now is the truck-jobsite-barn shot — drop a 1200x630 crop in and pass `image="/og-default.jpg"` from `BaseLayout`.
-- [ ] **Real logo.** `public/logo.svg` is the placeholder red checkmark + Times New Roman wordmark. Replace with Scott's actual wordmark.
+- [ ] **Final logo design.** `public/logo.svg`, `public/logo-horizontal.svg`, `public/logo-mark.svg`, and `public/favicon.svg` are now Claude Code-designed in-code SVGs (red checkmark + Fraunces serif wordmark in stacked and horizontal variants, plus a red-square mark for favicon and tight UI). Real upgrade over the original placeholder, but Scott may still want to commission a real designer ($100-300 on Fiverr or similar) for the launch mark — particularly to match the wave-style checkmark visible on the box truck.
 - [ ] **Per-location hero photos.** All 8 location pages currently use a decorative `ai-slot` background. As Scott shoots one signature job per city — Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, Louisa — drop the photo into `public/images/jobs/locations/` and replace the slot in `src/pages/locations/[slug].astro` (the hero section's first `<div class="absolute inset-0 ai-slot">`).
 - [ ] **Two service-tile slots** on the home page — Half-Round and Commercial currently render as `ai-slot` because we have no clean photos. Tiles in `src/pages/index.astro` `tiles` array, `aiSlot` prop.
 - [ ] **Process steps 2 + 3** (Written quote, Schedule) — currently `ai-slot` with calendar/document icons. Could remain as-is (they're abstract concepts) or get real photos of Scott handing a quote, etc.
 - [ ] **Albemarle vineyard case study** still has no hero photo wired.
 - [ ] **The 3 manual photos** referenced in earlier briefs (RCS truck, residential white half-round downspout, commercial flat-roof gutter) were never present at `public/images/jobs/manual-{1,2,3}.jpg`. Drop them in and they can backfill the home-page tiles + about-page trust block.
 - [ ] **OG default image.** No `/og-default.jpg` — social-share previews lack thumbnails. Drop a 1200×630 JPG; passing `image="/og-default.jpg"` from `BaseLayout` (or page-by-page) will opt back in.
-- [ ] **Real logo.** `public/logo.svg` is the placeholder red checkmark + Times New Roman wordmark. Replace with Scott's actual wordmark.
+- [ ] **Final logo design.** `public/logo.svg`, `public/logo-horizontal.svg`, `public/logo-mark.svg`, and `public/favicon.svg` are now Claude Code-designed in-code SVGs (red checkmark + Fraunces serif wordmark in stacked and horizontal variants, plus a red-square mark for favicon and tight UI). Real upgrade over the original placeholder, but Scott may still want to commission a real designer ($100-300 on Fiverr or similar) for the launch mark — particularly to match the wave-style checkmark visible on the box truck.
 
 ## Image-gen note
 

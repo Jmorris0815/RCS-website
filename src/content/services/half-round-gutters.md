@@ -54,11 +54,15 @@ A K-style installer who doesn't normally do half-round will often improvise. The
 
 Some historic homes don't actually have hung gutters at all. They have built-in or "box" gutters integrated into the cornice trim of the roof. These are a different beast: usually wood-framed, lined originally with tin or copper, and prone to leaking when the lining fails.
 
-We restore built-in gutters with new EPDM or copper liners. We don't sleeve a new aluminum K-style or half-round over the top of a failed box gutter, because that destroys the historic profile. If you have a 1900s downtown home with original box gutters, we'll walk you through restoration vs. replacement honestly.
+We restore built-in gutters with new EPDM or copper liners. We don't sleeve a new aluminum K-style or half-round over the top of a failed box gutter, because that destroys the historic profile. If you have a 1900s downtown home with original box gutters, we'll walk you through restoration vs. replacement honestly. (Culpeper's Main Street has dozens of these; we have a working approach for them.)
+
+## Snow guards on metal-roof half-round installs
+
+A real subset of half-round work happens on architect-designed homes with standing-seam metal roofs. Particularly out toward Crozet, Free Union, and the western edge of Madison. The metal roof slides snow in heavy slabs every winter, and a half-round trough catches that slab less forgivingly than a K-style. We install snow guards in staggered rows above the gutter line on every metal-roof half-round install. Bronze or copper guards on copper systems, painted aluminum on aluminum.
 
 ## Where we do half-round work
 
-Concentrated in the older parts of our service area: the historic districts of [Charlottesville](/locations/charlottesville/) and [Orange](/locations/orange/), the architecturally distinctive homes of western [Albemarle](/locations/albemarle/) (Crozet, Free Union, Ivy), and the retreat properties scattered across [Madison](/locations/madison/) and [Greene](/locations/greene/) Counties.
+Concentrated in the older parts of our service area: the historic districts of [Charlottesville](/locations/charlottesville/), [Orange](/locations/orange/), and [Culpeper](/locations/culpeper/); the architecturally distinctive homes of western [Albemarle](/locations/albemarle/) (Crozet, Free Union, Ivy); and the retreat properties scattered across [Madison](/locations/madison/) and [Greene](/locations/greene/) Counties.
 
 ## Related work
 

@@ -79,7 +79,7 @@ A lot of our cleaning customers prefer a scheduled twice-a-year service. We put 
 
 ## Where we clean
 
-[Charlottesville](/locations/charlottesville/), [Albemarle](/locations/albemarle/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), and [Louisa](/locations/louisa/) County. Same pricing structure across the entire service area.
+[Charlottesville](/locations/charlottesville/), [Albemarle](/locations/albemarle/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), [Louisa](/locations/louisa/), and [Culpeper](/locations/culpeper/) County. Same pricing structure across the entire service area.
 
 ## Related work
 

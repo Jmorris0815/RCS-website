@@ -26,7 +26,7 @@ seoDescription: "Authorized Leaf Solution dealer for Xtreme stainless steel micr
 
 ## Why Xtreme is our most-installed guard
 
-Across the eight Central Virginia counties we serve, more homes get Xtreme than any other gutter guard product we carry. The reason is the debris profile of our service area: pine, oak, sycamore, walnut, and tulip poplar in various combinations. Of the products on the market, Xtreme is the one we've seen consistently survive that mix for a decade or more.
+Across the nine Central Virginia counties we serve, more homes get Xtreme than any other gutter guard product we carry. The reason is the debris profile of our service area: pine, oak, sycamore, walnut, and tulip poplar in various combinations. Of the products on the market, Xtreme is the one we've seen consistently survive that mix for a decade or more.
 
 The product is straightforward in concept: surgical-grade stainless steel micro-mesh stretched across an aluminum frame that mounts onto your gutter. The mesh apertures are small enough to block small debris (down to roof grit and shingle granules) while letting water flow through at rates up to 60 gallons per minute.
 

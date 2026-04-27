@@ -35,6 +35,8 @@ const homeFaqs = [
     answer: "Yes, we are fully insured and operate as a Virginia-licensed contractor. License number is currently being updated; full credentials are available on request and will appear in the site footer once finalized." },
   { question: 'How do I know if my gutters need replacing vs just repair?',
     answer: 'Sagging mid-runs, pulled hangers, water sheeting over the front during storms, fascia rot behind the gutter, or visible separation at the corners usually mean replacement is the right call. If the gutters are .032 aluminum and structurally sound, repair is often cheaper. We tell you straight at the estimate which one your home needs.' },
+  { question: 'Do you install snow guards on metal roofs?',
+    answer: "Yes, on every metal-roof job that needs them. Standing-seam and ribbed-metal roofs slide snow in heavy slabs that catch on the gutter and rip whole sections off the house. Our standard metal-roof install includes snow guards mounted in staggered rows above the gutter line plus tightened hanger spacing (18 inches instead of our usual 24). We won't hang gutters on a standing-seam roof in Madison, Albemarle, or Culpeper farm country without that conversation up front." },
 ];
 
 // 6 service tile entries. 2 large (top row), 4 small (bottom row)
@@ -142,7 +144,7 @@ const steps = [
         <li class="hidden md:block w-px h-4 bg-line" aria-hidden="true"></li>
         <li class="flex items-center gap-2">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          Serving 8 Central VA counties
+          Serving 9 Central VA counties
         </li>
         <li class="hidden md:block w-px h-4 bg-line" aria-hidden="true"></li>
         <li class="flex items-center gap-2">
@@ -155,7 +157,7 @@ const steps = [
 
   <!-- ═══════════════════ 2. STATS STRIP ═══════════════════ -->
   <section class="bg-brand-cream">
-    <div class="container-x py-14 grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-4 text-center reveal">
+    <div class="container-x py-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-8 gap-x-4 text-center reveal">
       <div>
         <div class="font-display text-5xl md:text-6xl font-semibold text-brand-primary leading-none tabular-nums">
           <span data-count-to="12" data-count-dur="1400">0</span><span>+</span>
@@ -164,7 +166,7 @@ const steps = [
       </div>
       <div>
         <div class="font-display text-5xl md:text-6xl font-semibold text-brand-primary leading-none tabular-nums">
-          <span data-count-to="8" data-count-dur="1200">0</span>
+          <span data-count-to="9" data-count-dur="1200">0</span>
         </div>
         <div class="text-[13px] text-brand-warm-gray uppercase tracking-wider mt-2">Counties served</div>
       </div>
@@ -186,6 +188,20 @@ const steps = [
         </div>
         <div class="text-[13px] text-brand-warm-gray uppercase tracking-wider mt-2">Locally owned</div>
       </div>
+      <a
+        href="https://www.homeadvisor.com/rated.RightChoiceSeamless.42532376.html"
+        target="_blank" rel="noopener nofollow"
+        class="group block hover:scale-[1.02] transition-transform"
+      >
+        <div class="flex items-baseline gap-1 justify-center font-display text-5xl md:text-6xl font-semibold text-brand-primary leading-none tabular-nums">
+          <span>4.7</span>
+          <span class="text-brand-gold text-3xl md:text-4xl" aria-hidden="true">★</span>
+        </div>
+        <div class="text-[13px] text-brand-warm-gray uppercase tracking-wider mt-2">
+          <span class="tabular-nums">217</span> verified reviews
+          <span class="block text-[10px] text-brand-warm-gray/80 group-hover:text-brand-primary transition-colors">on HomeAdvisor →</span>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -404,7 +420,7 @@ const steps = [
       <div class="text-center max-w-2xl mx-auto mb-10 reveal">
         <span class="section-divider mx-auto"></span>
         <p class="kicker mb-3">Service area</p>
-        <h2 class="text-balance">Eight Central Virginia counties we know by heart</h2>
+        <h2 class="text-balance">Nine Central Virginia counties we know by heart</h2>
         <p class="text-ink-muted mt-4">
           Same pricing across our entire service area. Average response time from our Barboursville shop to most addresses: 30-45 minutes.
         </p>
@@ -462,40 +478,46 @@ const steps = [
     </div>
   </section>
 
-  <!-- ═══════════════════ 9. SOCIAL PROOF ═══════════════════ -->
+  <!-- ═══════════════════ 9. SOCIAL PROOF — HomeAdvisor headline ═══════════════════ -->
   <section class="section bg-brand-cream border-y border-line">
-    <div class="container-x text-center reveal">
-      <p class="kicker mb-4">Independent reviews</p>
-      <h2 class="text-balance mb-8 max-w-3xl mx-auto">We don't post our own testimonials. Read what real customers say.</h2>
-      <p class="text-ink-muted mb-10 max-w-2xl mx-auto">
-        We've decided not to surface curated quotes on this site until every quote has explicit customer permission. In the meantime, here's where you can read independent reviews of our work:
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-3 md:gap-5">
-        <a href="#" class="card px-6 py-4 flex items-center gap-3 hover-lift" rel="noopener">
-          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-            <path fill="#4285F4" d="M22.5 12.3c0-.79-.07-1.54-.2-2.27H12v4.3h5.92a5.07 5.07 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.27-4.74 3.27-8.11z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.99.66-2.25 1.06-3.72 1.06-2.86 0-5.29-1.93-6.15-4.53H2.18v2.84A11 11 0 0 0 12 23z"/>
-            <path fill="#FBBC05" d="M5.85 14.11A6.6 6.6 0 0 1 5.5 12c0-.74.13-1.46.35-2.11V7.05H2.18A11 11 0 0 0 1 12c0 1.78.42 3.46 1.18 4.95l3.67-2.84z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.55 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.05l3.67 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
-          </svg>
-          <span class="font-semibold text-brand-charcoal">Google Business</span>
-          <span class="text-xs text-brand-warm-gray">Read reviews →</span>
-        </a>
-        <a href="#" class="card px-6 py-4 flex items-center gap-3 hover-lift" rel="noopener">
-          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="#D32323">
-            <path d="M12 2c-2.5 0-4.7 1-6.4 2.6C3.9 6.3 3 8.5 3 11s.9 4.7 2.6 6.4C7.3 19.1 9.5 20 12 20s4.7-.9 6.4-2.6C20.1 15.7 21 13.5 21 11s-.9-4.7-2.6-6.4C16.7 3 14.5 2 12 2zm-1 5h2v6h-2V7zm0 8h2v2h-2v-2z"/>
-          </svg>
-          <span class="font-semibold text-brand-charcoal">Yelp</span>
-          <span class="text-xs text-brand-warm-gray">Read reviews →</span>
-        </a>
-        <a href="#" class="card px-6 py-4 flex items-center gap-3 hover-lift" rel="noopener">
-          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="#FA3913">
-            <path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-          </svg>
-          <span class="font-semibold text-brand-charcoal">Angi (HomeAdvisor)</span>
-          <span class="text-xs text-brand-warm-gray">Read reviews →</span>
-        </a>
+    <div class="container-x reveal">
+      <div class="text-center mb-10">
+        <p class="kicker mb-4">Independent reviews</p>
+        <h2 class="text-balance max-w-3xl mx-auto">We don't post our own testimonials. Real customers do that for us.</h2>
       </div>
+
+      <!-- Headline platform: HomeAdvisor — real, verified, scraped from the live page -->
+      <a
+        href="https://www.homeadvisor.com/rated.RightChoiceSeamless.42532376.html"
+        target="_blank" rel="noopener nofollow"
+        class="block max-w-3xl mx-auto card p-7 md:p-9 hover-lift group"
+      >
+        <div class="grid md:grid-cols-12 items-center gap-6 md:gap-8">
+          <div class="md:col-span-3 text-center md:text-left">
+            <div class="flex items-baseline justify-center md:justify-start gap-2">
+              <span class="font-display text-7xl font-semibold text-brand-primary leading-none tabular-nums">4.7</span>
+              <span class="text-brand-gold text-3xl" aria-hidden="true">★</span>
+            </div>
+            <div class="text-sm text-brand-warm-gray mt-2"><span class="tabular-nums font-semibold text-brand-charcoal">217</span> verified reviews</div>
+          </div>
+          <div class="md:col-span-9 text-center md:text-left">
+            <div class="flex items-center justify-center md:justify-start gap-2 mb-2 text-[11px] uppercase tracking-[0.18em] text-brand-warm-gray font-bold">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="#FA3913" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              <span>Right Choice Seamless Gutters · HomeAdvisor</span>
+            </div>
+            <p class="text-fluid-base text-brand-charcoal leading-relaxed">
+              4.74 out of 5 stars across 217 verified jobs. We don't curate the page; HomeAdvisor does the verification.
+              <span class="block text-brand-primary group-hover:text-brand-red-deep font-semibold mt-2 transition-colors">
+                Read every review on HomeAdvisor →
+              </span>
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <p class="text-center text-xs text-brand-warm-gray mt-6">
+        We post no on-site testimonials until each customer's permission is on file. In the meantime, the HomeAdvisor page above is the unfiltered record.
+      </p>
     </div>
   </section>
 

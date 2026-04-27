@@ -15,8 +15,10 @@ faqs:
     answer: "Yes. We carry the standard color line (white, almond, musket brown, terratone, royal brown, black, and a few others) plus we can special-order. We'll bring color samples to the estimate and hold them up against your trim and siding."
   - question: "Do I need 5-inch or 6-inch K-style?"
     answer: "Depends on your roof area and steepness. Most homes under 2,000 sq ft work fine with 5-inch K-style. Anything larger, anything with steep roof pitches, anything with valleys that funnel water to one corner, and anything in heavy-tree zones benefits from 6-inch. We measure and tell you straight which is right."
+  - question: "Do you install snow guards on metal roofs?"
+    answer: "Yes, on every metal-roof job that needs them. Standing-seam and ribbed-metal roofs slide snow in heavy slabs that catch on the gutter and rip whole sections off the house. Our standard metal-roof install includes snow guards mounted in staggered rows above the gutter line plus tightened hanger spacing (18 inches instead of our usual 24). We won't hang gutters on a standing-seam roof without that conversation up front."
 seoTitle: "Seamless Gutter Installation | Charlottesville & Central VA | RCS Gutters"
-seoDescription: ".032 aluminum, hidden hangers, custom-extruded on site. Seamless gutter installation across Albemarle, Orange, Madison, Greene, Fluvanna, and Louisa County, Virginia."
+seoDescription: ".032 aluminum, hidden hangers, custom-extruded on site. Seamless gutter installation across Albemarle, Orange, Madison, Greene, Fluvanna, Louisa, and Culpeper counties in Virginia. Snow guards on metal-roof homes."
 ---
 
 ## What we mean by "seamless"
@@ -52,9 +54,21 @@ We come to your home, walk every roof edge, measure runs and corners, count down
 
 No high-pressure sales, no "today only" pricing. The price we quote on Tuesday is the same price the following Tuesday.
 
+## Snow guards for metal-roof homes
+
+If your home has a standing-seam, ribbed-metal, or corrugated-metal roof, the install changes meaningfully. Slick metal sheds snow in heavy sliding slabs every winter, and a slab catching the front of an unprotected gutter can rip the entire run off the fascia in one event. We see this every February on Madison, Albemarle, and Culpeper farmhouses where a previous installer skipped the snow-guard conversation.
+
+Our standard metal-roof install includes:
+
+- **Snow guards in staggered rows** mounted to the roof above the gutter line. The pattern depends on roof pitch and slab length; we typically run two to three offset rows so any sliding slab gets broken up into smaller pieces before it reaches the gutter edge.
+- **Hanger spacing tightened** from our usual 24 inches to 18 inches, with extra fasteners on the windward side for ridge-top properties.
+- **Reinforced gutter bracketing** at known slide zones (typically the downhill-facing slope) so the gutter has additional support where snow will pile up.
+
+Snow guards are inexpensive next to the cost of replacing torn-off gutters and damaged fascia mid-winter. We won't quote a standing-seam metal-roof install without including them.
+
 ## Where we install
 
-We install seamless gutters across all eight Central Virginia counties we serve: [Charlottesville](/locations/charlottesville/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), [Louisa](/locations/louisa/), and [Albemarle](/locations/albemarle/) County. Same pricing, same spec, same crew across the entire service area.
+We install seamless gutters across all nine Central Virginia counties we serve: [Charlottesville](/locations/charlottesville/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), [Louisa](/locations/louisa/), [Albemarle](/locations/albemarle/), and [Culpeper](/locations/culpeper/) County. Same pricing, same spec, same crew across the entire service area.
 
 ## Common companion services
 

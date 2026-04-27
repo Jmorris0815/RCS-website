@@ -39,7 +39,7 @@ Most "commercial" gutter work is closer to specialty residential than to true co
 
 **Agricultural.** Horse barns, run-in sheds, machinery sheds, hay barns, riding rings. Single-slope and gable structures with long runs. We size up downspouts and almost always discharge underground.
 
-**Light industrial.** Small manufacturers, warehouses, contractor shops. Often metal roofing, often standing-seam, often with snow-load considerations.
+**Light industrial.** Small manufacturers, warehouses, contractor shops. Often metal roofing, often standing-seam, often with snow-load considerations. Standing-seam metal sheds snow in heavy slabs and we install staggered snow guards above any commercial gutter line on a metal-roof building.
 
 **HOA and common-area.** Pool houses, clubhouses, gatehouses, maintenance buildings. We coordinate with HOA boards on color matching and submission requirements.
 
@@ -66,9 +66,13 @@ For commercial work we usually:
 
 We're happy to bid against other contractors. The right comparison isn't always lowest dollar. Ask each bidder what gauge of metal they're using, what hanger spacing, and how they're handling drainage discharge. Apples-to-apples often shifts the math.
 
+## Snow guards on metal-roof commercial buildings
+
+Light industrial, agricultural, and many newer church and HOA buildings use standing-seam metal roofing. Metal sheds snow in heavy slabs, and a slab catching the front of a 6-inch K-style commercial gutter can pull a 60-foot run loose in one event. We install snow guards in staggered rows above the gutter line on every metal-roof commercial install. The bracket pattern depends on roof pitch and slab length; we typically run two to three offset rows on commercial pitches. Same logic that applies to residential metal-roof installs, scaled to commercial gutter sizes and bracket loads.
+
 ## Where we do commercial work
 
-All eight counties in our service area: [Charlottesville](/locations/charlottesville/), [Albemarle](/locations/albemarle/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), and [Louisa](/locations/louisa/).
+All nine counties in our service area: [Charlottesville](/locations/charlottesville/), [Albemarle](/locations/albemarle/), [Barboursville](/locations/barboursville/), [Orange](/locations/orange/), [Madison](/locations/madison/), [Greene](/locations/greene/), [Fluvanna](/locations/fluvanna/), [Louisa](/locations/louisa/), and [Culpeper](/locations/culpeper/).
 
 ## Related work
 
