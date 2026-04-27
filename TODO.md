@@ -23,19 +23,18 @@ Living list. Tackle top-down. Keep entries terse — link to the relevant file o
 
 The site currently uses 5 cropped jobsite photos (extracted from Scott's old Rhino-era ads — Scott was on the Rhino crew, all branding stripped) plus 6 Leaf Solution dealer assets. Where no honest photo fit, decorative AI-slots are used and clearly labeled:
 
-- [x] ~~**Scott's portrait**~~ — wired. Real headshot lives at `public/images/team/scott.{jpg,webp,avif}` and renders in the homepage owner-intro section.
-- [ ] **RCS-branded parts diagram** — slot expected at `public/images/products/rcs-parts-diagram.jpg`, intended to replace the Leaf Solution panel-line diagrams on the products hub and the gutter-guards service page. File not present in repo as of this commit; product pages still show the Leaf Solution dealer diagrams.
-- [ ] **Truck + jobsite photos** — slots expected at `public/images/jobs/truck-jobsite-barn.jpg` (home hero or about hero) and `public/images/jobs/truck-shop.jpg` (about secondary or homepage trust strip). Neither file is present yet, so the home hero still uses the Leaf Solution corner-miter shot and the about page has no hero photo.
+- [x] ~~**Scott's portrait**~~ — wired. Lives at `public/images/team/scott.{jpg,webp,avif}` and renders in the homepage owner-intro section.
+- [x] ~~**RCS-branded parts diagram**~~ — wired. Lives at `public/images/products/rcs-parts-diagram.{jpg,webp,avif}` and renders in a labeled-house section on the `/products/` hub. (Note: the diagram itself is AI-generated; it's a clearly-illustrated reference, not a real photograph. Replace later if Scott commissions a vector version.)
+- [x] ~~**Truck photos**~~ — both wired. `truck-jobsite-barn.{jpg,webp,avif}` is the home hero. `truck-commercial-flatroof.{jpg,webp,avif}` is the about-page hero.
+- [x] ~~**Inbox sort**~~ — `public/images/Inbox/` is now empty. 13 photos sorted into permanent locations, 1 (Screenshot) skipped. See `scripts/sort-inbox.mjs` for the explicit name → destination map.
 
-### Raw photo inbox (gitignored — review and rename before wiring)
+Photos still wanted (no slot present):
 
-There's a local `public/images/Inbox/` directory with raw photos staged for review (gitignored, so they don't ship to Vercel until moved). Candidates I noticed:
-- `gutters box truck.jpg` — likely fits the `truck-jobsite-barn.jpg` slot
-- `Right choice gutters.jpg` — may be the RCS brand asset / parts diagram source
-- `man-cleaning-gutter.jpg`, `downspouts.jpg`, several `copper-gutter-installation*.jpg` and `new-home-gutter-installation*.jpg` shots
-- A couple of generated/screenshot images that probably shouldn't ship
-
-To use any of these: rename + crop to the slot's expected filename, drop into the appropriate `public/images/` subfolder (which is tracked), and re-run the build. The `scripts/generate-hero-formats.mjs` script will produce AVIF/WebP variants.
+- [ ] **Per-location hero photos.** All 8 location pages still use a decorative `ai-slot` background. As Scott shoots one signature job per city, drop into `public/images/jobs/locations/<city>.jpg` and replace the slot in `src/pages/locations/[slug].astro`.
+- [ ] **Real cleaning crew photo.** The current `cleaning-hand-removal.jpg` is a decade-old low-res reference shot (300x227); flagged as "older reference photo" in the gallery caption.
+- [ ] **Albemarle vineyard case study** still has no hero photo wired.
+- [ ] **OG default image.** Still no `/og-default.jpg`. The strongest candidate now is the truck-jobsite-barn shot — drop a 1200x630 crop in and pass `image="/og-default.jpg"` from `BaseLayout`.
+- [ ] **Real logo.** `public/logo.svg` is the placeholder red checkmark + Times New Roman wordmark. Replace with Scott's actual wordmark.
 - [ ] **Per-location hero photos.** All 8 location pages currently use a decorative `ai-slot` background. As Scott shoots one signature job per city — Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, Louisa — drop the photo into `public/images/jobs/locations/` and replace the slot in `src/pages/locations/[slug].astro` (the hero section's first `<div class="absolute inset-0 ai-slot">`).
 - [ ] **Two service-tile slots** on the home page — Half-Round and Commercial currently render as `ai-slot` because we have no clean photos. Tiles in `src/pages/index.astro` `tiles` array, `aiSlot` prop.
 - [ ] **Process steps 2 + 3** (Written quote, Schedule) — currently `ai-slot` with calendar/document icons. Could remain as-is (they're abstract concepts) or get real photos of Scott handing a quote, etc.

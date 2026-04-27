@@ -1,0 +1,42 @@
+---
+// Generic picture wrapper that emits AVIF + WebP + JPEG sources from a single
+// public-path. Prefer this over <img> when the photo has been pre-processed by
+// scripts/generate-all-formats.mjs.
+
+export interface Props {
+  src: string; // full path including .jpg, e.g. "/images/jobs/foo.jpg"
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+  src,
+  alt,
+  class: className = '',
+  width,
+  height,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+} = Astro.props;
+
+const base = src.replace(/\.(jpg|jpeg|png)$/i, '');
+---
+
+<picture>
+  <source srcset={`${base}.avif`} type="image/avif" />
+  <source srcset={`${base}.webp`} type="image/webp" />
+  <img
+    src={src}
+    alt={alt}
+    class={className}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+  />
+</picture>

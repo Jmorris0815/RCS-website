@@ -50,7 +50,7 @@ seoDescription: "Pine-resistant gutter guards, seamless installation, and cleani
 
 You can't have an honest gutter conversation in Greene County without talking about pine trees. Loblolly, Virginia, and white pine cover huge swaths of the county. Planted as timber crops decades ago, regenerated naturally on old pasture, or kept as windbreaks around farmhouses. Their needles fall continuously, bypass standard screen guards, and form a wet mat at the bottom of any gutter without a real solution in place.
 
-Most Greene homeowners we meet have already tried something. Foam inserts, drop-in screens, brush guards. And watched it fail within a season or two. Their next call is usually to us.
+Most Greene homeowners we meet have already tried something — foam inserts, drop-in screens, brush guards — and watched it fail within a season or two. Their next call is usually to us.
 
 **Our standard recommendation in Greene** is stainless steel micro-mesh. Xtreme is our most-installed product here for that reason. The mesh is fine enough to shed pine needles instead of trapping them, and the stainless construction handles the corrosive sap film better than aluminum mesh.
 

@@ -1,23 +1,41 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LocalBusinessSchema from '../components/schemas/LocalBusinessSchema.astro';
+import PictureHero from '../components/PictureHero.astro';
 import { siteConfig } from '../config/site';
 ---
 
 <BaseLayout
   title="About Right Choice Seamless Gutters | Family-Owned Central VA Gutter Company"
   description="Family-owned and operated seamless gutter installer in Barboursville, VA. Authorized Leaf Solution dealer serving Charlottesville and surrounding counties. Meet Scott and the RCS crew."
+  heroImage="/images/jobs/truck-commercial-flatroof.jpg"
 >
   <LocalBusinessSchema slot="head" />
 
   <section class="container-x section-tight">
-    <p class="kicker mb-2">
-      About RCS
-    </p>
-    <h1 class="mb-4">Family-owned. Locally rooted. Built for the long run.</h1>
-    <p class="text-fluid-lg text-ink-muted max-w-3xl">
-      We're a small Central Virginia gutter company that has been doing this work the right way since {siteConfig.foundingYear}. No franchise pressure, no commission-driven sales, no products we wouldn't put on our own homes.
-    </p>
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-6 reveal">
+        <p class="kicker mb-2">About RCS</p>
+        <h1 class="mb-5 text-balance">Family-owned. Locally rooted. Built for the long run.</h1>
+        <span class="hero-underline !mt-0 mb-6"></span>
+        <p class="text-fluid-lg text-ink-muted leading-relaxed">
+          We're a small Central Virginia gutter company that has been doing this work the right way since {siteConfig.foundingYear}. No franchise pressure, no commission-driven sales, no products we wouldn't put on our own homes.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/quote/" class="btn-primary">Request a Quote</a>
+          <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary">Call {siteConfig.phoneDisplay}</a>
+        </div>
+      </div>
+      <div class="lg:col-span-6 reveal">
+        <PictureHero
+          base="/images/jobs/truck-commercial-flatroof"
+          alt="RCS Gutters truck on a commercial flat-roof job site, new aluminum K-style gutter run installed along the roofline"
+          class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[4/3]"
+          loading="eager" fetchpriority="high"
+          width={1100} height={825}
+        />
+      </div>
+    </div>
   </section>
 
   <section class="container-x section grid lg:grid-cols-2 gap-10 items-center">
@@ -29,7 +47,7 @@ import { siteConfig } from '../config/site';
       <p>
         We're based in Barboursville, in the small village that gives us our shop address. Most of us live within a thirty-minute drive of the shop. When we tell you we're "local," we mean we run into our customers at the gas station, at the school carpool line, and at the coffee shop downtown. That accountability is the whole reason a small gutter company can compete with the national franchises that throw bigger ad budgets at the market.
       </p>
-      <h2>What we do. And don't</h2>
+      <h2>What we do, and what we don't</h2>
       <p>
         We install seamless gutters. We clean gutters. We install Leaf Solution gutter guards as authorized dealers. We do fascia and soffit work because most gutter jobs need it. We design and install the drainage that takes water away from your foundation. We do half-round and copper restoration on historic homes. We do commercial work on retail, agricultural, and church properties.
       </p>

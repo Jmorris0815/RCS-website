@@ -48,7 +48,7 @@ seoDescription: "Seamless gutters, snow-load reinforcement, and Leaf Solution gu
 
 ## Why Madison is its own kind of gutter work
 
-Most of our Madison jobs aren't off a paved subdivision road. They're up gravel drives, behind cattle gates, or on family land that has had the same gutter system since the Reagan administration. The work is great. And the problems are different from anywhere else we go.
+Most of our Madison jobs aren't off a paved subdivision road. They're up gravel drives, behind cattle gates, or on family land that has had the same gutter system since the Reagan administration. The work is great, and the problems are different from anywhere else we go.
 
 **Snow and ice are a real factor.** A standing-seam metal roof at 800 feet of elevation drops snow in heavy slabs. If your gutter is a standard hanger-every-32-inches install, those slabs will pull entire sections off the house. We install snow guards on the roof above the gutter line and tighten our hanger spacing on any metal-roof Madison job.
 

@@ -1,0 +1,222 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { siteConfig } from '../config/site';
+
+// Every gallery item has: src, alt (describing what's in the photo), category.
+// Categories drive the filter button group below.
+type Cat = 'installs' | 'cleanings' | 'guards' | 'trucks' | 'before-after';
+interface Item { src: string; alt: string; cat: Cat; note?: string }
+
+const items: Item[] = [
+  // Trucks & Crew (lead — strongest brand photo, 1280px source)
+  { src: '/images/jobs/truck-jobsite-barn.jpg', cat: 'trucks',
+    alt: 'RCS Gutters branded box truck parked in front of a Central Virginia red-roof barn, full RCS wrap visible' },
+
+  // Installs (lead with a stunning high-res shot)
+  { src: '/images/jobs/install-copper-federal-brick.jpg', cat: 'installs',
+    alt: 'Federal-style red brick three-story home with newly installed copper gutters and downspouts' },
+  { src: '/images/jobs/truck-commercial-flatroof.jpg', cat: 'trucks',
+    alt: 'RCS truck on a commercial flat-roof job site, new aluminum K-style gutter run installed along the roofline' },
+  { src: '/images/team/scott.jpg', cat: 'trucks',
+    alt: 'Scott, founder and lead installer at Right Choice Seamless Gutters, in his shop' },
+
+  // Installs (real RCS work)
+  { src: '/images/jobs/install-copper-brick-home.jpg', cat: 'installs',
+    alt: 'Brick colonial home with new copper gutters, dormer trim, and matching downspouts' },
+  { src: '/images/jobs/install-downspout-sage-clapboard.jpg', cat: 'installs',
+    alt: 'Newly installed white K-style gutter and downspout running down a sage-green clapboard wall on a new-construction home' },
+  { src: '/images/jobs/install-soffit-detail.jpg', cat: 'installs',
+    alt: 'Soffit and roof-line detail showing a newly installed white K-style aluminum gutter against blue sky' },
+  { src: '/images/jobs/install-modern-board-batten.jpg', cat: 'installs',
+    alt: 'Modern board-and-batten home with dark-bronze metal roof and new black gutters under construction' },
+  { src: '/images/jobs/install-dark-clad-barn.jpg', cat: 'installs',
+    alt: 'Dark-clad barn-style new construction home with standing-seam metal roof and matching dark gutters' },
+  { src: '/images/jobs/install-gray-ranch.jpg', cat: 'installs',
+    alt: 'Gray rural ranch home in a wooded lot with new gutters and a covered back porch' },
+  { src: '/images/jobs/install-gray-ranch-screened-porch.jpg', cat: 'installs',
+    alt: 'Gray ranch home with screened porch addition and new gutters around the new roofline' },
+  { src: '/images/jobs/install-brick-and-blue-siding.jpg', cat: 'installs',
+    alt: 'Older red-brick home with light-blue side addition and new white gutters' },
+
+  // Gutter Guards (Leaf Solution dealer photos + parts diagram)
+  { src: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg', cat: 'guards',
+    alt: 'Leaf Solution corner-miter gutter guard installed on a shingle roof with autumn-yellow trees in the background' },
+  { src: '/images/products/straight-miter-fall-background.jpg', cat: 'guards',
+    alt: 'Leaf Solution straight-miter gutter guard installed along a shingle roof above a fall-leafed lawn' },
+  { src: '/images/products/ELS-miter-installed-wide_white.jpg', cat: 'guards',
+    alt: "Evelyn's Leaf Solution corner miter installed on a rural Virginia home with a white fence and green pasture" },
+  { src: '/images/products/rcs-parts-diagram.jpg', cat: 'guards',
+    alt: 'RCS Gutters parts diagram showing end cap, outside miter, gutter guard, straight miter, inside miter, inside bay miter, outside bay miter, and downspout cap labeled on a sample home',
+    note: 'Reference diagram (illustrated) showing the parts of a complete seamless system' },
+
+  // Cleanings (and the damage that cleaning prevents)
+  { src: '/images/jobs/clogged-leaves.jpg', cat: 'cleanings',
+    alt: 'Shingle-roof gutter packed with red, brown, and yellow autumn leaves, one yellow leaf falling onto the roof' },
+  { src: '/images/jobs/cleaning-hand-removal.jpg', cat: 'cleanings',
+    alt: 'Person sitting on a shingle roof reaching down to hand-clear leaves out of a packed gutter',
+    note: 'Older reference photo (low resolution); TODO swap for a current crew shot' },
+  { src: '/images/jobs/attic-water-damage.jpg', cat: 'cleanings',
+    alt: 'Wet, sagging brown attic insulation hanging off cracked masonry where water leaked in from failing gutters' },
+  { src: '/images/jobs/rotted-roof-deck.jpg', cat: 'cleanings',
+    alt: 'Mold-stained roof deck and rafter joists viewed from below, where chronic water from clogged gutters caused rot' },
+  { src: '/images/jobs/gutter-pulling-away.jpg', cat: 'cleanings',
+    alt: 'Failed older vinyl gutter pulling away from the fascia with sagging end cap, before replacement' },
+
+  // Before / After
+  { src: '/images/jobs/before-after-cleaning.jpg', cat: 'before-after',
+    alt: 'Before-and-after split: gutter packed with brown leaves on the left, clean Leaf Solution guard installed on the right' },
+];
+
+// Group counts for filter button labels
+const counts = items.reduce<Record<string, number>>((acc, it) => {
+  acc[it.cat] = (acc[it.cat] || 0) + 1;
+  acc.all = (acc.all || 0) + 1;
+  return acc;
+}, {});
+
+const filters: { id: Cat | 'all'; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'installs', label: 'Installs' },
+  { id: 'cleanings', label: 'Cleanings' },
+  { id: 'guards', label: 'Gutter Guards' },
+  { id: 'trucks', label: 'Trucks & Crew' },
+  { id: 'before-after', label: 'Before / After' },
+];
+---
+
+<BaseLayout
+  title="Gallery | Real RCS Gutters Work in Central Virginia"
+  description="Photos of real seamless gutter installs, cleanings, Leaf Solution guard installations, and the RCS truck on jobs across Central Virginia. Filter by category."
+  heroImage={items[0].src}
+>
+  <!-- Hero -->
+  <section class="container-x section-tight">
+    <div class="max-w-3xl reveal">
+      <p class="kicker mb-3">Our Work</p>
+      <h1 class="mb-5 text-balance">Real RCS jobs across Central Virginia.</h1>
+      <span class="hero-underline !mt-0"></span>
+      <p class="text-fluid-lg text-ink-muted leading-relaxed mt-6">
+        Installs, cleanings, gutter-guard projects, and the truck on the road. Filter by category, click any photo to see it full-size.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter button group -->
+  <section class="container-x">
+    <div
+      class="flex flex-wrap gap-2 sticky top-16 z-30 bg-white/92 backdrop-blur py-3 -mx-2 px-2 rounded-lg"
+      role="tablist"
+      aria-label="Filter gallery by category"
+      data-gallery-filter
+    >
+      {filters.map((f, i) => (
+        <button
+          type="button"
+          role="tab"
+          data-filter={f.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          class="filter-btn group inline-flex items-center gap-2 rounded-full border-[1.5px] border-line bg-white px-4 py-2 text-[13px] font-semibold text-brand-charcoal transition-all hover:border-brand-primary hover:text-brand-primary aria-selected:bg-brand-primary aria-selected:text-white aria-selected:border-brand-primary"
+        >
+          <span>{f.label}</span>
+          <span class="text-[11px] text-brand-warm-gray group-hover:text-brand-primary group-aria-selected:!text-white tabular-nums" aria-hidden="true">{counts[f.id]}</span>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- Gallery (CSS columns for masonry feel) -->
+  <section class="container-x section">
+    <div
+      class="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]"
+      data-gallery-grid
+    >
+      {items.map((it, i) => {
+        const base = it.src.replace(/\.(jpg|jpeg|png)$/i, '');
+        const isFirst = i === 0;
+        return (
+          <figure
+            class="break-inside-avoid mb-4 group cursor-zoom-in transition-opacity duration-200"
+            data-cat={it.cat}
+            data-lightbox-src={it.src}
+            data-lightbox-alt={it.alt}
+          >
+            <div class="relative overflow-hidden rounded-xl shadow-soft hover:shadow-lift transition-shadow">
+              <picture>
+                <source srcset={`${base}.avif`} type="image/avif" />
+                <source srcset={`${base}.webp`} type="image/webp" />
+                <img
+                  src={it.src}
+                  alt={it.alt}
+                  loading={isFirst ? 'eager' : 'lazy'}
+                  fetchpriority={isFirst ? 'high' : 'auto'}
+                  decoding="async"
+                  class="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
+                />
+              </picture>
+              <figcaption class="photo-overlay-caption text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span class="block">{it.alt}</span>
+                {it.note && <span class="block text-white/70 text-[10px] mt-1">· {it.note}</span>}
+              </figcaption>
+            </div>
+          </figure>
+        );
+      })}
+    </div>
+
+    <p class="text-xs text-ink-subtle mt-6 text-center">
+      Customer-job photos shown with permission and as Scott approves them. Some photos are decade-old reference shots; we replace as the crew shoots new work.
+    </p>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto reveal">
+      <p class="kicker !text-brand-gold-soft mb-3">Want yours in the gallery?</p>
+      <h2 class="font-display text-white text-balance mb-5">Free written estimate, on your home, this week.</h2>
+      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
+        Honest recommendations. Real local crew. No high-pressure sales.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/quote/" class="btn-accent">Request a Quote</a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">Call {siteConfig.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <Lightbox slot="end-of-body" />
+</BaseLayout>
+
+<script is:inline>
+  function rcsGalleryInit() {
+    const wrap = document.querySelector('[data-gallery-filter]');
+    const grid = document.querySelector('[data-gallery-grid]');
+    if (!wrap || !grid) return;
+    if (wrap.dataset.bound) return;
+    wrap.dataset.bound = 'true';
+
+    const buttons = wrap.querySelectorAll('button[data-filter]');
+    const figs = grid.querySelectorAll('figure[data-cat]');
+
+    function apply(filter) {
+      buttons.forEach((b) =>
+        b.setAttribute('aria-selected', b.getAttribute('data-filter') === filter ? 'true' : 'false')
+      );
+      figs.forEach((f) => {
+        const match = filter === 'all' || f.getAttribute('data-cat') === filter;
+        f.style.display = match ? '' : 'none';
+      });
+    }
+
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => apply(b.getAttribute('data-filter')))
+    );
+
+    // Honor ?cat=installs in the URL on first load
+    const cat = new URLSearchParams(location.search).get('cat');
+    if (cat && [...buttons].some((b) => b.getAttribute('data-filter') === cat)) {
+      apply(cat);
+    }
+  }
+  document.addEventListener('astro:page-load', rcsGalleryInit);
+</script>

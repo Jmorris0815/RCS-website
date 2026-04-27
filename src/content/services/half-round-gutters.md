@@ -21,7 +21,7 @@ seoDescription: "Half-round copper, aluminum, and galvalume gutter installation 
 
 ## When half-round is the right choice
 
-Half-round gutters belong on a specific kind of home. We see them work. And look beautiful. On:
+Half-round gutters belong on a specific kind of home. We see them work, and look beautiful, on:
 
 - **Historic district homes.** Charlottesville, Orange, Madison, and the other older town centers in our service area have homes from the 1880s through the 1920s with original half-round or built-in box gutters. K-style is historically wrong here. We do faithful restorations.
 - **Architect-designed retreat homes.** Western Albemarle, Madison, and Greene have a growing inventory of carefully-designed retreat properties where the architect specified half-round as part of the visual design.

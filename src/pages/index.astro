@@ -5,9 +5,10 @@ import LocalBusinessSchema from '../components/schemas/LocalBusinessSchema.astro
 import FAQ from '../components/FAQ.astro';
 import Lightbox from '../components/Lightbox.astro';
 import PictureHero from '../components/PictureHero.astro';
+import Picture from '../components/Picture.astro';
 import { siteConfig } from '../config/site';
 
-const HERO_IMG = '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg';
+const HERO_IMG = '/images/jobs/truck-jobsite-barn.jpg';
 
 const services = (await getCollection('services'))
   .sort((a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99));
@@ -92,10 +93,10 @@ const steps = [
   <!-- ═══════════════════ 1. HERO ═══════════════════ -->
   <section class="relative isolate overflow-hidden bg-brand-charcoal text-white">
     <PictureHero
-      base="/images/products/OUTSIIDE-CORNER-MITER-INSTALLED"
-      alt="Leaf Solution corner miter installed on a Central Virginia home, autumn trees behind"
+      base="/images/jobs/truck-jobsite-barn"
+      alt="The RCS Gutters branded box truck parked in front of a Central Virginia red-roof barn, full RCS wrap visible"
       class="absolute inset-0 w-full h-full object-cover object-center"
-      width={1600} height={1066}
+      width={1600} height={1136}
       loading="eager" fetchpriority="high"
     />
     <!-- Dark gradient overlay covering bottom 60% -->
@@ -200,9 +201,9 @@ const steps = [
           <li class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center reveal">
             <div class={`lg:col-span-6 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
               {s.img ? (
-                <img src={s.img} alt={s.alt}
+                <Picture src={s.img} alt={s.alt}
                   class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[4/3]"
-                  loading="lazy" width="1200" height="900" />
+                  loading="lazy" width={1200} height={900} />
               ) : (
                 <div class="ai-slot rounded-2xl shadow-soft aspect-[4/3] flex items-center justify-center border border-line">
                   <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.4" class="text-brand-primary/35" aria-hidden="true">
@@ -252,7 +253,7 @@ const steps = [
         {tiles.filter(t => t.large).map((t) => (
           <a href={`/services/${t.slug}/`} class="group relative block overflow-hidden rounded-2xl aspect-[16/10] bg-brand-warm-gray ring-1 ring-white/10">
             {t.img && (
-              <img src={t.img} alt="" loading="lazy" width="1200" height="750"
+              <Picture src={t.img} alt="" loading="lazy" width={1200} height={750}
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
             )}
             <div class="absolute inset-0 bg-gradient-to-t from-brand-charcoal via-brand-charcoal/45 to-transparent"></div>
@@ -272,7 +273,7 @@ const steps = [
         {tiles.filter(t => !t.large).map((t) => (
           <a href={`/services/${t.slug}/`} class="group relative block overflow-hidden rounded-xl aspect-[4/5] bg-brand-warm-gray ring-1 ring-white/10">
             {t.img ? (
-              <img src={t.img} alt="" loading="lazy" width="600" height="750"
+              <Picture src={t.img} alt="" loading="lazy" width={600} height={750}
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
             ) : (
               <div class="absolute inset-0 ai-slot">
@@ -300,7 +301,7 @@ const steps = [
         <p class="kicker mb-3">Featured product · Authorized dealer</p>
         <h2 class="text-balance mb-5">Why we install Leaf Solution</h2>
         <p class="text-ink-muted leading-relaxed mb-6">
-          We chose Leaf Solution as our primary gutter-guard partner for three reasons. The factory is in Rochelle, VA. About thirty minutes from our shop. So warranty questions and special-order colors get a relationship, not a 1-800 number. They only sell to authorized contractors, which keeps install quality consistent across the dealer network. And the products perform: across hundreds of installs in Central Virginia, the failures we end up tearing off are almost always cheaper non-Leaf Solution alternatives.
+          We chose Leaf Solution as our primary gutter-guard partner for three reasons. The factory is in Rochelle, VA, about thirty minutes from our shop, so warranty questions and special-order colors get a relationship instead of a 1-800 number. They only sell to authorized contractors, which keeps install quality consistent across the dealer network. And the products perform: across hundreds of installs in Central Virginia, the failures we end up tearing off are almost always cheaper non-Leaf Solution alternatives.
         </p>
         <ul class="space-y-3 mb-8">
           {[
@@ -325,11 +326,11 @@ const steps = [
       </div>
       <div class="lg:col-span-6 reveal">
         <div class="relative">
-          <img
+          <Picture
             src="/images/products/straight-miter-fall-background.jpg"
             alt="Leaf Solution gutter guard installed on a Central Virginia shingle roof in fall"
             class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[4/3]"
-            loading="lazy" width="1400" height="1050"
+            loading="lazy" width={1400} height={1050}
           />
           <div class="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-card p-4 flex items-center gap-3 max-w-[280px]">
             <img src="/images/products/xtreme-overhead-panel-line.png" alt="" class="h-12 w-auto" loading="lazy" width="100" height="64" />
@@ -350,38 +351,48 @@ const steps = [
         <div>
           <span class="section-divider"></span>
           <p class="kicker mb-3">Recent work</p>
-          <h2 class="text-balance">The kind of jobs we do. And the kind we replace</h2>
+          <h2 class="text-balance">A taste of the work. The full gallery has more.</h2>
         </div>
-        <a href="/case-studies/" class="hidden md:inline-flex text-brand-primary font-semibold hover:text-brand-red-deep transition-colors whitespace-nowrap">
-          Read case studies →
+        <a href="/gallery/" class="hidden md:inline-flex text-brand-primary font-semibold hover:text-brand-red-deep transition-colors whitespace-nowrap">
+          See the full gallery →
         </a>
       </div>
 
-      <!-- Masonry-feel: CSS columns -->
+      <!-- Masonry-feel: CSS columns. 6 strongest photos from the gallery -->
       <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
         {[
-          { src: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg', alt: 'Corner miter on a freshly installed seamless gutter, autumn trees behind', cap: 'Seamless install · corner miter detail' },
-          { src: '/images/jobs/before-after-cleaning.jpg', alt: 'Before and after: leaf-packed gutter on the left, clean micro-mesh on the right', cap: 'Before / after · cleaning + Leaf Solution upgrade' },
-          { src: '/images/products/straight-miter-fall-background.jpg', alt: 'Straight miter on a shingle roof above a fall lawn', cap: 'Gutter guard install · pine debris zone' },
-          { src: '/images/jobs/clogged-leaves.jpg', alt: 'A gutter packed with red and brown autumn leaves on a shingle roof', cap: 'Why guards matter · clogged-gutter rescue' },
-          { src: '/images/products/ELS-miter-installed-wide_white.jpg', alt: 'Corner miter installed on a Virginia rural property with white fence', cap: "Evelyn's Leaf Solution · rural property" },
-          { src: '/images/jobs/gutter-pulling-away.jpg', alt: 'A failed older gutter pulling away from the roofline', cap: 'Failed-install replacement' },
-        ].map((p, i) => (
-          <figure class="break-inside-avoid mb-4 group cursor-zoom-in"
-            data-lightbox-src={p.src} data-lightbox-alt={p.alt}>
-            <div class="relative overflow-hidden rounded-xl shadow-soft hover:shadow-lift transition-shadow">
-              <img src={p.src} alt={p.alt} loading="lazy"
-                class="w-full h-auto block transition-transform duration-500 group-hover:scale-105" />
-              <figcaption class="photo-overlay-caption text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {p.cap}
-              </figcaption>
-            </div>
-          </figure>
-        ))}
+          { src: '/images/jobs/install-copper-federal-brick.jpg', alt: 'Federal-style red-brick three-story home with newly installed copper gutters and downspouts', cap: 'Copper install · Federal-style brick home' },
+          { src: '/images/jobs/install-downspout-sage-clapboard.jpg', alt: 'Newly installed white K-style gutter and downspout running down a sage-green clapboard wall on a new-construction home', cap: 'New install · sage-clapboard new build' },
+          { src: '/images/jobs/before-after-cleaning.jpg', alt: 'Before-and-after split: gutter packed with brown leaves vs. clean Leaf Solution micro-mesh after upgrade', cap: 'Before / after · cleaning + Leaf Solution upgrade' },
+          { src: '/images/products/straight-miter-fall-background.jpg', alt: 'Leaf Solution straight-miter gutter guard installed on a shingle roof above a fall-leafed lawn', cap: 'Gutter guard install · pine debris zone' },
+          { src: '/images/jobs/install-modern-board-batten.jpg', alt: 'Modern board-and-batten home with dark-bronze metal roof and new black gutters under construction', cap: 'New construction · board-and-batten home' },
+          { src: '/images/jobs/install-copper-brick-home.jpg', alt: 'Brick colonial home with new copper gutters, dormer trim, and matching downspouts', cap: 'Copper install · brick colonial' },
+        ].map((p) => {
+          const base = p.src.replace(/\.(jpg|jpeg|png)$/i, '');
+          return (
+            <figure class="break-inside-avoid mb-4 group cursor-zoom-in"
+              data-lightbox-src={p.src} data-lightbox-alt={p.alt}>
+              <div class="relative overflow-hidden rounded-xl shadow-soft hover:shadow-lift transition-shadow">
+                <picture>
+                  <source srcset={`${base}.avif`} type="image/avif" />
+                  <source srcset={`${base}.webp`} type="image/webp" />
+                  <img src={p.src} alt={p.alt} loading="lazy" decoding="async"
+                    class="w-full h-auto block transition-transform duration-500 group-hover:scale-105" />
+                </picture>
+                <figcaption class="photo-overlay-caption text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {p.cap}
+                </figcaption>
+              </div>
+            </figure>
+          );
+        })}
       </div>
 
+      <div class="mt-8 flex items-center justify-center md:hidden">
+        <a href="/gallery/" class="btn-secondary">See the full gallery</a>
+      </div>
       <p class="text-xs text-ink-subtle mt-6 text-center">
-        Real installed product photos from our Leaf Solution dealer kit and our archive. Customer-job photos rolling in as Scott approves them.
+        Real RCS jobs across Central Virginia. Click any photo to expand, or browse the <a href="/gallery/" class="text-brand-primary font-semibold hover:underline">full gallery</a>.
       </p>
     </div>
   </section>

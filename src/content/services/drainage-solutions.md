@@ -23,7 +23,7 @@ seoDescription: "Buried downspout discharge, pop-up emitters, French drains, and
 
 Roof water moves a lot of volume. A 2,000 square foot roof in a one-inch rain event collects roughly 1,250 gallons of water. That water has to go somewhere. The gutter is half the answer; what happens after the downspout is the other half.
 
-We see homes across our service area where the gutters work fine. Clean, properly sized, well-maintained. And the foundation is wet, the basement is damp, the lawn nearest the house is mossy and waterlogged, or the driveway has a permanent dark stain at the bottom of a downspout. The problem isn't the gutter. The problem is what happens to the water after the gutter.
+We see homes across our service area where the gutters work fine — clean, properly sized, well-maintained — but the foundation is still wet, the basement is damp, the lawn nearest the house is mossy and waterlogged, or the driveway has a permanent dark stain at the bottom of a downspout. The problem isn't the gutter. The problem is what happens to the water after the gutter.
 
 Splash blocks alone don't solve real water problems. They redistribute water by maybe two or three feet. On heavy clay soil. Which is most of Central Virginia. A splash block at the base of a downspout creates a steady wet zone that the soil can't absorb fast enough.
 

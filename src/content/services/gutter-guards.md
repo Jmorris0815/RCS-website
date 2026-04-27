@@ -33,7 +33,7 @@ We install gutter guards every week and we've torn out enough failed ones to hav
 
 ## What we install
 
-We're an authorized [Leaf Solution](https://www.leafsolution.com) dealer. Their factory is in Rochelle, Virginia. About thirty minutes from our shop. And they only sell through licensed installers, which keeps the install quality consistent. We carry all three of their product lines:
+We're an authorized [Leaf Solution](https://www.leafsolution.com) dealer. Their factory is in Rochelle, Virginia, about thirty minutes from our shop, and they only sell through licensed installers, which keeps the install quality consistent. We carry all three of their product lines:
 
 ### Xtreme Gutter Guard
 Stainless steel micro-mesh on an aluminum frame. Handles up to 60 gallons per minute. The micro-mesh aperture is small enough to shed pine needles and sycamore bark while letting water flow through.

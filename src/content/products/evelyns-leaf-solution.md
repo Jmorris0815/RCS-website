@@ -48,7 +48,7 @@ The single biggest reason customers pick Evelyn's over Xtreme, though, is color.
 
 ## When it's not the right product
 
-For most of our installs, the honest answer is that [Xtreme](/products/xtreme-gutter-guard/) handles the debris equally well at a lower cost. We don't recommend Evelyn's just because it's the highest-margin product. We recommend it when the use case demands it. Appearance, snow load, fine debris. And we recommend Xtreme or [New Wave](/products/new-wave-gutter-guard/) when those demands aren't present.
+For most of our installs, the honest answer is that [Xtreme](/products/xtreme-gutter-guard/) handles the debris equally well at a lower cost. We don't recommend Evelyn's just because it's the highest-margin product. We recommend it when the use case demands it: appearance, snow load, or fine debris. Otherwise we recommend Xtreme or [New Wave](/products/new-wave-gutter-guard/).
 
 ## Where we install it most
 

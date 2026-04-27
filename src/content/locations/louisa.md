@@ -46,7 +46,7 @@ seoTitle: "Louisa County VA Gutters & Lake Anna Gutter Guards | Right Choice Sea
 seoDescription: "Seamless gutter installation, Lake Anna waterfront drainage solutions, and Leaf Solution gutter guards across Louisa County, Mineral, Gum Spring, and Zion Crossroads."
 ---
 
-## Louisa is geographically big. And the lake changes everything
+## Louisa is big country, and the lake changes everything
 
 Louisa County is one of the bigger areas we cover, and the work breaks into two pretty different conversations: the Lake Anna side, and everywhere else.
 

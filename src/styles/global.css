@@ -1,6 +1,6 @@
-/* ── Variable font faces ──────────────────────────────────────────────── */
-@import '@fontsource-variable/inter/index.css';
-@import '@fontsource-variable/fraunces/index.css';
+/* ── Variable font faces (weight axis + latin subset only — leaner CSS) ─── */
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/fraunces/wght.css';
 
 @tailwind base;
 @tailwind components;
