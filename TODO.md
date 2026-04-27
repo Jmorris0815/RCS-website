@@ -4,38 +4,47 @@ Living list. Tackle top-down. Keep entries terse — link to the relevant file o
 
 ## Blockers (must do before public launch)
 
-- [ ] **Disable Vercel Deployment Protection.** Settings → Deployment Protection → Vercel Authentication: **Disabled** for Production. Until that's flipped, the `*.vercel.app` URL returns HTTP 401 and no anonymous visitor (or Lighthouse run from outside) can reach the site.
-- [ ] **Email Leaf Solution to confirm dealer-asset rights** for the product photos and panel-line diagrams pulled from leafsolution.com (`public/images/products/`). RCS is an authorized dealer so use is likely permitted, but get it in writing before launch. Contact: the rep at the Rochelle, VA factory.
-- [ ] **Web3Forms access key.** `src/pages/quote.astro` has `value="REPLACE_WITH_WEB3FORMS_KEY"`. Sign up at web3forms.com (free), paste the key, and the form will start delivering leads to Scott's email. Until then form posts return 400.
+- [ ] **Disable Vercel Deployment Protection.** Settings → Deployment Protection → Vercel Authentication: **Disabled** for Production. Until that's flipped, the `*.vercel.app` URL returns HTTP 401 and no anonymous visitor (or external Lighthouse run) can reach the site.
+- [ ] **Email Leaf Solution to confirm dealer-asset rights** for the photos and panel-line diagrams pulled from leafsolution.com (`public/images/products/`). RCS is an authorized dealer so use is likely permitted, but get it in writing before launch.
+- [ ] **Web3Forms access key** — `src/pages/quote.astro` and `src/components/Footer.astro` (newsletter) both reference `value="REPLACE_WITH_WEB3FORMS_KEY"`. Sign up at web3forms.com (free), paste the key, both forms start delivering.
 
 ## Confirm with Scott
 
-- [ ] **Founding year.** `siteConfig.foundingYear = 2014` is currently a guess. Appears in About, footer, schema, byline, and the `10+ years` hero badge.
-- [ ] **License number.** `siteConfig.licenseNumber` is empty; footer reads "License coming soon."
+- [ ] **Founding year.** `siteConfig.foundingYear = 2014` — currently a guess. Appears in About, footer, schema, byline, the "12+ years" stat (calculated as 2026−2014).
+- [ ] **License number.** `siteConfig.licenseNumber` is empty; footer + LocalBusiness schema currently omit it.
 - [ ] **Email address.** `info@rcsgutters.com` is a placeholder.
-- [ ] **Shop address.** `249 Greenwood Farms Ct, Barboursville VA 22923` carried over from the scaffold — verify before it hits the schema and search engines.
-- [ ] **Scott's bio.** `src/content/authors/scott.json` currently has `PLACEHOLDER` text. Used by every blog and case-study byline.
-- [ ] **Customer-quote permissions.** All 4 case studies have `permissionGranted: false`. Quotes exist in frontmatter but won't render until Scott confirms each customer's OK to publish.
-- [ ] **Social URLs.** `siteConfig.socials` (facebook, instagram, youtube, google) are all empty.
+- [ ] **Shop address.** `249 Greenwood Farms Ct, Barboursville VA 22923` carried over from the scaffold — verify before launch (it's in schema and footer).
+- [ ] **Scott's bio.** `src/content/authors/scott.json` says `PLACEHOLDER` — drives every blog/case-study byline.
+- [ ] **Customer-quote permissions.** All 4 case studies have `permissionGranted: false`. Quotes exist in frontmatter but won't render until each customer's OK is on file.
+- [ ] **Social URLs.** `siteConfig.socials` (facebook, instagram, youtube, google) are all empty — footer renders empty `#` links and labels them as "TODO link" until provided.
+- [ ] **Review platform URLs** for the social-proof section (Google Business, Yelp, Angi). Currently labeled "TODO link" honestly rather than faked.
 
-## Photo backlog
+## Photo backlog (decorative AI-slots that need real photos)
 
-We currently ship with 5 cropped jobsite photos (extracted from Scott's old Rhino-era ads — legitimate to reuse since Scott was on the Rhino crew, and we stripped all Rhino/Bucs branding) plus 6 Leaf Solution dealer product photos. Replace as Scott's own crew photos roll in.
+The site currently uses 5 cropped jobsite photos (extracted from Scott's old Rhino-era ads — Scott was on the Rhino crew, all branding stripped) plus 6 Leaf Solution dealer assets. Where no honest photo fit, decorative AI-slots are used and clearly labeled:
 
-- [ ] **The 3 manual photos** referenced in the design brief (RCS truck, residential white half-round downspout, commercial flat-roof gutter) were not present at `public/images/jobs/manual-1..3.jpg` when the design pass ran. Drop them in and we'll wire them into the about-page trust strip and a couple of location heroes.
-- [ ] **Per-location hero photos.** All 8 location pages (`src/content/locations/`) are currently text-only. As Scott shoots one signature job per city — Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, Louisa — drop the photo into `public/images/jobs/locations/` and add a `HERO_PHOTOS[slug]` entry in `src/pages/locations/[slug].astro`.
-- [ ] **Real before/after photos** for the Charlottesville, Greene, and Madison case studies. Current hero photos are stand-ins from the Rhino archive. Once Scott approves real customer-job photos with permission, swap the entries in `src/pages/case-studies/[slug].astro` `HERO_PHOTOS` map.
-- [ ] **Albemarle vineyard case study** (`albemarle-vineyard-multi-building-drainage`) has no hero photo wired — needs a real shot of the multi-building drainage work.
-- [ ] **OG default image.** Currently no `/og-default.jpg`, so social-share previews have no thumbnail. Drop a 1200×630 JPG at `public/og-default.jpg` and pass `image="/og-default.jpg"` from `BaseLayout` (or page-by-page) to opt back in. The brand-red corner-miter Leaf Solution shot would work well.
-- [ ] **Real logo.** `public/logo.svg` is the placeholder red checkmark + Times New Roman wordmark. Drop in Scott's actual wordmark SVG when available.
+- [ ] **Scott's portrait** — owner-intro section uses an `ai-slot` with a generic icon. Drop in a real headshot at `public/images/team/scott.jpg` and replace the slot in `src/pages/index.astro` § 8.
+- [ ] **Per-location hero photos.** All 8 location pages currently use a decorative `ai-slot` background. As Scott shoots one signature job per city — Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, Louisa — drop the photo into `public/images/jobs/locations/` and replace the slot in `src/pages/locations/[slug].astro` (the hero section's first `<div class="absolute inset-0 ai-slot">`).
+- [ ] **Two service-tile slots** on the home page — Half-Round and Commercial currently render as `ai-slot` because we have no clean photos. Tiles in `src/pages/index.astro` `tiles` array, `aiSlot` prop.
+- [ ] **Process steps 2 + 3** (Written quote, Schedule) — currently `ai-slot` with calendar/document icons. Could remain as-is (they're abstract concepts) or get real photos of Scott handing a quote, etc.
+- [ ] **Albemarle vineyard case study** still has no hero photo wired.
+- [ ] **The 3 manual photos** referenced in earlier briefs (RCS truck, residential white half-round downspout, commercial flat-roof gutter) were never present at `public/images/jobs/manual-{1,2,3}.jpg`. Drop them in and they can backfill the home-page tiles + about-page trust block.
+- [ ] **OG default image.** No `/og-default.jpg` — social-share previews lack thumbnails. Drop a 1200×630 JPG; passing `image="/og-default.jpg"` from `BaseLayout` (or page-by-page) will opt back in.
+- [ ] **Real logo.** `public/logo.svg` is the placeholder red checkmark + Times New Roman wordmark. Replace with Scott's actual wordmark.
 
-## Sources that were tried and didn't work
+## Image-gen note
 
-- **HomeAdvisor profile** (`https://www.homeadvisor.com/rated.RightChoiceSeamless.42532376.html`) — page returns HTTP 200 but the SPA only serves generic Angi/HomeAdvisor stock illustrations in the initial HTML. Real project photos (if any) load via subsequent API calls behind their bot protection.
-- **Facebook page** (`https://www.facebook.com/rcsgutters/`) — HTTP 400, login wall as expected.
+Round 2 brief asked for 8 location AI background hero images, 5 process icons, an abstract noise texture, and a labeled gutter-guard cross-section diagram. **No image-gen tool was available in this environment.** Where the brief asked for AI imagery, the site currently uses CSS/SVG decorative `ai-slot` placeholders that are clearly labeled "TODO replace" so they don't pretend to be real photos. To execute Round 2's image-gen plan, run a separate pass with whatever image-gen pipeline you have (Midjourney / Veo / Nano Banana / etc.) and drop outputs into `public/images/ai/`, then swap the `ai-slot` blocks for real `<picture>` elements.
+
+## Sources tried previously (still valid)
+
+- **HomeAdvisor** — page returns generic Angi stock illustrations only; real photos are behind their bot-protected API.
+- **Facebook page** — login wall, HTTP 400.
 
 ## Scope-creep candidates (not blocking launch)
 
-- [ ] Move public/ images into `src/assets/` and use Astro's `<Image />` component for AVIF/WebP + responsive srcset. Today they're plain `<img>` tags from `public/`, which is fine for Lighthouse but leaves bandwidth on the table.
-- [ ] Strip `public/images/source/extracted/` and `public/images/source/candidates/` from the deploy. Scratch work — keep in repo for re-cropping but `.vercelignore` it so it doesn't ship.
-- [ ] 14 npm vulnerabilities (7 low, 7 moderate) — mostly transitive in lhci/sharp/pdf-poppler dev deps, not in the production bundle. Audit later.
+- [ ] Move public/ images into `src/assets/` and use Astro's `<Image />` component natively for AVIF + WebP + responsive srcset (currently using a hand-rolled `PictureHero` + sharp pre-gen via `scripts/generate-hero-formats.mjs`).
+- [ ] Real `/privacy/` and `/terms/` pages — footer links to them but they 404 today.
+- [ ] Real reviews carousel powered by Google Business Profile API once review URLs are confirmed.
+- [ ] Newsletter actually wired into a Mailchimp/Buttondown/Beehiiv list (currently posts to placeholder Web3Forms key).
+- [ ] 14 npm vulnerabilities (7 low, 7 moderate) — mostly transitive in lhci/sharp/pdf-poppler dev deps.

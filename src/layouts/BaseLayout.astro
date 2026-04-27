@@ -1,7 +1,10 @@
 ---
 import { SEO } from 'astro-seo';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StickyCTAs from '../components/StickyCTAs.astro';
+import { siteConfig } from '../config/site';
 import '../styles/global.css';
 
 export interface Props {
@@ -10,6 +13,7 @@ export interface Props {
   image?: string;
   canonical?: string;
   noindex?: boolean;
+  heroImage?: string; // optional preload hint for above-the-fold image
 }
 
 const {
@@ -18,6 +22,7 @@ const {
   image,
   canonical,
   noindex = false,
+  heroImage,
 } = Astro.props;
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
@@ -31,8 +36,9 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#D72027" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {heroImage && (
+      <link rel="preload" as="image" type="image/avif" href={heroImage.replace(/\.(jpg|jpeg|png)$/i, '.avif')} fetchpriority="high" />
+    )}
 
     <SEO
       title={title}
@@ -40,32 +46,21 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
       canonical={canonicalUrl}
       noindex={noindex}
       openGraph={ogImage ? {
-        basic: {
-          title,
-          type: 'website',
-          image: ogImage,
-          url: canonicalUrl,
-        },
-        optional: {
-          description,
-          siteName: 'Right Choice Seamless Gutters',
-          locale: 'en_US',
-        },
+        basic: { title, type: 'website', image: ogImage, url: canonicalUrl },
+        optional: { description, siteName: siteConfig.name, locale: 'en_US' },
       } : undefined}
-      twitter={ogImage ? {
-        card: 'summary_large_image',
-        title,
-        description,
-        image: ogImage,
-      } : { card: 'summary', title, description }}
+      twitter={ogImage
+        ? { card: 'summary_large_image', title, description, image: ogImage }
+        : { card: 'summary', title, description }}
     />
 
+    <ClientRouter />
     <slot name="head" />
   </head>
   <body class="bg-white text-ink-primary font-sans antialiased">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:z-50"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:z-[60]"
       >Skip to content</a
     >
     <Header />
@@ -73,6 +68,83 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
       <slot />
     </main>
     <Footer />
+    <StickyCTAs />
     <slot name="end-of-body" />
+
+    <!--
+      Tiny scroll-reveal + count-up runtime. ~30 lines, no library.
+      Respects prefers-reduced-motion. Re-runs on Astro view-transition swaps.
+    -->
+    <script is:inline>
+      function rcsInit() {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Fade-up reveal
+        const reveals = document.querySelectorAll('.reveal:not([data-revealed])');
+        if (reduced) {
+          reveals.forEach((el) => el.setAttribute('data-revealed', 'true'));
+        } else if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.setAttribute('data-revealed', 'true');
+                io.unobserve(e.target);
+              }
+            });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+          reveals.forEach((el) => io.observe(el));
+        } else {
+          reveals.forEach((el) => el.setAttribute('data-revealed', 'true'));
+        }
+
+        // Count-up
+        const counters = document.querySelectorAll('[data-count-to]:not([data-counted])');
+        if (reduced) {
+          counters.forEach((el) => {
+            const to = el.getAttribute('data-count-to');
+            el.textContent = el.dataset.format === 'comma'
+              ? Number(to).toLocaleString('en-US')
+              : to;
+            el.setAttribute('data-counted', 'true');
+          });
+        } else if ('IntersectionObserver' in window) {
+          const co = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              const el = e.target;
+              const to = parseFloat(el.getAttribute('data-count-to'));
+              const dur = parseInt(el.getAttribute('data-count-dur') || '1400', 10);
+              const fmt = el.dataset.format === 'comma';
+              const start = performance.now();
+              function tick(now) {
+                const t = Math.min((now - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - t, 3);
+                const v = to * eased;
+                el.textContent = fmt
+                  ? Math.round(v).toLocaleString('en-US')
+                  : (to % 1 ? v.toFixed(1) : Math.round(v).toString());
+                if (t < 1) requestAnimationFrame(tick);
+              }
+              requestAnimationFrame(tick);
+              el.setAttribute('data-counted', 'true');
+              co.unobserve(el);
+            });
+          }, { threshold: 0.5 });
+          counters.forEach((el) => co.observe(el));
+        }
+
+        // Sticky desktop CTA: show after hero (~600px scroll)
+        const stickyDesk = document.querySelector('[data-sticky-cta]');
+        if (stickyDesk) {
+          const onScroll = () => {
+            stickyDesk.setAttribute('data-show', window.scrollY > 600 ? 'true' : 'false');
+          };
+          window.addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        }
+      }
+
+      document.addEventListener('astro:page-load', rcsInit);
+    </script>
   </body>
 </html>

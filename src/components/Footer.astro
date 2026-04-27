@@ -1,66 +1,146 @@
 ---
 import { siteConfig } from '../config/site';
+const year = new Date().getFullYear();
 ---
 
-<footer class="bg-brand-dark text-white mt-20">
-  <div class="max-w-container mx-auto px-4 lg:px-8 py-14 grid gap-10 md:grid-cols-4">
-    <div>
-      <div class="font-display font-bold text-lg mb-3">Right Choice Seamless Gutters</div>
-      <p class="text-sm text-white/70 leading-relaxed">
-        Family-owned seamless gutter installation, cleaning, and Leaf Solution gutter guard
-        specialists serving Central Virginia since {siteConfig.foundingYear}.
+<footer class="bg-brand-charcoal text-white pb-24 md:pb-0">
+  <div class="container-wide pt-16 pb-12 grid gap-12 md:grid-cols-12">
+    <!-- Brand col -->
+    <div class="md:col-span-4">
+      <div class="flex items-center gap-2 mb-5">
+        <img src="/logo.svg" alt="" class="h-9 w-auto" width="140" height="36" />
+        <span class="font-display font-semibold text-white text-lg">RCS Gutters</span>
+      </div>
+      <p class="text-sm text-white/70 leading-relaxed mb-5 max-w-sm">
+        Family-owned seamless gutter installation, cleaning, and Leaf Solution gutter guard specialists serving Central Virginia since {siteConfig.foundingYear}.
       </p>
-      <div class="mt-4 text-sm">
-        <div>{siteConfig.address.street}</div>
-        <div>{siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}</div>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="block mt-2 text-white font-semibold underline-offset-4 hover:underline"
-          >{siteConfig.phoneDisplay}</a
-        >
+      <address class="not-italic text-sm text-white/80 space-y-1">
+        <div class="flex items-start gap-2">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-soft mt-1 flex-shrink-0" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <div>
+            {siteConfig.address.street}<br />
+            {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
+          </div>
+        </div>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="flex items-center gap-2 mt-3 text-white font-semibold underline-offset-4 hover:underline">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-soft" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          {siteConfig.phoneDisplay}
+        </a>
+      </address>
+      <div class="mt-5 text-sm text-white/70">
+        <div class="flex items-center gap-2">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-soft" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span><strong class="text-white">Mon–Fri</strong> {siteConfig.hours.weekdays}</span>
+        </div>
+        <div class="ml-6 mt-1">
+          <strong class="text-white">Sat</strong> {siteConfig.hours.saturday} · <strong class="text-white">Sun</strong> closed
+        </div>
       </div>
     </div>
 
-    <div>
-      <h3 class="font-semibold uppercase tracking-wider text-xs text-white/60 mb-3">Services</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="/services/seamless-gutter-installation/" class="hover:underline">Seamless Gutter Installation</a></li>
-        <li><a href="/services/gutter-guards/" class="hover:underline">Gutter Guards</a></li>
-        <li><a href="/services/gutter-cleaning/" class="hover:underline">Gutter Cleaning</a></li>
-        <li><a href="/services/half-round-gutters/" class="hover:underline">Half-Round Gutters</a></li>
-        <li><a href="/services/commercial-gutters/" class="hover:underline">Commercial Gutters</a></li>
+    <!-- Services -->
+    <div class="md:col-span-2">
+      <p class="kicker !text-brand-gold-soft mb-4">Services</p>
+      <ul class="space-y-2.5 text-sm">
+        <li><a href="/services/seamless-gutter-installation/" class="text-white/80 hover:text-white transition-colors">Seamless Installation</a></li>
+        <li><a href="/services/gutter-guards/" class="text-white/80 hover:text-white transition-colors">Gutter Guards</a></li>
+        <li><a href="/services/gutter-cleaning/" class="text-white/80 hover:text-white transition-colors">Gutter Cleaning</a></li>
+        <li><a href="/services/half-round-gutters/" class="text-white/80 hover:text-white transition-colors">Half-Round Gutters</a></li>
+        <li><a href="/services/commercial-gutters/" class="text-white/80 hover:text-white transition-colors">Commercial Gutters</a></li>
+        <li><a href="/services/fascia-and-soffit/" class="text-white/80 hover:text-white transition-colors">Fascia &amp; Soffit</a></li>
+        <li><a href="/services/drainage-solutions/" class="text-white/80 hover:text-white transition-colors">Drainage Solutions</a></li>
       </ul>
     </div>
 
-    <div>
-      <h3 class="font-semibold uppercase tracking-wider text-xs text-white/60 mb-3">Service Area</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="/locations/barboursville/" class="hover:underline">Barboursville</a></li>
-        <li><a href="/locations/charlottesville/" class="hover:underline">Charlottesville</a></li>
-        <li><a href="/locations/orange/" class="hover:underline">Orange</a></li>
-        <li><a href="/locations/madison/" class="hover:underline">Madison</a></li>
-        <li><a href="/locations/greene/" class="hover:underline">Greene</a></li>
-        <li><a href="/locations/" class="hover:underline">All locations →</a></li>
+    <!-- Service area -->
+    <div class="md:col-span-2">
+      <p class="kicker !text-brand-gold-soft mb-4">Service area</p>
+      <ul class="space-y-2.5 text-sm">
+        <li><a href="/locations/charlottesville/" class="text-white/80 hover:text-white transition-colors">Charlottesville</a></li>
+        <li><a href="/locations/albemarle/" class="text-white/80 hover:text-white transition-colors">Albemarle County</a></li>
+        <li><a href="/locations/barboursville/" class="text-white/80 hover:text-white transition-colors">Barboursville</a></li>
+        <li><a href="/locations/orange/" class="text-white/80 hover:text-white transition-colors">Orange</a></li>
+        <li><a href="/locations/madison/" class="text-white/80 hover:text-white transition-colors">Madison</a></li>
+        <li><a href="/locations/greene/" class="text-white/80 hover:text-white transition-colors">Greene</a></li>
+        <li><a href="/locations/fluvanna/" class="text-white/80 hover:text-white transition-colors">Fluvanna</a></li>
+        <li><a href="/locations/louisa/" class="text-white/80 hover:text-white transition-colors">Louisa</a></li>
       </ul>
     </div>
 
-    <div>
-      <h3 class="font-semibold uppercase tracking-wider text-xs text-white/60 mb-3">Company</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="/about/" class="hover:underline">About Scott</a></li>
-        <li><a href="/case-studies/" class="hover:underline">Recent Projects</a></li>
-        <li><a href="/blog/" class="hover:underline">Blog</a></li>
-        <li><a href="/financing/" class="hover:underline">Financing</a></li>
-        <li><a href="/warranty/" class="hover:underline">Warranty</a></li>
-        <li><a href="/contact/" class="hover:underline">Contact</a></li>
+    <!-- Newsletter + Company links -->
+    <div class="md:col-span-4">
+      <p class="kicker !text-brand-gold-soft mb-4">Stay in the loop</p>
+      <p class="text-sm text-white/70 mb-4 leading-relaxed">
+        Seasonal gutter checklists, project tips, and the occasional ladder safety reminder. Once a quarter, no spam.
+      </p>
+      <form
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        class="flex gap-2 mb-2"
+      >
+        <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_KEY" />
+        <input type="hidden" name="subject" value="RCS newsletter signup" />
+        <input type="hidden" name="from_name" value="rcsgutters.com" />
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+        <label class="sr-only" for="footer-email">Email address</label>
+        <input
+          id="footer-email"
+          type="email"
+          name="email"
+          required
+          placeholder="you@email.com"
+          class="flex-1 min-w-0 rounded-md bg-white/5 border border-white/15 text-white placeholder-white/40 px-3 py-2.5 text-sm focus:outline-none focus:border-brand-gold-soft focus:bg-white/10 transition-colors"
+        />
+        <button type="submit" class="bg-brand-primary hover:bg-brand-red-deep text-white px-4 py-2.5 rounded-md text-sm font-semibold transition-colors whitespace-nowrap">
+          Sign up
+        </button>
+      </form>
+      <p class="text-[11px] text-white/65">No spam, ever. Unsubscribe with one click.</p>
+
+      <p class="kicker !text-brand-gold-soft mt-8 mb-4">Company</p>
+      <ul class="grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
+        <li><a href="/about/" class="text-white/80 hover:text-white transition-colors">About</a></li>
+        <li><a href="/case-studies/" class="text-white/80 hover:text-white transition-colors">Our Work</a></li>
+        <li><a href="/blog/" class="text-white/80 hover:text-white transition-colors">Blog</a></li>
+        <li><a href="/financing/" class="text-white/80 hover:text-white transition-colors">Financing</a></li>
+        <li><a href="/warranty/" class="text-white/80 hover:text-white transition-colors">Warranty</a></li>
+        <li><a href="/contact/" class="text-white/80 hover:text-white transition-colors">Contact</a></li>
       </ul>
     </div>
   </div>
 
+  <!-- Bottom strip -->
   <div class="border-t border-white/10">
-    <div
-      class="max-w-container mx-auto px-4 lg:px-8 py-5 text-xs text-white/50 flex flex-wrap items-center justify-between gap-2"
-    >
-      <div>© {new Date().getFullYear()} Right Choice Seamless Gutters. All rights reserved.</div>
-      <div>Licensed and insured · Virginia · {siteConfig.licenseNumber || 'License coming soon'}</div>
+    <div class="container-wide py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs text-white/50">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <span>© {year} Right Choice Seamless Gutters · All rights reserved</span>
+        <span class="hidden md:inline w-px h-3 bg-white/15" aria-hidden="true"></span>
+        <span class="text-brand-gold-soft">Made with care in Central Virginia</span>
+      </div>
+
+      <!-- Social + legal -->
+      <div class="flex items-center gap-5">
+        <div class="flex items-center gap-3">
+          <a href={siteConfig.socials.facebook || '#'} aria-label="Facebook" rel="noopener" class="text-white/60 hover:text-white transition-colors">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9V14.9H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href={siteConfig.socials.instagram || '#'} aria-label="Instagram" rel="noopener" class="text-white/60 hover:text-white transition-colors">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href={siteConfig.socials.youtube || '#'} aria-label="YouTube" rel="noopener" class="text-white/60 hover:text-white transition-colors">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23 7s-.2-1.5-.8-2.2c-.8-.9-1.6-.9-2-.9C17.1 3.5 12 3.5 12 3.5s-5.1 0-8.2.4c-.4 0-1.2 0-2 .9C1.2 5.5 1 7 1 7s-.2 1.7-.2 3.5v1.6C.8 13.9 1 15.6 1 15.6s.2 1.5.8 2.2c.8.9 1.8.9 2.3 1 1.6.1 7.1.4 7.9.4 0 0 5.1 0 8.2-.4.4 0 1.2 0 2-.9.6-.7.8-2.2.8-2.2s.2-1.7.2-3.5v-1.6C23.2 8.7 23 7 23 7zM9.7 14.6V8.7l6.5 3-6.5 2.9z"/></svg>
+          </a>
+        </div>
+        <span class="hidden md:inline w-px h-4 bg-white/15" aria-hidden="true"></span>
+        <a href="/privacy/" class="hover:text-white transition-colors">Privacy</a>
+        <a href="/terms/" class="hover:text-white transition-colors">Terms</a>
+      </div>
     </div>
   </div>
 </footer>

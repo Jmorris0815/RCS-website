@@ -1,0 +1,31 @@
+---
+import FAQSchema from './schemas/FAQSchema.astro';
+
+export interface Props {
+  heading?: string;
+  kicker?: string;
+  faqs: { question: string; answer: string }[];
+  injectSchema?: boolean;
+}
+
+const { heading = 'Frequently asked questions', kicker = 'Answers', faqs, injectSchema = true } = Astro.props;
+---
+
+{faqs.length > 0 && (
+  <section class="section bg-brand-cream">
+    <div class="container-x max-w-3xl reveal">
+      <span class="section-divider"></span>
+      <p class="kicker mb-3">{kicker}</p>
+      <h2 class="mb-8 text-balance">{heading}</h2>
+      <div class="space-y-3">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.question}</summary>
+            <div class="faq-body">{f.answer}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+    {injectSchema && <FAQSchema faqs={faqs} />}
+  </section>
+)}

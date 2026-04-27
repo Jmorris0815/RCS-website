@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FAQSchema from '../../components/schemas/FAQSchema.astro';
+import FAQ from '../../components/FAQ.astro';
+import PictureHero from '../../components/PictureHero.astro';
 import { siteConfig } from '../../config/site';
 
 export async function getStaticPaths() {
@@ -13,7 +14,7 @@ const { svc } = Astro.props;
 const { Content } = await svc.render();
 const data = svc.data;
 
-// Slug → hero photo map. Only includes services where we have an honest matching shot.
+// Slug → hero photo. Only where we have an honest match.
 const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
   'seamless-gutter-installation': {
     src: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg',
@@ -33,6 +34,79 @@ const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
   },
 };
 const hero = HERO_PHOTOS[svc.slug];
+
+// Slug → 3-step mini-process tailored to this service
+const PROCESSES: Record<string, { title: string; steps: { h: string; b: string }[] }> = {
+  'seamless-gutter-installation': {
+    title: 'How we install',
+    steps: [
+      { h: 'Walk + measure', b: 'We walk every roof edge, measure runs and corners, count downspouts, and inspect fascia underneath. You get a written quote on site or within 24 hours.' },
+      { h: 'On-site extrusion', b: 'We extrude every gutter on site to the exact length of your roof line — no field seams except at corners. .032 aluminum, hidden hangers at 24-inch spacing.' },
+      { h: 'Walk-through + photo report', b: "We walk the finished job with you — pull on hangers, check pitch, verify discharge — and email a photo report so you've got documentation." },
+    ],
+  },
+  'gutter-cleaning': {
+    title: 'How we clean',
+    steps: [
+      { h: 'Hand cleanout', b: 'Two-person crew hand-clears every gutter run from the ladder. We bag the debris and haul it off — nothing dumped on your lawn or beds.' },
+      { h: 'Flush-test downspouts', b: 'Every downspout gets garden-hose flushed to confirm flow. Any clog gets cleared at the elbow before we leave the property.' },
+      { h: 'Photo documentation', b: "Before-and-after photos of every gutter run and every downspout, emailed to you the same day. You see exactly what was done." },
+    ],
+  },
+  'gutter-guards': {
+    title: 'How we install guards',
+    steps: [
+      { h: 'Tree-mix walk-through', b: "We walk the property and identify the dominant trees within 50 feet of your home. That determines whether Xtreme, New Wave, or Evelyn's is the right product." },
+      { h: 'Existing system audit', b: "Guards only work on properly-sized, properly-pitched gutters. If the underlying system is undersized or sagging, we fix that first — or quote replacement." },
+      { h: 'Install + warranty paperwork', b: "Panel installation typically takes a half-day for a single-family home. You get the manufacturer warranty paperwork plus our install warranty before we leave." },
+    ],
+  },
+  'half-round-gutters': {
+    title: 'How we install half-round',
+    steps: [
+      { h: 'Material consultation', b: 'Aluminum, copper, or galvanized — material choice depends on architecture, budget, and how the gutters will weather over decades.' },
+      { h: 'Custom fabrication', b: 'Half-round runs fabricated to your roof-line lengths. Hangers spec\'d for the material — copper needs different hangers than aluminum.' },
+      { h: 'Detail finishing', b: "End caps and miters are riveted and sealed by hand. We work slower than K-style installers because half-round is a detail-craft product." },
+    ],
+  },
+  'commercial-gutters': {
+    title: 'How we approach commercial',
+    steps: [
+      { h: 'Walk + spec', b: 'Commercial roofs need oversized K-style, box gutters, or scuppers depending on roof area and slope. We size the system for actual rainfall, not residential rules of thumb.' },
+      { h: 'Coordinate w/ trades', b: 'On retail and ag buildings we coordinate with your roofer, electrician (heat tape, lighting), and any landscape work. One point of contact for the gutter scope.' },
+      { h: 'Documented turnover', b: 'Photos, drainage diagrams, and a maintenance schedule handed to your facilities manager at completion.' },
+    ],
+  },
+  'fascia-and-soffit': {
+    title: 'How we approach fascia work',
+    steps: [
+      { h: 'Find the cause', b: "Most rotted fascia is a symptom — water sneaking behind a failing gutter, or missing drip-edge flashing. We diagnose the cause, not just the visible damage." },
+      { h: 'Replace + flash properly', b: "Pressure-treated and primed pine, painted to match. Drip-edge / gutter-apron flashing installed if missing. Corners scribed and sealed." },
+      { h: 'Re-hang gutters', b: 'New gutters or re-hang of existing system into clean fascia. Hidden hangers always — no spike-and-ferrule into fresh wood.' },
+    ],
+  },
+  'drainage-solutions': {
+    title: 'How we solve drainage',
+    steps: [
+      { h: 'Diagnose the runoff', b: 'We map where downspouts discharge, where water actually pools, and what your foundation looks like. Often the right answer is splash-block extension; sometimes it\'s buried PVC.' },
+      { h: 'Design the system', b: '4-inch SCH 40 PVC trenched 12+ feet from the foundation, daylighted at grade or run to a pop-up emitter. We coordinate around irrigation, electrical, and septic.' },
+      { h: 'Install + verify', b: 'We trench, lay pipe, and back-fill. After install we run a hose into each downspout to confirm flow before we close trenches.' },
+    ],
+  },
+};
+const proc = PROCESSES[svc.slug];
+
+// Pricing transparency — broad ranges Scott can live with
+const PRICING: Record<string, string> = {
+  'seamless-gutter-installation': "Most full-home installs in our service area run **$1,800–$4,200** depending on linear footage, downspout count, and color. Larger or multi-story homes can run higher.",
+  'gutter-cleaning': "Standard residential cleanings run **$175–$425** depending on home size and roof complexity. Properties with heavy tree cover or two-story access price toward the upper end.",
+  'gutter-guards': "Installed Leaf Solution guards typically run **$1,500–$3,500** for an average single-family home, depending on linear footage and which product line fits. Larger or steeper homes price higher.",
+  'half-round-gutters': "Aluminum half-round runs **$3,200–$6,500** installed. Copper is significantly more — usually **$8,000–$18,000** depending on linear footage, gauge, and corner count.",
+  'commercial-gutters': "Commercial scopes are quoted per-job. Box-gutter and scupper systems for retail or ag buildings typically start around **$4,500** and scale with roof area.",
+  'fascia-and-soffit': "Fascia replacement runs **$25–$45 per linear foot** including primed pine, paint, and proper drip-edge flashing. Soffit work priced separately based on extent.",
+  'drainage-solutions': "Buried discharge runs typically cost **$650–$1,400** per downspout for 12-foot runs to a daylight or pop-up. Longer runs, multi-downspout coordination, and obstacles price higher.",
+};
+const priceRange = PRICING[svc.slug];
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -61,11 +135,11 @@ const serviceSchema = {
 <BaseLayout
   title={data.seoTitle ?? `${data.title} | RCS Gutters`}
   description={data.seoDescription ?? data.description}
+  heroImage={hero?.src}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
-    <FAQSchema faqs={data.faqs} />
   </Fragment>
 
   <nav class="container-x pt-6 text-sm text-ink-muted" aria-label="Breadcrumb">
@@ -74,97 +148,113 @@ const serviceSchema = {
       <li>›</li>
       <li><a href="/services/" class="hover:underline">Services</a></li>
       <li>›</li>
-      <li class="text-ink-primary font-medium">{data.title}</li>
+      <li class="text-brand-charcoal font-medium">{data.title}</li>
     </ol>
   </nav>
 
+  <!-- Hero -->
   <section class="container-x section-tight">
     <div class={hero ? 'grid lg:grid-cols-12 gap-10 items-center' : ''}>
-      <div class={hero ? 'lg:col-span-6' : ''}>
-        <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">
-          Service · Central Virginia
-        </p>
-        <h1 class="mb-4">{data.title}</h1>
-        <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
-        <div class="mt-6 flex flex-wrap gap-3">
+      <div class={hero ? 'lg:col-span-6 reveal' : 'reveal max-w-3xl'}>
+        <p class="kicker mb-3">Service · Central Virginia</p>
+        <h1 class="mb-5 text-balance">{data.title}</h1>
+        <span class="hero-underline !mt-0 mb-6"></span>
+        <p class="text-fluid-lg text-ink-muted leading-relaxed">{data.tagline}</p>
+        <div class="mt-7 flex flex-wrap gap-3">
           <a href="/quote/" class="btn-primary">Get a Free Quote</a>
           <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary">Call {siteConfig.phoneDisplay}</a>
         </div>
       </div>
       {hero && (
-        <div class="lg:col-span-6">
-          <img
-            src={hero.src}
+        <div class="lg:col-span-6 reveal">
+          <PictureHero
+            base={hero.src.replace(/\.(jpg|jpeg|png)$/i, '')}
             alt={hero.alt}
-            class="w-full h-auto rounded-xl shadow-card object-cover aspect-[4/3]"
-            loading="eager"
-            fetchpriority="high"
-            width="1400"
-            height="1050"
+            class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[4/3]"
+            loading="eager" fetchpriority="high"
+            width={1280} height={960}
           />
         </div>
       )}
     </div>
   </section>
 
-  <section class="bg-brand-cream section">
-    <div class="container-x grid lg:grid-cols-3 gap-10">
-      <article class="lg:col-span-2 prose-rcs">
+  <!-- Mini-process -->
+  {proc && (
+    <section class="bg-brand-cream section">
+      <div class="container-x reveal">
+        <span class="section-divider"></span>
+        <p class="kicker mb-3">{proc.title}</p>
+        <h2 class="text-balance mb-10 max-w-2xl">Three steps from your call to a finished job</h2>
+        <div class="grid md:grid-cols-3 gap-5">
+          {proc.steps.map((s, i) => (
+            <div class="card p-7 reveal">
+              <div class="font-display text-5xl text-brand-primary leading-none mb-4 tabular-nums">{String(i + 1).padStart(2, '0')}</div>
+              <h3 class="font-display text-xl mb-3">{s.h}</h3>
+              <p class="text-ink-muted text-sm leading-relaxed">{s.b}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Long-form content -->
+  <section class="section">
+    <div class="container-x grid lg:grid-cols-12 gap-10">
+      <article class="lg:col-span-8 prose-rcs">
         <Content />
       </article>
-      <aside class="space-y-5">
-        <div class="card p-6 bg-white">
-          <h3 class="text-lg font-bold mb-3">Free, no-pressure estimate</h3>
-          <p class="text-sm text-ink-muted mb-4">
-            We come walk your property, measure, and give you a written quote on the spot or within 24 hours. Same pricing across our entire 8-county service area.
+      <aside class="lg:col-span-4 space-y-5 self-start lg:sticky lg:top-20">
+        <div class="card p-6">
+          <p class="kicker-charcoal mb-3">Free, no-pressure estimate</p>
+          <h3 class="font-display text-xl mb-3">Get a written quote</h3>
+          <p class="text-sm text-ink-muted mb-5 leading-relaxed">
+            On-site walk-through, measurements, and a written quote either same-day or within 24 hours. Same pricing across our entire 8-county service area.
           </p>
-          <a href="/quote/" class="btn-primary w-full text-center">Request Quote</a>
-          <a href={`tel:${siteConfig.phoneRaw}`} class="block text-center mt-3 text-brand-primary font-semibold">
+          <a href="/quote/" class="btn-primary w-full justify-center">Request Quote</a>
+          <a href={`tel:${siteConfig.phoneRaw}`} class="block text-center mt-3 text-brand-primary font-semibold hover:text-brand-red-deep transition-colors">
             Or call {siteConfig.phoneDisplay}
           </a>
         </div>
-        <div class="card p-6 bg-white">
-          <h3 class="text-lg font-bold mb-3">Where we work</h3>
-          <ul class="text-sm space-y-1 text-ink-muted">
-            <li><a class="hover:underline" href="/locations/charlottesville/">Charlottesville</a></li>
-            <li><a class="hover:underline" href="/locations/albemarle/">Albemarle County</a></li>
-            <li><a class="hover:underline" href="/locations/barboursville/">Barboursville</a></li>
-            <li><a class="hover:underline" href="/locations/orange/">Orange County</a></li>
-            <li><a class="hover:underline" href="/locations/madison/">Madison County</a></li>
-            <li><a class="hover:underline" href="/locations/greene/">Greene County</a></li>
-            <li><a class="hover:underline" href="/locations/fluvanna/">Fluvanna County</a></li>
-            <li><a class="hover:underline" href="/locations/louisa/">Louisa County</a></li>
+        {priceRange && (
+          <div class="card p-6 bg-brand-cream">
+            <p class="kicker-charcoal mb-3">Typical pricing</p>
+            <p class="text-sm leading-relaxed text-brand-charcoal" set:html={priceRange.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-brand-primary font-bold">$1</strong>')}></p>
+            <p class="text-[11px] text-ink-subtle mt-3">Ranges, not guarantees — actual pricing depends on the on-site walk.</p>
+          </div>
+        )}
+        <div class="card p-6">
+          <p class="kicker-charcoal mb-3">Where we work</p>
+          <ul class="text-sm space-y-1.5 text-ink-muted">
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/charlottesville/">Charlottesville</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/albemarle/">Albemarle County</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/barboursville/">Barboursville</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/orange/">Orange County</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/madison/">Madison County</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/greene/">Greene County</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/fluvanna/">Fluvanna County</a></li>
+            <li><a class="hover:text-brand-primary transition-colors" href="/locations/louisa/">Louisa County</a></li>
           </ul>
         </div>
       </aside>
     </div>
   </section>
 
-  {data.faqs.length > 0 && (
-    <section class="section container-x max-w-3xl">
-      <h2 class="mb-6">Frequently asked questions</h2>
-      <div class="space-y-3">
-        {data.faqs.map((f) => (
-          <details class="card p-5">
-            <summary class="font-semibold cursor-pointer">{f.question}</summary>
-            <p class="mt-3 text-ink-muted">{f.answer}</p>
-          </details>
-        ))}
-      </div>
-    </section>
-  )}
+  <!-- FAQ -->
+  <FAQ faqs={data.faqs} kicker="Frequently asked" heading={`${data.title} — what people ask`} />
 
+  <!-- Final CTA -->
   <section class="section bg-brand-primary text-white">
-    <div class="container-x text-center max-w-2xl mx-auto">
-      <h2 class="text-white">Ready when you are.</h2>
-      <p class="text-white/95 mt-3 mb-6">
-        Free written estimate. Honest recommendations. Real local crew.
+    <div class="container-x text-center max-w-2xl mx-auto reveal">
+      <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
+      <h2 class="font-display text-white text-balance mb-5">Real local crew. Real local accountability.</h2>
+      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
+        Free written estimate. Honest recommendations. No "today only" pricing.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
         <a href="/quote/" class="btn-accent">Get a Quote</a>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
-          {siteConfig.phoneDisplay}
-        </a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">Call {siteConfig.phoneDisplay}</a>
       </div>
     </div>
   </section>

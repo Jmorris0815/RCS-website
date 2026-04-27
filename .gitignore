@@ -29,3 +29,6 @@ pnpm-debug.log*
 
 # lighthouse
 .lighthouseci/
+
+# image extraction scratch (PDF page renders + crop candidates kept local only)
+public/images/source/

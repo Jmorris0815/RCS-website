@@ -1,84 +1,256 @@
+/* ── Variable font faces ──────────────────────────────────────────────── */
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/fraunces/index.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Base layer ───────────────────────────────────────────────────────── */
 @layer base {
   :root {
     --header-h: 64px;
+    --section-pad: clamp(56px, 7vw, 112px);
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   body {
     @apply font-sans text-ink-primary;
-    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv11', 'ss01', 'ss02';
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold tracking-tight text-ink-primary;
+    @apply font-display text-brand-charcoal;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.1;
   }
+  h1 { font-size: clamp(2.5rem, 1.7rem + 3vw, 4.5rem); line-height: 1.05; letter-spacing: -0.022em; }
+  h2 { font-size: clamp(2rem, 1.5rem + 2.2vw, 3.25rem); line-height: 1.1; letter-spacing: -0.018em; }
+  h3 { font-size: clamp(1.375rem, 1.15rem + 0.9vw, 1.75rem); line-height: 1.2; letter-spacing: -0.012em; }
+  h4 { font-size: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem); line-height: 1.3; letter-spacing: -0.008em; }
 
-  h1 { @apply text-fluid-3xl leading-[1.1]; }
-  h2 { @apply text-fluid-2xl leading-[1.2]; }
-  h3 { @apply text-fluid-xl leading-[1.3]; }
-  h4 { @apply text-fluid-lg leading-[1.4]; }
+  p { line-height: 1.7; }
 
-  p { @apply leading-relaxed; }
-
-  ::selection {
-    @apply bg-brand-primary text-white;
-  }
-
-  ::-moz-selection {
-    @apply bg-brand-primary text-white;
-  }
+  ::selection { @apply bg-brand-primary text-white; }
+  ::-moz-selection { @apply bg-brand-primary text-white; }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-primary;
+    outline: 2px solid theme('colors.brand.primary');
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
+/* ── Components ───────────────────────────────────────────────────────── */
 @layer components {
-  .container-x {
-    @apply max-w-container mx-auto px-4 lg:px-8;
+  .container-x { @apply max-w-container mx-auto px-5 lg:px-8; }
+  .container-wide { @apply max-w-container-wide mx-auto px-5 lg:px-8; }
+
+  /* Section padding */
+  .section { padding-block: var(--section-pad); }
+  .section-tight { padding-block: clamp(40px, 5vw, 72px); }
+
+  /* Eyebrow / kicker */
+  .kicker {
+    @apply inline-block text-[11px] font-bold uppercase text-brand-primary;
+    letter-spacing: 0.18em;
+  }
+  .kicker-charcoal {
+    @apply inline-block text-[11px] font-bold uppercase text-brand-charcoal;
+    letter-spacing: 0.18em;
   }
 
+  /* Section divider — short red line that grows in on reveal */
+  .section-divider {
+    @apply block h-[3px] w-[60px] bg-brand-primary rounded-full mb-5;
+    transform-origin: 0 50%;
+  }
+  .reveal[data-revealed="true"] .section-divider {
+    animation: divider-grow 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Animated underline that draws under hero headline */
+  .hero-underline {
+    @apply block h-[5px] w-[110px] bg-brand-primary rounded-full mt-4;
+    transform-origin: 0 50%;
+    animation: underline-draw 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+  }
+
+  /* Buttons */
   .btn {
-    @apply inline-flex items-center justify-center font-semibold rounded transition;
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition-all duration-200;
+    will-change: transform;
   }
-
   .btn-primary {
-    @apply btn bg-brand-primary text-white px-5 py-3 hover:bg-brand-primary-hover;
+    @apply btn text-white px-6 py-3.5 text-[15px];
+    background: linear-gradient(180deg, theme('colors.brand.primary') 0%, theme('colors.brand.primary-hover') 100%);
+    box-shadow: theme('boxShadow.red-cta');
   }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: theme('boxShadow.red-cta-hover');
+  }
+  .btn-primary:active { transform: translateY(0); }
 
   .btn-secondary {
-    @apply btn border-2 border-brand-primary text-brand-primary px-5 py-3 hover:bg-brand-primary hover:text-white;
+    @apply btn border-2 border-brand-primary text-brand-primary px-6 py-3 text-[15px] bg-white hover:bg-brand-primary hover:text-white;
   }
+  .btn-secondary:hover { transform: translateY(-1px); }
+
+  .btn-outline-white {
+    @apply btn border-2 border-white text-white px-6 py-3 text-[15px] hover:bg-white hover:text-brand-charcoal;
+  }
+  .btn-outline-white:hover { transform: translateY(-1px); }
 
   .btn-dark {
-    @apply btn bg-brand-dark text-white px-5 py-3 hover:bg-black;
+    @apply btn bg-brand-charcoal text-white px-6 py-3.5 text-[15px] hover:bg-black;
   }
 
   .btn-accent {
-    @apply btn bg-white text-brand-primary border-2 border-white px-5 py-3 hover:brightness-95;
+    @apply btn bg-white text-brand-primary border-2 border-white px-6 py-3.5 text-[15px] hover:brightness-95;
+  }
+  .btn-accent:hover { transform: translateY(-2px); }
+
+  /* Cards */
+  .card {
+    @apply bg-white border border-line rounded-xl shadow-soft transition-all duration-200;
+    border-width: 1.5px;
+  }
+  .card:hover {
+    @apply shadow-lift;
+    transform: translateY(-2px);
+  }
+  .card-flat {
+    @apply bg-white border border-line rounded-xl;
+    border-width: 1.5px;
   }
 
   .prose-rcs {
-    @apply prose max-w-prose;
+    @apply prose max-w-prose prose-headings:font-display prose-headings:text-brand-charcoal
+           prose-h2:mt-12 prose-h3:mt-8 prose-a:text-brand-primary prose-a:font-semibold
+           hover:prose-a:text-brand-red-deep prose-strong:text-brand-charcoal;
   }
 
-  .section {
-    @apply py-[clamp(48px,6vw,96px)];
+  /* Photo overlay caption shared style */
+  .photo-overlay-caption {
+    @apply absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4 text-white;
   }
 
-  .section-tight {
-    @apply py-[clamp(32px,4vw,64px)];
+  /* Pill tags (location pill cloud, related links) */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-brand-primary/30 bg-brand-light text-brand-red-deep
+           px-3 py-1.5 text-[13px] font-medium transition-all duration-200;
+  }
+  .pill:hover {
+    @apply bg-brand-primary text-white border-brand-primary;
+    transform: translateY(-1px);
   }
 
-  .card {
-    @apply bg-white border border-line rounded-lg shadow-soft hover:shadow-card transition;
+  /* Sticky CTAs */
+  .sticky-cta-desktop {
+    @apply fixed bottom-6 right-6 z-40 hidden md:inline-flex items-center gap-2
+           bg-brand-primary text-white px-5 py-3.5 rounded-full font-semibold shadow-lift
+           opacity-0 translate-y-4 transition-all duration-300 pointer-events-none;
+  }
+  .sticky-cta-desktop[data-show="true"] {
+    @apply opacity-100 translate-y-0 pointer-events-auto;
+  }
+  .sticky-cta-desktop:hover { transform: translateY(-2px); box-shadow: theme('boxShadow.red-cta-hover'); }
+
+  .sticky-bar-mobile {
+    @apply fixed bottom-0 inset-x-0 z-40 md:hidden grid grid-cols-2 bg-white/95 backdrop-blur border-t border-line;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .sticky-bar-mobile a {
+    @apply flex items-center justify-center gap-2 py-3 text-sm font-semibold transition-colors;
+  }
+  .sticky-bar-mobile a:first-child { @apply bg-brand-primary text-white; }
+  .sticky-bar-mobile a:last-child { @apply text-brand-charcoal hover:bg-brand-cream; }
+
+  /* Scroll reveal — fade-up baseline (set by IntersectionObserver) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal[data-revealed="true"] { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* FAQ accordion (CSS-only via grid-template-rows) */
+  .faq-item {
+    @apply card-flat overflow-hidden;
+  }
+  .faq-item summary {
+    @apply flex items-center justify-between gap-4 cursor-pointer list-none p-5 font-semibold text-brand-charcoal;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    @apply text-brand-primary text-2xl font-light transition-transform duration-300;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item .faq-body {
+    @apply px-5 pb-5 text-ink-muted;
+    line-height: 1.7;
+  }
+
+  /* AI placeholder slot — never pretends to be a real photo */
+  .ai-slot {
+    @apply relative overflow-hidden bg-gradient-to-br from-brand-cream via-white to-brand-light;
+  }
+  .ai-slot::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgb(215 32 39 / 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgb(200 151 58 / 0.10) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .ai-slot-label {
+    @apply absolute bottom-3 right-3 text-[10px] uppercase tracking-wider text-brand-warm-gray
+           bg-white/80 backdrop-blur rounded px-2 py-1 font-medium;
+  }
+}
+
+/* ── Utilities ────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Hover lift utility */
+  .hover-lift { transition: transform 200ms ease, box-shadow 200ms ease; }
+  .hover-lift:hover { transform: translateY(-2px); }
+
+  /* Image hover scale (used inside overflow-hidden parent) */
+  .hover-zoom { transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .hover-zoom:hover { transform: scale(1.04); }
+}
+
+/* ── Astro View Transitions polish ─────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 250ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 }

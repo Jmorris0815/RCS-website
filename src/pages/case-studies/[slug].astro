@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PictureHero from '../../components/PictureHero.astro';
 import { siteConfig } from '../../config/site';
 
 export async function getStaticPaths() {
@@ -13,7 +14,6 @@ const { Content } = await study.render();
 const data = study.data;
 const author = await getEntry(data.author);
 
-// Slug → hero image. Where we have an honest visual match to the case story.
 const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
   'charlottesville-tulip-poplar-xtreme-upgrade': {
     src: '/images/jobs/before-after-cleaning.jpg',
@@ -44,6 +44,7 @@ const breadcrumbSchema = {
 <BaseLayout
   title={data.seoTitle ?? `${data.title} | RCS Gutters`}
   description={data.seoDescription ?? data.problem.slice(0, 160)}
+  heroImage={hero?.src}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -55,29 +56,33 @@ const breadcrumbSchema = {
       <li>›</li>
       <li><a href="/case-studies/" class="hover:underline">Our Work</a></li>
       <li>›</li>
-      <li class="text-ink-primary font-medium truncate">{data.title}</li>
+      <li class="text-brand-charcoal font-medium truncate">{data.title}</li>
     </ol>
   </nav>
 
   <article class="container-x section-tight">
-    <div class="max-w-3xl">
-      <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">
+    <div class="max-w-3xl reveal">
+      <p class="kicker mb-3">
         {data.customerCity}{data.customerCounty ? `, ${data.customerCounty} County` : ''} · {data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
       </p>
-      <h1 class="mb-5">{data.title}</h1>
+      <h1 class="mb-5 text-balance">{data.title}</h1>
+      <span class="hero-underline !mt-0"></span>
     </div>
+
     {hero && (
-      <img
-        src={hero.src}
-        alt={hero.alt}
-        class="w-full h-auto rounded-xl shadow-card object-cover aspect-[16/9] mb-8"
-        loading="eager"
-        fetchpriority="high"
-      />
+      <div class="mt-8 reveal">
+        <PictureHero
+          base={hero.src.replace(/\.(jpg|jpeg|png)$/i, '')}
+          alt={hero.alt}
+          class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[16/9]"
+          loading="eager" fetchpriority="high"
+          width={1280} height={720}
+        />
+      </div>
     )}
 
-    <div class="grid lg:grid-cols-3 gap-10 mt-2">
-      <div class="lg:col-span-2 prose-rcs">
+    <div class="grid lg:grid-cols-12 gap-10 mt-12">
+      <div class="lg:col-span-8 prose-rcs reveal">
         <h2>The problem</h2>
         <p>{data.problem}</p>
         <h2>What we did</h2>
@@ -86,34 +91,54 @@ const breadcrumbSchema = {
         <p>{data.outcome}</p>
         <Content />
         {data.customerQuote && data.permissionGranted && (
-          <blockquote class="border-l-4 border-brand-primary pl-5 italic my-7">
-            <p>"{data.customerQuote}"</p>
-            {data.customerName && <cite class="block mt-2 text-sm text-ink-muted not-italic">— {data.customerName}, {data.customerCity}</cite>}
+          <blockquote class="font-display text-fluid-xl border-l-4 border-brand-primary pl-6 my-8 not-italic text-brand-charcoal">
+            "{data.customerQuote}"
+            {data.customerName && (
+              <cite class="block mt-3 text-sm text-ink-muted not-italic font-sans">— {data.customerName}, {data.customerCity}</cite>
+            )}
           </blockquote>
         )}
       </div>
-      <aside class="space-y-5">
+      <aside class="lg:col-span-4 space-y-5 self-start lg:sticky lg:top-20">
         <div class="card p-6 bg-brand-cream">
-          <h3 class="font-bold mb-2">Project facts</h3>
-          <dl class="text-sm space-y-2">
+          <p class="kicker-charcoal mb-3">Project facts</p>
+          <dl class="text-sm space-y-3">
             <div>
-              <dt class="text-ink-subtle text-xs uppercase tracking-wider">Location</dt>
-              <dd>{data.customerCity}, VA</dd>
+              <dt class="text-[11px] text-brand-warm-gray uppercase tracking-wider">Location</dt>
+              <dd class="font-semibold text-brand-charcoal">{data.customerCity}, VA</dd>
             </div>
             <div>
-              <dt class="text-ink-subtle text-xs uppercase tracking-wider">Completed</dt>
-              <dd>{data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</dd>
+              <dt class="text-[11px] text-brand-warm-gray uppercase tracking-wider">Completed</dt>
+              <dd class="font-semibold text-brand-charcoal">{data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</dd>
             </div>
+            {author && (
+              <div>
+                <dt class="text-[11px] text-brand-warm-gray uppercase tracking-wider">Crew lead</dt>
+                <dd class="font-semibold text-brand-charcoal">{author.data.name}</dd>
+              </div>
+            )}
           </dl>
         </div>
-        <div class="card p-6 bg-white">
-          <h3 class="font-bold mb-2">Want similar work?</h3>
-          <p class="text-sm text-ink-muted mb-4">
+        <div class="card p-6">
+          <p class="kicker-charcoal mb-3">Want similar work?</p>
+          <p class="text-sm text-ink-muted mb-5 leading-relaxed">
             Every house is different. Get a free quote and we'll walk yours.
           </p>
-          <a href="/quote/" class="btn-primary w-full text-center">Request Quote</a>
+          <a href="/quote/" class="btn-primary w-full justify-center">Request Quote</a>
         </div>
       </aside>
     </div>
   </article>
+
+  <!-- Final CTA -->
+  <section class="section bg-brand-primary text-white">
+    <div class="container-x text-center max-w-2xl mx-auto reveal">
+      <p class="kicker !text-brand-gold-soft mb-3">Want this on your house?</p>
+      <h2 class="font-display text-white text-balance mb-5">Free written estimate.</h2>
+      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
+        Honest recommendations. Real local crew.
+      </p>
+      <a href="/quote/" class="btn-accent">Request a Quote</a>
+    </div>
+  </section>
 </BaseLayout>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PictureHero from '../../components/PictureHero.astro';
 import { siteConfig } from '../../config/site';
 
 export async function getStaticPaths() {
@@ -12,7 +13,12 @@ const { product } = Astro.props;
 const { Content } = await product.render();
 const data = product.data;
 
-// Slug → product photo + technical diagram (overhead panel line)
+// All Leaf Solution products for the comparison table
+const allProducts = (await getCollection('products')).sort((a, b) => {
+  const order = { economy: 0, standard: 1, premium: 2, luxury: 3 };
+  return (order[a.data.priceTier] ?? 0) - (order[b.data.priceTier] ?? 0);
+});
+
 const PRODUCT_MEDIA: Record<string, { hero: string; heroAlt: string; diagram?: string; diagramAlt?: string }> = {
   'xtreme-gutter-guard': {
     hero: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg',
@@ -58,6 +64,7 @@ const productSchema = {
 <BaseLayout
   title={data.seoTitle ?? `${data.title} | RCS Gutters`}
   description={data.seoDescription ?? data.description}
+  heroImage={media?.hero}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -70,60 +77,58 @@ const productSchema = {
       <li>›</li>
       <li><a href="/products/" class="hover:underline">Products</a></li>
       <li>›</li>
-      <li class="text-ink-primary font-medium">{data.title}</li>
+      <li class="text-brand-charcoal font-medium">{data.title}</li>
     </ol>
   </nav>
 
+  <!-- Hero with photo + stats + diagram -->
   <section class="container-x section-tight">
     <div class={media ? 'grid lg:grid-cols-12 gap-10 items-start' : ''}>
-      <div class={media ? 'lg:col-span-6' : ''}>
-        <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">
-          {data.manufacturer} · Gutter Guard
-        </p>
-        <h1 class="mb-4">{data.title}</h1>
-        <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
+      <div class={media ? 'lg:col-span-6 reveal' : 'reveal'}>
+        <p class="kicker mb-3">{data.manufacturer} · Gutter Guard</p>
+        <h1 class="mb-5 text-balance">{data.title}</h1>
+        <span class="hero-underline !mt-0 mb-6"></span>
+        <p class="text-fluid-lg text-ink-muted leading-relaxed">{data.tagline}</p>
 
-        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3">
-          <div class="card p-4 text-center">
-            <div class="text-3xl font-display font-bold text-brand-primary">{data.gpmCapacity ?? '—'}</div>
-            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">GPM throughput</div>
+        <div class="mt-8 grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3">
+          <div class="card-flat p-4 text-center">
+            <div class="font-display text-3xl text-brand-primary leading-none tabular-nums">{data.gpmCapacity ?? '—'}</div>
+            <div class="text-[11px] text-brand-warm-gray uppercase tracking-wider mt-2">GPM throughput</div>
           </div>
-          <div class="card p-4 text-center">
-            <div class="text-3xl font-display font-bold text-brand-primary">{data.warrantyYears ?? '—'}</div>
-            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Year warranty</div>
+          <div class="card-flat p-4 text-center">
+            <div class="font-display text-3xl text-brand-primary leading-none tabular-nums">{data.warrantyYears ?? '—'}</div>
+            <div class="text-[11px] text-brand-warm-gray uppercase tracking-wider mt-2">Year warranty</div>
           </div>
-          <div class="card p-4 text-center">
-            <div class="text-2xl font-display font-bold text-brand-primary capitalize">{data.priceTier}</div>
-            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Price tier</div>
+          <div class="card-flat p-4 text-center">
+            <div class="font-display text-2xl text-brand-primary leading-none capitalize">{data.priceTier}</div>
+            <div class="text-[11px] text-brand-warm-gray uppercase tracking-wider mt-2">Price tier</div>
           </div>
-          <div class="card p-4 text-center">
-            <div class="text-2xl font-display font-bold text-brand-primary">{data.colors.length}</div>
-            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">{data.colors.length === 1 ? 'Color' : 'Colors'}</div>
+          <div class="card-flat p-4 text-center">
+            <div class="font-display text-2xl text-brand-primary leading-none">{data.colors.length || '—'}</div>
+            <div class="text-[11px] text-brand-warm-gray uppercase tracking-wider mt-2">{data.colors.length === 1 ? 'Color' : 'Colors'}</div>
           </div>
         </div>
 
-        <div class="mt-6 flex flex-wrap gap-3">
+        <div class="mt-7 flex flex-wrap gap-3">
           <a href="/quote/" class="btn-primary">Get a Free Quote</a>
-          <a href="/configurator/" class="btn-secondary">Try the Configurator Quiz</a>
+          <a href="/configurator/" class="btn-secondary">4-question quiz</a>
         </div>
       </div>
 
       {media && (
-        <div class="lg:col-span-6 space-y-4">
-          <img
-            src={media.hero}
+        <div class="lg:col-span-6 reveal space-y-4">
+          <PictureHero
+            base={media.hero.replace(/\.(jpg|jpeg|png)$/i, '')}
             alt={media.heroAlt}
-            class="w-full h-auto rounded-xl shadow-card object-cover aspect-[4/3]"
-            loading="eager"
-            fetchpriority="high"
-            width="1400"
-            height="1050"
+            class="w-full h-auto rounded-2xl shadow-card object-cover aspect-[4/3]"
+            loading="eager" fetchpriority="high"
+            width={1280} height={960}
           />
           {media.diagram && (
-            <figure class="bg-brand-cream rounded-lg p-4 flex items-center gap-4">
-              <img src={media.diagram} alt={media.diagramAlt} class="h-20 w-auto" loading="lazy" />
+            <figure class="card-flat bg-brand-cream p-4 flex items-center gap-4">
+              <img src={media.diagram} alt={media.diagramAlt} class="h-20 w-auto" loading="lazy" width="120" height="80" />
               <figcaption class="text-xs text-ink-muted leading-relaxed">
-                <span class="block font-semibold text-ink-primary mb-0.5">Panel construction</span>
+                <span class="block font-semibold text-brand-charcoal mb-0.5">Panel construction</span>
                 Overhead view of the panel as it sits across your gutter trough.
               </figcaption>
             </figure>
@@ -133,55 +138,129 @@ const productSchema = {
     </div>
   </section>
 
-  <section class="bg-brand-cream section">
-    <div class="container-x grid lg:grid-cols-3 gap-10">
-      <article class="lg:col-span-2 prose-rcs">
+  <!-- Best for tree types -->
+  {(data.idealFor.length > 0 || data.notIdealFor.length > 0) && (
+    <section class="section bg-brand-cream">
+      <div class="container-x">
+        <div class="max-w-2xl mb-10 reveal">
+          <span class="section-divider"></span>
+          <p class="kicker mb-3">Fit guide</p>
+          <h2 class="text-balance">Where {data.title} fits — and where it doesn't</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+          {data.idealFor.length > 0 && (
+            <div class="card p-7 reveal">
+              <div class="flex items-center gap-2 mb-4">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-accent-success" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h3 class="font-display text-xl !mt-0">Ideal for</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-ink-muted">
+                {data.idealFor.map((item) => (
+                  <li class="flex gap-2 items-start">
+                    <span class="text-accent-success font-bold mt-0.5">·</span><span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {data.notIdealFor.length > 0 && (
+            <div class="card p-7 reveal">
+              <div class="flex items-center gap-2 mb-4">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-warm-gray" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                <h3 class="font-display text-xl !mt-0">Not the best fit for</h3>
+              </div>
+              <ul class="space-y-2 text-sm text-ink-muted">
+                {data.notIdealFor.map((item) => (
+                  <li class="flex gap-2 items-start">
+                    <span class="text-brand-warm-gray font-bold mt-0.5">·</span><span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Long-form content -->
+  <section class="section">
+    <div class="container-x grid lg:grid-cols-12 gap-10">
+      <article class="lg:col-span-8 prose-rcs reveal">
         <Content />
       </article>
-      <aside class="space-y-5">
-        {data.idealFor.length > 0 && (
-          <div class="card p-5 bg-white">
-            <div class="text-xs font-bold uppercase text-accent-success tracking-wider mb-2">Ideal for</div>
-            <ul class="text-sm space-y-1.5 text-ink-muted">
-              {data.idealFor.map((item) => <li>· {item}</li>)}
-            </ul>
-          </div>
-        )}
-        {data.notIdealFor.length > 0 && (
-          <div class="card p-5 bg-white">
-            <div class="text-xs font-bold uppercase text-accent-danger tracking-wider mb-2">Not the best fit for</div>
-            <ul class="text-sm space-y-1.5 text-ink-muted">
-              {data.notIdealFor.map((item) => <li>· {item}</li>)}
-            </ul>
-          </div>
-        )}
-        <div class="card p-5 bg-white">
-          <div class="text-xs font-bold uppercase text-ink-subtle tracking-wider mb-2">Material</div>
+      <aside class="lg:col-span-4 space-y-5 self-start lg:sticky lg:top-20">
+        <div class="card p-6">
+          <p class="kicker-charcoal mb-3">Material</p>
           <p class="text-sm text-ink-muted">{data.materialType}</p>
         </div>
         {data.colors.length > 0 && (
-          <div class="card p-5 bg-white">
-            <div class="text-xs font-bold uppercase text-ink-subtle tracking-wider mb-2">Colors available</div>
-            <ul class="text-sm space-y-1 text-ink-muted">
-              {data.colors.map((c) => <li>{c}</li>)}
+          <div class="card p-6">
+            <p class="kicker-charcoal mb-3">Colors available</p>
+            <ul class="text-sm text-ink-muted space-y-1">
+              {data.colors.map((c) => <li>· {c}</li>)}
             </ul>
           </div>
         )}
+        <a href="/quote/" class="btn-primary w-full justify-center">Request a Quote</a>
       </aside>
     </div>
   </section>
 
+  <!-- Comparison table -->
+  {allProducts.length > 1 && (
+    <section class="section bg-brand-cream">
+      <div class="container-x">
+        <div class="max-w-2xl mb-10 reveal">
+          <span class="section-divider"></span>
+          <p class="kicker mb-3">Compare</p>
+          <h2 class="text-balance">Leaf Solution lineup at a glance</h2>
+          <p class="text-ink-muted mt-3">All three are products we install regularly. The right one depends on your tree mix and budget.</p>
+        </div>
+        <div class="overflow-x-auto rounded-2xl border-2 border-line bg-white shadow-soft">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left bg-brand-cream/60 border-b border-line">
+                <th class="px-5 py-4 font-display text-brand-charcoal">Product</th>
+                <th class="px-5 py-4 font-semibold text-brand-charcoal">Material</th>
+                <th class="px-5 py-4 font-semibold text-brand-charcoal text-right">GPM</th>
+                <th class="px-5 py-4 font-semibold text-brand-charcoal text-right">Warranty</th>
+                <th class="px-5 py-4 font-semibold text-brand-charcoal">Tier</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allProducts.map((p) => (
+                <tr class={`border-b border-line/60 last:border-0 ${p.slug === product.slug ? 'bg-brand-light/40' : ''}`}>
+                  <td class="px-5 py-4">
+                    <a href={`/products/${p.slug}/`} class={`font-semibold ${p.slug === product.slug ? 'text-brand-primary' : 'text-brand-charcoal hover:text-brand-primary'} transition-colors`}>
+                      {p.data.title}
+                      {p.slug === product.slug && <span class="ml-2 text-[11px] text-brand-warm-gray font-normal">(this product)</span>}
+                    </a>
+                  </td>
+                  <td class="px-5 py-4 text-ink-muted">{p.data.materialType}</td>
+                  <td class="px-5 py-4 text-right font-medium tabular-nums">{p.data.gpmCapacity ?? '—'}</td>
+                  <td class="px-5 py-4 text-right font-medium tabular-nums">{p.data.warrantyYears ?? '—'} yr</td>
+                  <td class="px-5 py-4 capitalize text-ink-muted">{p.data.priceTier}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Final CTA -->
   <section class="section bg-brand-primary text-white">
-    <div class="container-x text-center max-w-2xl mx-auto">
-      <h2 class="text-white">Want this on your home?</h2>
-      <p class="text-white/95 mt-3 mb-6">
+    <div class="container-x text-center max-w-2xl mx-auto reveal">
+      <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
+      <h2 class="font-display text-white text-balance mb-5">Want this on your home?</h2>
+      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
         Free written estimate. We'll walk your property and tell you if {data.title} is actually the right pick — or if a different option fits better.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
         <a href="/quote/" class="btn-accent">Request a Quote</a>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
-          {siteConfig.phoneDisplay}
-        </a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">{siteConfig.phoneDisplay}</a>
       </div>
     </div>
   </section>

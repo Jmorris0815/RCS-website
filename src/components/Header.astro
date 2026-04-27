@@ -2,35 +2,56 @@
 import { siteConfig } from '../config/site';
 ---
 
-<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-line">
-  <div class="max-w-container mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2 font-display font-bold text-brand-primary">
-      <img src="/logo.svg" alt="Right Choice Seamless Gutters" class="h-9 w-auto" />
+<header class="sticky top-0 z-40 bg-white/92 backdrop-blur border-b border-line transition-shadow">
+  <div class="max-w-container-wide mx-auto px-5 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 font-display font-bold text-brand-primary text-lg tracking-tight" aria-label="Right Choice Seamless Gutters — home">
+      <img src="/logo.svg" alt="" class="h-9 w-auto" width="140" height="36" />
       <span class="hidden sm:inline">RCS Gutters</span>
     </a>
 
-    <nav class="hidden lg:flex items-center gap-7 text-sm font-medium">
-      <a href="/services/" class="hover:text-brand-primary">Services</a>
-      <a href="/products/" class="hover:text-brand-primary">Products</a>
-      <a href="/locations/" class="hover:text-brand-primary">Service Area</a>
-      <a href="/case-studies/" class="hover:text-brand-primary">Our Work</a>
-      <a href="/blog/" class="hover:text-brand-primary">Blog</a>
-      <a href="/about/" class="hover:text-brand-primary">About</a>
+    <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium text-brand-charcoal" aria-label="Main">
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/products/" class="nav-link">Products</a>
+      <a href="/locations/" class="nav-link">Service Area</a>
+      <a href="/case-studies/" class="nav-link">Our Work</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/about/" class="nav-link">About</a>
     </nav>
 
     <div class="flex items-center gap-3">
       <a
         href={`tel:${siteConfig.phoneRaw}`}
-        class="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary"
+        class="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-semibold text-brand-charcoal hover:text-brand-primary transition-colors"
       >
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+        </svg>
         {siteConfig.phoneDisplay}
       </a>
-      <a
-        href="/quote/"
-        class="inline-flex items-center bg-brand-primary text-white px-4 py-2 rounded font-semibold text-sm hover:bg-brand-dark transition"
-      >
+      <a href="/quote/" class="inline-flex items-center btn-primary !py-2.5 !px-4 !text-[13px] !rounded-md">
         Get a Quote
       </a>
     </div>
   </div>
 </header>
+
+<style>
+  .nav-link {
+    position: relative;
+    padding-block: 4px;
+    transition: color 200ms ease;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -2px;
+    height: 2px;
+    background: theme('colors.brand.primary');
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-link:hover { color: theme('colors.brand.primary'); }
+  .nav-link:hover::after { transform: scaleX(1); }
+</style>
