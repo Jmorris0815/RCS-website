@@ -13,6 +13,23 @@ const { Content } = await study.render();
 const data = study.data;
 const author = await getEntry(data.author);
 
+// Slug → hero image. Where we have an honest visual match to the case story.
+const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
+  'charlottesville-tulip-poplar-xtreme-upgrade': {
+    src: '/images/jobs/before-after-cleaning.jpg',
+    alt: 'Before-and-after split: gutter packed with brown tulip-poplar leaves vs. clean micro-mesh after upgrade',
+  },
+  'greene-pine-forest-cleaning-rescue': {
+    src: '/images/jobs/clogged-leaves.jpg',
+    alt: 'A shingle-roof gutter packed with autumn leaves and pine needles before cleaning',
+  },
+  'madison-farmhouse-half-round-restoration': {
+    src: '/images/jobs/gutter-pulling-away.jpg',
+    alt: 'A failed older gutter pulling away from the roofline of a farmhouse before restoration',
+  },
+};
+const hero = HERO_PHOTOS[study.slug];
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -44,11 +61,20 @@ const breadcrumbSchema = {
 
   <article class="container-x section-tight">
     <div class="max-w-3xl">
-      <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
+      <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">
         {data.customerCity}{data.customerCounty ? `, ${data.customerCounty} County` : ''} · {data.dateCompleted.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
       </p>
       <h1 class="mb-5">{data.title}</h1>
     </div>
+    {hero && (
+      <img
+        src={hero.src}
+        alt={hero.alt}
+        class="w-full h-auto rounded-xl shadow-card object-cover aspect-[16/9] mb-8"
+        loading="eager"
+        fetchpriority="high"
+      />
+    )}
 
     <div class="grid lg:grid-cols-3 gap-10 mt-2">
       <div class="lg:col-span-2 prose-rcs">

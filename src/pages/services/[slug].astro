@@ -13,6 +13,27 @@ const { svc } = Astro.props;
 const { Content } = await svc.render();
 const data = svc.data;
 
+// Slug → hero photo map. Only includes services where we have an honest matching shot.
+const HERO_PHOTOS: Record<string, { src: string; alt: string }> = {
+  'seamless-gutter-installation': {
+    src: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg',
+    alt: 'Corner miter on a freshly installed seamless aluminum gutter, autumn leaves in background',
+  },
+  'gutter-cleaning': {
+    src: '/images/jobs/clogged-leaves.jpg',
+    alt: 'A shingle-roof gutter packed with red and brown autumn leaves',
+  },
+  'gutter-guards': {
+    src: '/images/products/straight-miter-fall-background.jpg',
+    alt: 'Leaf Solution gutter guard installed on a shingle roof above a fall lawn',
+  },
+  'fascia-and-soffit': {
+    src: '/images/jobs/rotted-roof-deck.jpg',
+    alt: 'Rotted roof deck and ceiling joists viewed from below — typical fascia-failure damage',
+  },
+};
+const hero = HERO_PHOTOS[svc.slug];
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -58,14 +79,31 @@ const serviceSchema = {
   </nav>
 
   <section class="container-x section-tight">
-    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
-      Service · Central Virginia
-    </p>
-    <h1 class="mb-4">{data.title}</h1>
-    <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
-    <div class="mt-6 flex flex-wrap gap-3">
-      <a href="/quote/" class="btn-primary">Get a Free Quote</a>
-      <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary">Call {siteConfig.phoneDisplay}</a>
+    <div class={hero ? 'grid lg:grid-cols-12 gap-10 items-center' : ''}>
+      <div class={hero ? 'lg:col-span-6' : ''}>
+        <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">
+          Service · Central Virginia
+        </p>
+        <h1 class="mb-4">{data.title}</h1>
+        <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/quote/" class="btn-primary">Get a Free Quote</a>
+          <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary">Call {siteConfig.phoneDisplay}</a>
+        </div>
+      </div>
+      {hero && (
+        <div class="lg:col-span-6">
+          <img
+            src={hero.src}
+            alt={hero.alt}
+            class="w-full h-auto rounded-xl shadow-card object-cover aspect-[4/3]"
+            loading="eager"
+            fetchpriority="high"
+            width="1400"
+            height="1050"
+          />
+        </div>
+      )}
     </div>
   </section>
 

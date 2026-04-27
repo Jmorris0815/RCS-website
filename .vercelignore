@@ -1,0 +1,6 @@
+public/images/source/
+/c/dev/tmp/
+scripts/extract-rhino-pdfs.mjs
+scripts/crop-candidates.mjs
+scripts/final-crops.mjs
+scripts/optimize-product-images.mjs

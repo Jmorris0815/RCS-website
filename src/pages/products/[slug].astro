@@ -12,6 +12,29 @@ const { product } = Astro.props;
 const { Content } = await product.render();
 const data = product.data;
 
+// Slug → product photo + technical diagram (overhead panel line)
+const PRODUCT_MEDIA: Record<string, { hero: string; heroAlt: string; diagram?: string; diagramAlt?: string }> = {
+  'xtreme-gutter-guard': {
+    hero: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg',
+    heroAlt: 'Stainless micro-mesh gutter guard installed at a corner miter, autumn trees in background',
+    diagram: '/images/products/xtreme-overhead-panel-line.png',
+    diagramAlt: 'Overhead view of an Xtreme stainless steel micro-mesh panel',
+  },
+  'new-wave-gutter-guard': {
+    hero: '/images/products/straight-miter-fall-background.jpg',
+    heroAlt: 'New Wave gutter guard panel installed on a shingle roof above a fall yard',
+    diagram: '/images/products/new-wave-overhead-panel-line.png',
+    diagramAlt: 'Overhead view of a New Wave punched-aluminum gutter guard panel',
+  },
+  'evelyns-leaf-solution': {
+    hero: '/images/products/ELS-miter-installed-wide_white.jpg',
+    heroAlt: "Evelyn's Leaf Solution corner miter installed on a rural Virginia home with a white fence",
+    diagram: '/images/products/els-overhead-panel-line.png',
+    diagramAlt: "Overhead view of an Evelyn's Leaf Solution panel",
+  },
+};
+const media = PRODUCT_MEDIA[product.slug];
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -52,34 +75,61 @@ const productSchema = {
   </nav>
 
   <section class="container-x section-tight">
-    <p class="text-brand-accent text-xs font-bold uppercase tracking-[0.18em] mb-2">
-      {data.manufacturer} · Gutter Guard
-    </p>
-    <h1 class="mb-4">{data.title}</h1>
-    <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
+    <div class={media ? 'grid lg:grid-cols-12 gap-10 items-start' : ''}>
+      <div class={media ? 'lg:col-span-6' : ''}>
+        <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">
+          {data.manufacturer} · Gutter Guard
+        </p>
+        <h1 class="mb-4">{data.title}</h1>
+        <p class="text-fluid-lg text-ink-muted max-w-3xl">{data.tagline}</p>
 
-    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-3xl">
-      <div class="card p-4 text-center">
-        <div class="text-3xl font-display font-bold text-brand-primary">{data.gpmCapacity ?? '—'}</div>
-        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">GPM throughput</div>
-      </div>
-      <div class="card p-4 text-center">
-        <div class="text-3xl font-display font-bold text-brand-primary">{data.warrantyYears ?? '—'}</div>
-        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Year warranty</div>
-      </div>
-      <div class="card p-4 text-center">
-        <div class="text-2xl font-display font-bold text-brand-primary capitalize">{data.priceTier}</div>
-        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Price tier</div>
-      </div>
-      <div class="card p-4 text-center">
-        <div class="text-2xl font-display font-bold text-brand-primary">{data.colors.length}</div>
-        <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">{data.colors.length === 1 ? 'Color' : 'Colors'}</div>
-      </div>
-    </div>
+        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3">
+          <div class="card p-4 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary">{data.gpmCapacity ?? '—'}</div>
+            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">GPM throughput</div>
+          </div>
+          <div class="card p-4 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary">{data.warrantyYears ?? '—'}</div>
+            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Year warranty</div>
+          </div>
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-display font-bold text-brand-primary capitalize">{data.priceTier}</div>
+            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">Price tier</div>
+          </div>
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-display font-bold text-brand-primary">{data.colors.length}</div>
+            <div class="text-xs text-ink-subtle uppercase tracking-wider mt-1">{data.colors.length === 1 ? 'Color' : 'Colors'}</div>
+          </div>
+        </div>
 
-    <div class="mt-6 flex flex-wrap gap-3">
-      <a href="/quote/" class="btn-primary">Get a Free Quote</a>
-      <a href="/configurator/" class="btn-secondary">Try the Configurator Quiz</a>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/quote/" class="btn-primary">Get a Free Quote</a>
+          <a href="/configurator/" class="btn-secondary">Try the Configurator Quiz</a>
+        </div>
+      </div>
+
+      {media && (
+        <div class="lg:col-span-6 space-y-4">
+          <img
+            src={media.hero}
+            alt={media.heroAlt}
+            class="w-full h-auto rounded-xl shadow-card object-cover aspect-[4/3]"
+            loading="eager"
+            fetchpriority="high"
+            width="1400"
+            height="1050"
+          />
+          {media.diagram && (
+            <figure class="bg-brand-cream rounded-lg p-4 flex items-center gap-4">
+              <img src={media.diagram} alt={media.diagramAlt} class="h-20 w-auto" loading="lazy" />
+              <figcaption class="text-xs text-ink-muted leading-relaxed">
+                <span class="block font-semibold text-ink-primary mb-0.5">Panel construction</span>
+                Overhead view of the panel as it sits across your gutter trough.
+              </figcaption>
+            </figure>
+          )}
+        </div>
+      )}
     </div>
   </section>
 

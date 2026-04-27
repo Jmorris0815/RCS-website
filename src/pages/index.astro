@@ -25,6 +25,8 @@ const cities = (await getCollection('locations'))
     eyebrow="Central Virginia · Family-Owned Since 2014"
     headline="Gutters that last 30 years. Installed by people who'll still be here in 30 years."
     subhead="Seamless gutters, Leaf Solution gutter guards, and honest cleaning service across Charlottesville, Barboursville, Madison, Orange, and the rest of Central VA."
+    imageSrc="/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg"
+    imageAlt="Leaf Solution gutter guard corner miter installed on a Central Virginia home, autumn trees in the background"
   />
 
   <!-- Services strip -->
@@ -76,20 +78,87 @@ const cities = (await getCollection('locations'))
     </div>
   </section>
 
-  <!-- Trust strip -->
+  <!-- Recent work strip -->
   <section class="section container-x">
-    <div class="grid md:grid-cols-3 gap-6 text-center">
+    <div class="flex items-end justify-between mb-8 gap-4">
+      <div>
+        <p class="text-brand-primary text-xs font-bold uppercase tracking-[0.18em] mb-2">Recent Work</p>
+        <h2>The kind of jobs we do — and the kind we replace</h2>
+      </div>
+      <a href="/case-studies/" class="hidden md:inline-flex text-brand-primary font-semibold hover:underline whitespace-nowrap">
+        See case studies →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      <figure class="group relative overflow-hidden rounded-lg aspect-[4/5] bg-brand-cream">
+        <img
+          src="/images/products/straight-miter-fall-background.jpg"
+          alt="Seamless aluminum gutter installation on a shingle roof with fall trees behind"
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 text-white text-xs font-medium">
+          Seamless install · .032 aluminum, hidden hangers
+        </figcaption>
+      </figure>
+
+      <figure class="group relative overflow-hidden rounded-lg aspect-[4/5] bg-brand-cream">
+        <img
+          src="/images/jobs/before-after-cleaning.jpg"
+          alt="Before and after: gutter packed with leaves on the left, clean micro-mesh guard on the right"
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 text-white text-xs font-medium">
+          Before / after · cleaning + Leaf Solution upgrade
+        </figcaption>
+      </figure>
+
+      <figure class="group relative overflow-hidden rounded-lg aspect-[4/5] bg-brand-cream">
+        <img
+          src="/images/products/ELS-miter-installed-wide_white.jpg"
+          alt="Corner miter installed on a Virginia home with white fence and green pasture"
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 text-white text-xs font-medium">
+          Evelyn's Leaf Solution miter · rural property
+        </figcaption>
+      </figure>
+
+      <figure class="group relative overflow-hidden rounded-lg aspect-[4/5] bg-brand-cream">
+        <img
+          src="/images/jobs/clogged-leaves.jpg"
+          alt="A gutter packed with red, orange, and brown autumn leaves on a shingle roof"
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 text-white text-xs font-medium">
+          Clogged-gutter rescue · why guards matter
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="text-xs text-ink-subtle mt-4 text-center md:text-right">
+      Real work product photos. Customer-job photos coming as Scott approves them.
+    </p>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="section bg-brand-cream">
+    <div class="container-x grid md:grid-cols-3 gap-6 text-center">
       <div class="p-6">
-        <div class="text-4xl font-display font-bold text-brand-primary">2014</div>
-        <div class="text-sm text-ink-muted mt-1">Year Scott founded RCS</div>
+        <div class="text-5xl font-display font-bold text-brand-primary leading-none">2014</div>
+        <div class="text-sm text-ink-muted mt-2">Year Scott founded RCS</div>
+      </div>
+      <div class="p-6 md:border-x md:border-line">
+        <div class="text-5xl font-display font-bold text-brand-primary leading-none">8</div>
+        <div class="text-sm text-ink-muted mt-2">Central VA counties served</div>
       </div>
       <div class="p-6">
-        <div class="text-4xl font-display font-bold text-brand-primary">Leaf Solution</div>
-        <div class="text-sm text-ink-muted mt-1">Authorized Central VA dealer</div>
-      </div>
-      <div class="p-6">
-        <div class="text-4xl font-display font-bold text-brand-primary">100%</div>
-        <div class="text-sm text-ink-muted mt-1">Locally owned and operated</div>
+        <div class="text-5xl font-display font-bold text-brand-primary leading-none">100%</div>
+        <div class="text-sm text-ink-muted mt-2">Locally owned · Leaf Solution authorized</div>
       </div>
     </div>
   </section>
