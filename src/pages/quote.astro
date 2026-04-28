@@ -245,11 +245,12 @@ import { siteConfig } from '../config/site';
       setState('pending');
       try {
         var fd = new FormData(form);
-        // Always POST to the canonical www host. Hitting the apex
-        // (rcsgutters.com) triggers a 308 -> www redirect that strips
-        // the request body in browser fetch, so the function would
-        // receive an empty payload and the form would silently fail.
-        var res = await fetch('https://www.rcsgutters.com/api/quote', {
+        // Same-origin POST: page on apex -> apex API, page on www -> www API.
+        // Cross-origin from apex to www would trigger a CORS preflight (handled
+        // server-side in api/quote.ts) and risk silent failures in older
+        // browsers; keeping it same-origin sidesteps the issue.
+        var apiUrl = window.location.origin + '/api/quote';
+        var res = await fetch(apiUrl, {
           method: 'POST',
           body: fd,
           headers: { 'Accept': 'application/json' },

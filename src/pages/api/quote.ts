@@ -33,6 +33,22 @@ const GHL_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/';
 const GHL_VERSION = '2021-07-28';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
+// Form may be served from rcsgutters.com (apex) or www.rcsgutters.com. The
+// browser treats those as different origins, so a same-origin POST from apex
+// to /api/quote that ends up at www would be a cross-origin call requiring
+// CORS. Wildcard is safe here: no credentials, no auth cookies, public lead form.
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
+  'Access-Control-Allow-Headers': 'Content-Type, Accept',
+  'Access-Control-Max-Age': '86400',
+} as const;
+
+function corsJson(body: unknown, init?: ResponseInit) {
+  const merged: ResponseInit = { ...init, headers: { ...CORS_HEADERS, ...(init?.headers || {}) } };
+  return Response.json(body, merged);
+}
+
 function toE164(raw: string): string {
   const digits = (raw || '').replace(/\D/g, '');
   if (digits.length === 10) return '+1' + digits;
@@ -87,12 +103,12 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     body = await readBody(request);
   } catch (err) {
-    return Response.json({ ok: false, error: 'invalid_body' }, { status: 400 });
+    return corsJson({ ok: false, error: 'invalid_body' }, { status: 400 });
   }
 
   // Honeypot — silently 200 so bots don't get a useful signal.
   if (body.botcheck) {
-    return Response.json({ ok: true, source: 'honeypot_dropped' });
+    return corsJson({ ok: true, source: 'honeypot_dropped' });
   }
 
   const { firstName, lastName } = splitName(body.name || '', body.firstName, body.lastName);
@@ -148,7 +164,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
       if (ghlRes.ok) {
-        return Response.json({ ok: true, source: 'ghl' });
+        return corsJson({ ok: true, source: 'ghl' });
       }
       // Log non-OK status for ops visibility (Vercel function logs)
       const errText = await ghlRes.text().catch(() => '<no body>');
@@ -157,7 +173,7 @@ export const POST: APIRoute = async ({ request }) => {
       // the customer's POV their info reached us — treat as success so they
       // don't see a scary error for legitimately re-submitting their details.
       if (ghlRes.status === 400 && /duplicated|matchingField/i.test(errText)) {
-        return Response.json({ ok: true, source: 'ghl', duplicate: true });
+        return corsJson({ ok: true, source: 'ghl', duplicate: true });
       }
     } catch (err) {
       console.error('[quote] GHL fetch error', err);
@@ -191,7 +207,7 @@ export const POST: APIRoute = async ({ request }) => {
         body: JSON.stringify(w3Payload),
       });
       if (w3Res.ok) {
-        return Response.json({ ok: true, source: 'web3forms-fallback' });
+        return corsJson({ ok: true, source: 'web3forms-fallback' });
       }
       const errText = await w3Res.text().catch(() => '<no body>');
       console.error('[quote] Web3Forms non-OK', w3Res.status, errText.slice(0, 500));
@@ -203,16 +219,23 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // Both failed — surface this so the client UI can show a phone-call CTA.
-  return Response.json(
+  return corsJson(
     { ok: false, error: 'delivery_failed', message: 'Lead delivery failed; please call us directly.' },
     { status: 502 }
   );
 };
 
+// CORS preflight for the quote-form POST. Browsers fire this when the page
+// origin (e.g. https://rcsgutters.com) differs from the API origin
+// (https://www.rcsgutters.com), or when the POST sends a Content-Type other
+// than the simple types. Reply 204 + the same headers we set on POST.
+export const OPTIONS: APIRoute = async () =>
+  new Response(null, { status: 204, headers: CORS_HEADERS });
+
 // Allow simple GET for healthcheck (returns whether env vars are present;
 // never echoes the values themselves).
 export const GET: APIRoute = async () =>
-  Response.json({
+  corsJson({
     ok: true,
     ghl_token_present: !!import.meta.env.GHL_PRIVATE_INTEGRATION_TOKEN,
     ghl_location_id_present: !!import.meta.env.GHL_LOCATION_ID,
