@@ -25,7 +25,9 @@ interface QuoteBody {
   services?: string[] | string;
   message?: string;
   source?: string;
-  // honeypot — Web3Forms convention; if filled, treat as bot
+  // honeypot — non-semantic name so autofill ignores it; if filled, treat as bot
+  hp_field_x9?: string;
+  // legacy honeypot name kept for any cached form HTML still in flight
   botcheck?: string;
 }
 
@@ -106,9 +108,11 @@ export const POST: APIRoute = async ({ request }) => {
     return corsJson({ ok: false, error: 'invalid_body' }, { status: 400 });
   }
 
-  // Honeypot — silently 200 so bots don't get a useful signal.
-  if (body.botcheck) {
-    return corsJson({ ok: true, source: 'honeypot_dropped' });
+  // Honeypot — silently 200 so bots think they succeeded and any legit user
+  // accidentally autofilled into it sees the success state, not an error.
+  if (body.hp_field_x9 || body.botcheck) {
+    console.log('[quote] honeypot tripped; silent drop');
+    return corsJson({ ok: true, source: 'silent_drop' });
   }
 
   const { firstName, lastName } = splitName(body.name || '', body.firstName, body.lastName);
