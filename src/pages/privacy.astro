@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+
+const effectiveDate = 'April 28, 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy | Right Choice Seamless Gutters"
+  description="How RCS Gutters collects, uses, and protects information you share when you request a quote, sign up for our newsletter, or browse the site."
+>
+  <section class="container-x section-tight">
+    <p class="kicker mb-2">Privacy</p>
+    <h1 class="mb-4 text-balance">Privacy Policy</h1>
+    <span class="hero-underline !mt-0 mb-6"></span>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl leading-relaxed">
+      Plain-language summary of what we collect, why, who we share it with, and how to opt out. If anything below is unclear, call us at <a href={`tel:${siteConfig.phoneRaw}`} class="text-brand-primary font-semibold">{siteConfig.phoneDisplay}</a> and we'll explain.
+    </p>
+    <p class="text-sm text-ink-subtle mt-4"><strong>Effective date:</strong> {effectiveDate}.</p>
+  </section>
+
+  <section class="container-x section">
+    <article class="prose-rcs">
+      <h2>Who we are</h2>
+      <p>
+        Right Choice Seamless Gutters (RCS Gutters) is a family-owned gutter installation, cleaning, and gutter-guard contractor based at {siteConfig.address.street}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}. We serve nine counties in Central Virginia. This site is operated by us; it is the place we collect contact details when you ask for a free estimate or sign up to hear from us.
+      </p>
+
+      <h2>What we collect, and when</h2>
+      <p>
+        We only collect information you give us directly, plus a small amount of standard website-traffic data. Specifically:
+      </p>
+      <ul>
+        <li><strong>Quote-form submissions.</strong> When you fill out the form on our quote page, we collect your name, phone number, email address, property address, the services you want a quote on, and any notes you write. You give us these details so we can call you back, schedule a walk-through, and send a written estimate.</li>
+        <li><strong>Newsletter signups.</strong> If you put your email into the footer newsletter form, we collect just that email and use it to send you occasional seasonal-checklist or maintenance-tip emails. You can unsubscribe with one click on any email we send.</li>
+        <li><strong>Phone calls.</strong> When you call any of our phone numbers, your phone number and the time of the call may be recorded by our phone provider for routing and missed-call follow-up. We do not record the audio of calls without telling you first.</li>
+        <li><strong>Website analytics.</strong> Our pages load Google Tag Manager and Google Analytics-compatible tags. These collect anonymous traffic data: which pages were visited, the rough geographic region of the visitor (city or state level, not address), the device and browser type, the referrer that brought you to our site, and basic timing information. We do not use this data to identify you personally; we use it to understand which content is useful and where to invest time.</li>
+        <li><strong>Google Ads conversion tracking.</strong> If you click on one of our Google Ads, Google sets a cookie that lets us see whether the click eventually led to a phone call or a quote-form submission. We see counts and aggregated patterns; we do not see who you are personally from this data.</li>
+      </ul>
+
+      <h2>What we don't collect</h2>
+      <p>
+        We do not collect Social Security numbers, financial-account numbers, government-issued ID numbers, health information, or anything similar. We do not run credit checks. We do not require you to create an account on this site to get a quote. We do not collect children's data — this site is intended for property owners and decision-makers, generally adults.
+      </p>
+
+      <h2>How we use what we collect</h2>
+      <p>
+        Quote-form information is used to call or text you back, schedule a free on-site walk-through, send the written estimate, and follow up after the work is complete. We may text you on the phone number you give us to confirm a scheduled visit; if you'd rather we not text, tell us when we call and we'll switch to email or phone-only.
+      </p>
+      <p>
+        Newsletter information is used only to send the occasional seasonal email about gutter maintenance, weather-prep checklists, and notable changes to our services.
+      </p>
+      <p>
+        Analytics and ad-conversion data is used to understand which pages and which advertising channels actually bring in customers, so we can spend our marketing budget where it works.
+      </p>
+      <p>
+        We never sell your personal information to data brokers, list-rental services, lead-resale companies, or any other party. Period.
+      </p>
+
+      <h2>Who we share data with (and only for these reasons)</h2>
+      <ul>
+        <li><strong>GoHighLevel (LeadConnector).</strong> Quote-form submissions are sent into our customer-relationship-management system, which is operated by HighLevel, Inc. They are our data processor: they store contact records on our behalf so we can manage scheduling, follow-up, and job history. They do not market to you, and they do not share your information with anyone else.</li>
+        <li><strong>Web3Forms.</strong> If our primary form delivery fails for any reason, the submission is forwarded to us by email through Web3Forms as a backup. They forward the email and don't retain the contents.</li>
+        <li><strong>Google.</strong> Google Tag Manager, Google Analytics-compatible tags, and Google Ads receive the anonymous analytics and conversion data described above. Google's own privacy policy governs what they do with that data on their end.</li>
+        <li><strong>Vercel.</strong> Our website is hosted by Vercel, Inc. Like any website host, Vercel sees standard server-log data (IP addresses, request URLs, timestamps) for the purpose of delivering pages and protecting against abuse. They do not have access to anything you submit through our forms beyond what's necessary to route the request.</li>
+        <li><strong>Our crew.</strong> When you book a job with us, the crew member doing the work sees your name, phone number, and address so they can show up on the right driveway. That's it.</li>
+      </ul>
+      <p>
+        We do not share your information with marketing partners, affiliated businesses, our friends in other trades, or anyone else. We will share information if legally required (a valid court order, a subpoena, an active investigation by a law enforcement agency with jurisdiction over us), but we'll tell you that has happened unless we're legally prohibited from doing so.
+      </p>
+
+      <h2>Cookies and tracking</h2>
+      <p>
+        We use a small number of first-party and third-party cookies. They fall into two buckets:
+      </p>
+      <ul>
+        <li><strong>Necessary.</strong> Cookies that make the site work (for example, remembering whether you've dismissed our cookie notice, if we ever add one). You can't really opt out of these and use the site.</li>
+        <li><strong>Analytics and advertising.</strong> Cookies set by Google Tag Manager, Google Analytics-compatible tags, and Google Ads. These are described above. You can opt out of Google Analytics across the entire web at <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener nofollow">tools.google.com/dlpage/gaoptout</a>, and you can opt out of personalized Google Ads at <a href="https://adssettings.google.com" rel="noopener nofollow">adssettings.google.com</a>. Most browsers also let you block third-party cookies entirely in their privacy settings.</li>
+      </ul>
+
+      <h2>How long we keep things</h2>
+      <p>
+        Quote-form submissions and customer records stay in our CRM as long as you're an active or recent customer, so we can serve you on follow-up jobs and warranty questions. If you ask us to delete your information, we will (see "your rights" below) — except to the extent we're legally required to keep specific records (for example, tax-related job invoicing).
+      </p>
+      <p>
+        Newsletter emails stay on our list until you unsubscribe.
+      </p>
+      <p>
+        Anonymous analytics data is retained for the standard period the analytics platforms use (typically 14 to 26 months), then automatically aggregated or deleted on their end.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Whatever state you're in, you can:
+      </p>
+      <ul>
+        <li>Ask us what information we have about you. We'll tell you in plain language.</li>
+        <li>Ask us to correct anything that's wrong.</li>
+        <li>Ask us to delete your information. We'll do it, except for records we're legally required to keep.</li>
+        <li>Ask us to stop contacting you. The "do not notify" preference flag is honored across our systems.</li>
+        <li>Unsubscribe from the newsletter with one click on any email we send.</li>
+      </ul>
+      <p>
+        Send any of these requests to <a href={`mailto:${siteConfig.email}`} class="text-brand-primary font-semibold">{siteConfig.email}</a> or call <a href={`tel:${siteConfig.phoneRaw}`} class="text-brand-primary font-semibold">{siteConfig.phoneDisplay}</a> and tell us what you'd like. We respond to requests within 30 days.
+      </p>
+      <p>
+        If you live in California, the EU, the UK, or another jurisdiction with specific data-rights laws, those laws apply to us if and when they apply to a small Virginia contractor like us. We're committed to honoring data requests in good faith regardless.
+      </p>
+
+      <h2>Security</h2>
+      <p>
+        Form submissions travel over HTTPS. CRM records are stored on infrastructure managed by HighLevel, Inc. with industry-standard access controls. We don't store credit card information; we don't take payments through this website.
+      </p>
+      <p>
+        That said, no system is bulletproof. If we ever experience a data incident affecting your information, we'll notify you within the timeframe required by Virginia law (and any other law that applies to your residency).
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        This site is not directed at children. We don't knowingly collect information from anyone under 13. If you're a parent or guardian and you believe your child has submitted information through our site, contact us and we'll delete it.
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        We update this policy when we change something material about the data we collect or how we use it. The effective date at the top will change accordingly. We won't make material changes retroactive — anything we collected under an earlier version of this policy is governed by the version in effect when you submitted it.
+      </p>
+
+      <h2>How to reach us</h2>
+      <p>
+        Right Choice Seamless Gutters<br />
+        {siteConfig.address.street}<br />
+        {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}<br />
+        Phone: <a href={`tel:${siteConfig.phoneRaw}`} class="text-brand-primary font-semibold">{siteConfig.phoneDisplay}</a><br />
+        Email: <a href={`mailto:${siteConfig.email}`} class="text-brand-primary font-semibold">{siteConfig.email}</a>
+      </p>
+      <p>
+        If you'd rather just talk to a person about any of this, the phone number above is the right call.
+      </p>
+    </article>
+  </section>
+</BaseLayout>

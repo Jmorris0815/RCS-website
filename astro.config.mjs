@@ -2,12 +2,19 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  // Match siteConfig.url. Will flip to 'https://www.rcsgutters.com' when the
-  // domain is pointed at this Vercel build.
-  site: 'https://rcs-website-justin-morris-projects-f0ac0487.vercel.app',
+  // Canonical schema target for AI crawlers + search engines.
+  // The site is reachable at *.vercel.app until DNS flips; the schema URLs
+  // point at the intended canonical domain so indexing settles on it.
+  site: 'https://www.rcsgutters.com',
+  // Static by default; the Vercel adapter deploys any individual route that
+  // sets `export const prerender = false;` as a serverless function.
+  // /api/quote.ts is the only such route today.
+  output: 'static',
+  adapter: vercel(),
   integrations: [
     tailwind({ applyBaseStyles: false }),
     mdx(),

@@ -10,7 +10,8 @@ import { siteConfig } from '../config/site';
   <section class="container-x section-tight">
     <p class="kicker mb-2">Free Quote</p>
     <h1 class="mb-4">Tell us about the project.</h1>
-    <p class="text-fluid-lg text-ink-muted max-w-3xl">
+    <span class="hero-underline !mt-0 mb-6"></span>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl leading-relaxed">
       We'll come walk your property, measure, and give you a written quote on site or within 24 hours. No high-pressure sales, no "today only" pricing.
     </p>
   </section>
@@ -18,15 +19,12 @@ import { siteConfig } from '../config/site';
   <section class="container-x section">
     <div class="grid lg:grid-cols-3 gap-10">
       <form
+        id="rcs-quote-form"
         class="lg:col-span-2 card p-7 space-y-5 bg-white"
-        action="https://api.web3forms.com/submit"
+        action="/api/quote"
         method="POST"
         novalidate
       >
-        <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_KEY" />
-        <input type="hidden" name="subject" value="New RCS Gutters Quote Request" />
-        <input type="hidden" name="from_name" value="rcsgutters.com" />
-
         <div class="grid sm:grid-cols-2 gap-4">
           <label class="block">
             <span class="block text-sm font-semibold mb-1">Your name *</span>
@@ -34,6 +32,7 @@ import { siteConfig } from '../config/site';
               type="text"
               name="name"
               required
+              autocomplete="name"
               class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
             />
           </label>
@@ -43,6 +42,7 @@ import { siteConfig } from '../config/site';
               type="tel"
               name="phone"
               required
+              autocomplete="tel"
               class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
             />
           </label>
@@ -54,6 +54,7 @@ import { siteConfig } from '../config/site';
             type="email"
             name="email"
             required
+            autocomplete="email"
             class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
           />
         </label>
@@ -64,10 +65,34 @@ import { siteConfig } from '../config/site';
             type="text"
             name="address"
             required
-            placeholder="Street, city, ZIP"
+            placeholder="Street"
+            autocomplete="street-address"
             class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
           />
         </label>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="block text-sm font-semibold mb-1">City</span>
+            <input
+              type="text"
+              name="city"
+              autocomplete="address-level2"
+              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
+            />
+          </label>
+          <label class="block">
+            <span class="block text-sm font-semibold mb-1">ZIP</span>
+            <input
+              type="text"
+              name="postalCode"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              maxlength="10"
+              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
+            />
+          </label>
+        </div>
 
         <fieldset>
           <legend class="block text-sm font-semibold mb-2">What do you need? (check all that apply)</legend>
@@ -106,10 +131,34 @@ import { siteConfig } from '../config/site';
         <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
 
         <div class="pt-3">
-          <button type="submit" class="btn-primary w-full sm:w-auto">Send Quote Request</button>
+          <button type="submit" id="rcs-quote-submit" class="btn-primary w-full sm:w-auto" data-default-label="Send Quote Request">
+            Send Quote Request
+          </button>
           <p class="text-xs text-ink-subtle mt-3">
             We'll call or text you within one business day to schedule the on-site walk-through. We do not sell or share your information.
           </p>
+        </div>
+
+        <!-- Inline state regions. Hidden by default; the script toggles them. -->
+        <div
+          id="rcs-quote-success"
+          class="hidden rounded-lg border-2 border-accent-success/30 bg-accent-success/10 p-5 text-sm text-brand-charcoal"
+          role="status"
+          aria-live="polite"
+        >
+          <p class="font-semibold text-base mb-1">Got it. Scott will be in touch within one business day.</p>
+          <p class="text-ink-muted">If your project is urgent or you'd rather talk now, call us at <a href={`tel:${siteConfig.phoneRaw}`} class="text-brand-primary font-semibold underline-offset-4 hover:underline">{siteConfig.phoneDisplay}</a>. Mon–Fri 9–5, Sat 9–12.</p>
+        </div>
+
+        <div
+          id="rcs-quote-error"
+          class="hidden rounded-lg border-2 border-brand-primary/30 bg-brand-light p-5 text-sm text-brand-charcoal"
+          role="alert"
+          aria-live="assertive"
+        >
+          <p class="font-semibold text-base mb-1">Submission didn't go through.</p>
+          <p class="text-ink-muted mb-3">Network or server hiccup on our end. The fastest fix is to call us directly — we answer through Saturday at noon.</p>
+          <a href={`tel:${siteConfig.phoneRaw}`} class="btn-primary !text-sm">Call {siteConfig.phoneDisplay}</a>
         </div>
       </form>
 
@@ -128,6 +177,7 @@ import { siteConfig } from '../config/site';
           <ul class="text-sm space-y-1 text-ink-muted">
             <li>· Charlottesville and Albemarle County</li>
             <li>· Barboursville and Orange County</li>
+            <li>· Culpeper</li>
             <li>· Madison County</li>
             <li>· Greene County</li>
             <li>· Fluvanna County (incl. Lake Monticello)</li>
@@ -147,3 +197,75 @@ import { siteConfig } from '../config/site';
     </div>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  // Submit /api/quote via fetch, swap to inline success/error state.
+  // Bind once per page, re-bind on Astro view-transition swaps.
+  function rcsQuoteFormInit() {
+    var form = document.getElementById('rcs-quote-form');
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = 'true';
+
+    var btn = document.getElementById('rcs-quote-submit');
+    var successEl = document.getElementById('rcs-quote-success');
+    var errorEl = document.getElementById('rcs-quote-error');
+    var defaultLabel = btn ? (btn.getAttribute('data-default-label') || btn.textContent) : 'Send Quote Request';
+
+    function setState(state) {
+      if (!btn) return;
+      if (state === 'pending') {
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        btn.textContent = 'Sending…';
+        if (successEl) successEl.classList.add('hidden');
+        if (errorEl) errorEl.classList.add('hidden');
+      } else if (state === 'success') {
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+        btn.textContent = defaultLabel;
+        if (successEl) successEl.classList.remove('hidden');
+        if (errorEl) errorEl.classList.add('hidden');
+        // Push a conversion event GTM can map to a Google Ads form-submit
+        // conversion (separate from the phone-call conversion).
+        (window.dataLayer = window.dataLayer || []).push({
+          event: 'quote_form_submit',
+          page_path: window.location.pathname,
+        });
+      } else if (state === 'error') {
+        btn.disabled = false;
+        btn.removeAttribute('aria-busy');
+        btn.textContent = defaultLabel;
+        if (errorEl) errorEl.classList.remove('hidden');
+        if (successEl) successEl.classList.add('hidden');
+      }
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      setState('pending');
+      try {
+        var fd = new FormData(form);
+        var res = await fetch('/api/quote', {
+          method: 'POST',
+          body: fd,
+          headers: { 'Accept': 'application/json' },
+        });
+        var data = null;
+        try { data = await res.json(); } catch (_) { /* non-JSON response */ }
+        if (res.ok && data && data.ok) {
+          setState('success');
+          form.reset();
+          // Scroll the success card into view in case it's below the fold
+          if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          console.error('[quote] non-OK response', res.status, data);
+          setState('error');
+        }
+      } catch (err) {
+        console.error('[quote] fetch error', err);
+        setState('error');
+      }
+    });
+  }
+  document.addEventListener('astro:page-load', rcsQuoteFormInit);
+</script>

@@ -5,12 +5,12 @@
 export const siteConfig = {
   name: 'Right Choice Seamless Gutters',
   shortName: 'RCS Gutters',
-  // Public canonical URL. Currently the Vercel production alias because the
-  // rcsgutters.com domain hasn't been pointed at this build yet. Switch back to
-  // 'https://www.rcsgutters.com' the moment the DNS flip happens, and add a
-  // 301 redirect map from the vercel.app URL to the canonical at the same time.
-  url: 'https://rcs-website-justin-morris-projects-f0ac0487.vercel.app',
-  canonicalUrl: 'https://www.rcsgutters.com', // intended final canonical
+  // Canonical schema target. Set to the intended final canonical so AI
+  // crawlers and search engines index against the right URL even before
+  // DNS flips. The site stays publicly reachable at *.vercel.app until
+  // rcsgutters.com is pointed at this Vercel build.
+  url: 'https://www.rcsgutters.com',
+  canonicalUrl: 'https://www.rcsgutters.com',
   homeAdvisorProfileUrl: 'https://www.homeadvisor.com/rated.RightChoiceSeamless.42532376.html',
   reviewCount: 217,
   reviewAverage: 4.74, // live aggregateRating from the HomeAdvisor profile (rounded display: 4.7)

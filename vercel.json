@@ -3,5 +3,31 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install --legacy-peer-deps"
+  "installCommand": "npm install --legacy-peer-deps",
+  "redirects": [
+    { "source": "/areas-we-serve/aroda", "destination": "/locations/madison/", "permanent": true },
+    { "source": "/areas-we-serve/dyke", "destination": "/locations/greene/", "permanent": true },
+    { "source": "/areas-we-serve/earlysville", "destination": "/locations/albemarle/", "permanent": true },
+    { "source": "/areas-we-serve/free-union", "destination": "/locations/albemarle/", "permanent": true },
+    { "source": "/areas-we-serve/hollymead", "destination": "/locations/albemarle/", "permanent": true },
+    { "source": "/areas-we-serve/hood", "destination": "/locations/madison/", "permanent": true },
+    { "source": "/areas-we-serve/pratts", "destination": "/locations/madison/", "permanent": true },
+    { "source": "/areas-we-serve/quinque", "destination": "/locations/greene/", "permanent": true },
+    { "source": "/areas-we-serve/rochelle", "destination": "/locations/madison/", "permanent": true },
+    { "source": "/areas-we-serve/ruckersville", "destination": "/locations/greene/", "permanent": true },
+    { "source": "/areas-we-serve/somerset", "destination": "/locations/orange/", "permanent": true },
+    { "source": "/areas-we-serve/stanardsville", "destination": "/locations/greene/", "permanent": true },
+    { "source": "/areas-we-serve/wolftown", "destination": "/locations/madison/", "permanent": true },
+    { "source": "/areas-we-serve/barboursville", "destination": "/locations/barboursville/", "permanent": true },
+    { "source": "/areas-we-serve", "destination": "/locations/", "permanent": true },
+    { "source": "/snow-guards", "destination": "/services/seamless-gutter-installation/#snow-guards", "permanent": true },
+    { "source": "/half-round-gutters", "destination": "/services/half-round-gutters/", "permanent": true },
+    { "source": "/services/gutter-guards", "destination": "/services/gutter-guards/", "permanent": true },
+    { "source": "/services/gutter-cleaning", "destination": "/services/gutter-cleaning/", "permanent": true },
+    { "source": "/services/seamless-gutters", "destination": "/services/seamless-gutter-installation/", "permanent": true },
+    { "source": "/about", "destination": "/about/", "permanent": true },
+    { "source": "/contact", "destination": "/contact/", "permanent": true },
+    { "source": "/reviews", "destination": "/reviews/", "permanent": true },
+    { "source": "/gallery", "destination": "/gallery/", "permanent": true }
+  ]
 }
