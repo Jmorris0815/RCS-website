@@ -39,3 +39,5 @@ public/images/source/
 # raw photo inbox — review and move to /jobs, /products, /team before committing
 public/images/Inbox/
 public/images/inbox/
+
+.vercel

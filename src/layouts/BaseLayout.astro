@@ -26,7 +26,11 @@ const {
 } = Astro.props;
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
-const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
+// Default to /og-image.png (full Scott+Myriam logo + tagline) so every shared
+// link gets a sane preview, not just pages that pass an explicit `image` prop.
+const ogImage = image
+  ? new URL(image, Astro.site).toString()
+  : new URL('/og-image.png', Astro.site).toString();
 
 // GHL chat widget (required for A2P 10DLC compliance), suppressed on pages
 // that already collect a phone number so a customer doesn't see two competing
@@ -41,8 +45,10 @@ const showChatWidget = !chatWidgetExcludedPaths.some((p) => normalizedPath === p
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#D72027" />
+    <meta name="theme-color" content="#CF0515" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {heroImage && (
       <link rel="preload" as="image" type="image/avif" href={heroImage.replace(/\.(jpg|jpeg|png)$/i, '.avif')} fetchpriority="high" />
     )}
@@ -65,13 +71,11 @@ const showChatWidget = !chatWidgetExcludedPaths.some((p) => normalizedPath === p
       description={description}
       canonical={canonicalUrl}
       noindex={noindex}
-      openGraph={ogImage ? {
+      openGraph={{
         basic: { title, type: 'website', image: ogImage, url: canonicalUrl },
         optional: { description, siteName: siteConfig.name, locale: 'en_US' },
-      } : undefined}
-      twitter={ogImage
-        ? { card: 'summary_large_image', title, description, image: ogImage }
-        : { card: 'summary', title, description }}
+      }}
+      twitter={{ card: 'summary_large_image', title, description, image: ogImage }}
     />
 
     <ClientRouter />

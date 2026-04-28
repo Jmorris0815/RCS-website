@@ -7,9 +7,9 @@ export default {
     extend: {
       colors: {
         brand: {
-          primary: '#D72027',
-          'primary-hover': '#B81A1F',
-          'red-deep': '#7A0F12',
+          primary: '#CF0515',
+          'primary-hover': '#B00410',
+          'red-deep': '#7A0309',
           dark: '#1F1F1F',
           charcoal: '#1A1A1A',
           accent: '#0E2C4D',
@@ -69,8 +69,8 @@ export default {
         soft: '0 2px 6px -1px rgb(15 24 40 / 0.06), 0 1px 2px -1px rgb(15 24 40 / 0.04)',
         card: '0 8px 24px -6px rgb(15 24 40 / 0.10), 0 2px 6px -2px rgb(15 24 40 / 0.06)',
         lift: '0 14px 32px -8px rgb(15 24 40 / 0.18), 0 4px 10px -4px rgb(15 24 40 / 0.08)',
-        'red-cta': '0 6px 16px -4px rgb(215 32 39 / 0.45), 0 2px 4px -2px rgb(215 32 39 / 0.30)',
-        'red-cta-hover': '0 12px 28px -6px rgb(215 32 39 / 0.55), 0 4px 8px -4px rgb(215 32 39 / 0.35)',
+        'red-cta': '0 6px 16px -4px rgb(207 5 21 / 0.45), 0 2px 4px -2px rgb(207 5 21 / 0.30)',
+        'red-cta-hover': '0 12px 28px -6px rgb(207 5 21 / 0.55), 0 4px 8px -4px rgb(207 5 21 / 0.35)',
       },
       animation: {
         'underline-draw': 'underline-draw 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both',
