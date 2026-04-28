@@ -1,82 +1,124 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../config/site';
+
+const phoneRows = [
+  { ...siteConfig.phones.charlottesville, areas: 'Charlottesville, Albemarle, Barboursville, Orange, Madison, Greene, Fluvanna, Louisa', primary: true },
+  { ...siteConfig.phones.culpeperFredericksburg, areas: 'Culpeper, Fredericksburg, and surrounding area' },
+  { ...siteConfig.phones.richmond, areas: 'Richmond and surrounding area' },
+  { ...siteConfig.phones.tollFree, areas: 'Anywhere — universal fallback' },
+];
 ---
 
 <BaseLayout
-  title="Contact Right Choice Seamless Gutters | Barboursville VA"
-  description="Phone, email, address, and hours for Right Choice Seamless Gutters in Barboursville, Virginia. Serving 9 Central VA counties."
+  title="Contact Right Choice Seamless Gutters | Barboursville VA · 4 regional numbers"
+  description="Phone numbers for each region we serve, email, address, and hours for Right Choice Seamless Gutters in Barboursville, Virginia. Serving 9 Central VA counties."
 >
   <section class="container-x section-tight">
     <p class="kicker mb-2">Contact</p>
     <h1 class="mb-4">Get in touch</h1>
-    <p class="text-fluid-lg text-ink-muted max-w-3xl">
-      Phone is the fastest way to reach us. For non-urgent quote requests, the form on our <a href="/quote/" class="text-brand-primary underline">quote page</a> is the most efficient. It gives us everything we need to schedule a walk-through.
+    <span class="hero-underline !mt-0 mb-6"></span>
+    <p class="text-fluid-lg text-ink-muted max-w-3xl leading-relaxed">
+      Phone is the fastest way to reach us. We have four numbers — one for each region we serve, plus a toll-free that rings anywhere. Pick the one closest to you. For non-urgent quote requests, the form on our <a href="/quote/" class="text-brand-primary underline">quote page</a> is the most efficient.
     </p>
   </section>
 
-  <section class="container-x section grid md:grid-cols-2 gap-8">
+  <!-- Full phones table -->
+  <section class="container-x section">
+    <p class="kicker mb-3">Call us</p>
+    <h2 class="text-balance mb-8">Four regional numbers, one crew</h2>
+
+    <div class="overflow-x-auto rounded-2xl border-2 border-line bg-white shadow-soft">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left bg-brand-cream/60 border-b border-line">
+            <th class="px-5 py-4 font-display text-brand-charcoal">Number</th>
+            <th class="px-5 py-4 font-semibold text-brand-charcoal">Best for</th>
+            <th class="px-5 py-4 font-semibold text-brand-charcoal">Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {phoneRows.map((p) => (
+            <tr class={`border-b border-line/60 last:border-0 ${p.primary ? 'bg-brand-light/30' : ''}`}>
+              <td class="px-5 py-4 align-top">
+                <a href={`tel:${p.raw}`} class="font-display font-semibold text-brand-primary text-xl tabular-nums hover:text-brand-red-deep transition-colors">
+                  {p.display}
+                </a>
+                {p.primary && <div class="text-[11px] uppercase tracking-wider text-brand-warm-gray mt-1">Primary line</div>}
+              </td>
+              <td class="px-5 py-4 align-top text-brand-charcoal font-medium">{p.label}</td>
+              <td class="px-5 py-4 align-top text-ink-muted">{p.areas}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-xs text-ink-subtle mt-4">
+      All four numbers ring to the same crew. Use whichever is closest — the regional ones make it clear we're answering your local line.
+    </p>
+  </section>
+
+  <!-- Address / email / service area / hours grid -->
+  <section class="container-x section grid md:grid-cols-2 gap-6">
     <div class="card p-7 bg-white">
-      <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">Phone</div>
-      <a href={`tel:${siteConfig.phoneRaw}`} class="text-3xl font-display font-bold text-brand-primary block mb-4">
-        {siteConfig.phoneDisplay}
+      <p class="kicker-charcoal mb-3">Email</p>
+      <a href={`mailto:${siteConfig.email}`} class="text-brand-primary font-display text-xl font-semibold break-all hover:text-brand-red-deep transition-colors">
+        {siteConfig.email}
       </a>
-      <div class="text-sm text-ink-muted space-y-1">
-        <div>Monday, Friday: {siteConfig.hours.weekdays}</div>
-        <div>Saturday: {siteConfig.hours.saturday}</div>
-        <div>Sunday: {siteConfig.hours.sunday}</div>
-      </div>
+      <p class="text-sm text-ink-muted mt-4 leading-relaxed">
+        Best for non-urgent inquiries, photos of existing gutter problems, or sending us additional details after a phone call.
+      </p>
+    </div>
+
+    <div class="card p-7 bg-white">
+      <p class="kicker-charcoal mb-3">Hours</p>
+      <ul class="text-sm text-brand-charcoal space-y-1">
+        <li><strong>Monday – Friday</strong> · {siteConfig.hours.weekdays}</li>
+        <li><strong>Saturday</strong> · {siteConfig.hours.saturday}</li>
+        <li><strong>Sunday</strong> · {siteConfig.hours.sunday}</li>
+      </ul>
       <p class="text-xs text-ink-subtle mt-4">
         Voicemail off-hours. We return calls the next business day.
       </p>
     </div>
 
     <div class="card p-7 bg-white">
-      <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">Shop address</div>
-      <p class="text-base">
+      <p class="kicker-charcoal mb-3">Shop address</p>
+      <p class="text-base text-brand-charcoal">
         {siteConfig.address.street}<br />
         {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
       </p>
-      <p class="text-sm text-ink-muted mt-3">
-        Our shop and equipment yard. We don't take walk-in customers. We come to your property to estimate.
-      </p>
-    </div>
-
-    <div class="card p-7 bg-white">
-      <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">Email</div>
-      <a href={`mailto:${siteConfig.email}`} class="text-brand-primary font-semibold break-all">
-        {siteConfig.email}
-      </a>
-      <p class="text-sm text-ink-muted mt-3">
-        Best for non-urgent inquiries, photos of existing gutter problems, or sending us additional details after a phone call.
+      <p class="text-sm text-ink-muted mt-4 leading-relaxed">
+        Our shop and equipment yard. We don't take walk-in customers — we come to your property to estimate.
       </p>
     </div>
 
     <div class="card p-7 bg-brand-cream">
-      <div class="text-xs font-bold uppercase text-brand-accent tracking-[0.18em] mb-3">Service area</div>
-      <p class="text-sm text-ink-muted mb-3">
-        We serve all of Central Virginia within roughly 60 minutes of our shop:
+      <p class="kicker-charcoal mb-3">Service area</p>
+      <p class="text-sm text-ink-muted mb-3 leading-relaxed">
+        Nine Central Virginia counties within roughly 60 minutes of our shop:
       </p>
       <ul class="text-sm space-y-1 text-ink-muted">
-        <li><a class="hover:underline" href="/locations/charlottesville/">Charlottesville</a> · <a class="hover:underline" href="/locations/albemarle/">Albemarle County</a></li>
-        <li><a class="hover:underline" href="/locations/barboursville/">Barboursville</a> · <a class="hover:underline" href="/locations/orange/">Orange County</a></li>
-        <li><a class="hover:underline" href="/locations/madison/">Madison County</a> · <a class="hover:underline" href="/locations/greene/">Greene County</a></li>
-        <li><a class="hover:underline" href="/locations/fluvanna/">Fluvanna County</a> · <a class="hover:underline" href="/locations/louisa/">Louisa County</a></li>
+        <li><a class="hover:text-brand-primary transition-colors" href="/locations/charlottesville/">Charlottesville</a> · <a class="hover:text-brand-primary transition-colors" href="/locations/albemarle/">Albemarle County</a></li>
+        <li><a class="hover:text-brand-primary transition-colors" href="/locations/barboursville/">Barboursville</a> · <a class="hover:text-brand-primary transition-colors" href="/locations/culpeper/">Culpeper</a></li>
+        <li><a class="hover:text-brand-primary transition-colors" href="/locations/orange/">Orange County</a> · <a class="hover:text-brand-primary transition-colors" href="/locations/madison/">Madison County</a></li>
+        <li><a class="hover:text-brand-primary transition-colors" href="/locations/greene/">Greene County</a> · <a class="hover:text-brand-primary transition-colors" href="/locations/fluvanna/">Fluvanna County</a></li>
+        <li><a class="hover:text-brand-primary transition-colors" href="/locations/louisa/">Louisa County</a></li>
       </ul>
     </div>
   </section>
 
   <section class="section bg-brand-primary text-white">
     <div class="container-x text-center max-w-2xl mx-auto">
-      <h2 class="text-white">Ready to schedule a walk-through?</h2>
-      <p class="text-white/95 mt-3 mb-6">
-        Free quote, on site, in person.
+      <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
+      <h2 class="font-display text-white text-balance mb-5">Free written estimate. On site, in person.</h2>
+      <p class="text-white/95 mt-3 mb-7 leading-relaxed">
+        Honest recommendations. Real local crew. The quote holds 30 days, no pressure.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
         <a href="/quote/" class="btn-accent">Request a Quote</a>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
-          Call {siteConfig.phoneDisplay}
-        </a>
+        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">Call {siteConfig.phoneDisplay}</a>
       </div>
     </div>
   </section>

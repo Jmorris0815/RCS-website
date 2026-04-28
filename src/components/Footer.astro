@@ -24,13 +24,37 @@ const year = new Date().getFullYear();
             {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
           </div>
         </div>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="flex items-center gap-2 mt-3 text-white font-semibold underline-offset-4 hover:underline">
+        <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-2 mt-3 text-white/85 hover:text-white transition-colors">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-soft" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
           </svg>
-          {siteConfig.phoneDisplay}
+          {siteConfig.email}
         </a>
       </address>
+
+      <!-- Phones by region -->
+      <div class="mt-5 text-sm">
+        <p class="kicker !text-brand-gold-soft mb-2.5 !text-[10px]">Call us</p>
+        <ul class="space-y-1.5 text-white/85">
+          <li class="flex items-center gap-2">
+            <a href={`tel:${siteConfig.phones.charlottesville.raw}`} class="font-semibold text-white tabular-nums hover:underline underline-offset-4">{siteConfig.phones.charlottesville.display}</a>
+            <span class="text-white/55 text-[12px]">{siteConfig.phones.charlottesville.label}</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <a href={`tel:${siteConfig.phones.culpeperFredericksburg.raw}`} class="font-semibold text-white tabular-nums hover:underline underline-offset-4">{siteConfig.phones.culpeperFredericksburg.display}</a>
+            <span class="text-white/55 text-[12px]">{siteConfig.phones.culpeperFredericksburg.label}</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <a href={`tel:${siteConfig.phones.richmond.raw}`} class="font-semibold text-white tabular-nums hover:underline underline-offset-4">{siteConfig.phones.richmond.display}</a>
+            <span class="text-white/55 text-[12px]">{siteConfig.phones.richmond.label}</span>
+          </li>
+          <li class="flex items-center gap-2 pt-1.5 border-t border-white/10 mt-1.5">
+            <a href={`tel:${siteConfig.phones.tollFree.raw}`} class="font-semibold text-brand-gold-soft tabular-nums hover:underline underline-offset-4">{siteConfig.phones.tollFree.display}</a>
+            <span class="text-white/55 text-[12px]">{siteConfig.phones.tollFree.label}</span>
+          </li>
+        </ul>
+      </div>
+
       <div class="mt-5 text-sm text-white/70">
         <div class="flex items-center gap-2">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-soft" aria-hidden="true">
@@ -42,6 +66,11 @@ const year = new Date().getFullYear();
           <strong class="text-white">Sat</strong> {siteConfig.hours.saturday} · <strong class="text-white">Sun</strong> closed
         </div>
       </div>
+
+      <!-- Licensed & insured (no number — license currently in reinstatement) -->
+      <p class="mt-4 text-[12px] text-white/55">
+        Licensed and insured · Commonwealth of Virginia
+      </p>
 
       <!-- HomeAdvisor reviews trust signal -->
       <a

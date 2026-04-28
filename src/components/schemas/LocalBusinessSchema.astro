@@ -9,6 +9,37 @@ const schema = {
   alternateName: siteConfig.shortName,
   url: siteConfig.url,
   telephone: siteConfig.phoneDisplay,
+  // Regional contact points. The toll-free covers anywhere; the three regional
+  // numbers each signal "we answer your local line" to a nearby caller.
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: siteConfig.phones.charlottesville.display,
+      contactType: 'sales',
+      areaServed: ['Charlottesville', 'Albemarle', 'Barboursville', 'Orange', 'Madison', 'Greene', 'Fluvanna', 'Louisa'],
+      availableLanguage: 'English',
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: siteConfig.phones.culpeperFredericksburg.display,
+      contactType: 'sales',
+      areaServed: ['Culpeper', 'Fredericksburg'],
+      availableLanguage: 'English',
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: siteConfig.phones.richmond.display,
+      contactType: 'sales',
+      areaServed: 'Richmond',
+      availableLanguage: 'English',
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: siteConfig.phones.tollFree.display,
+      contactType: 'customer service',
+      availableLanguage: 'English',
+    },
+  ],
   email: siteConfig.email,
   foundingDate: String(siteConfig.foundingYear),
   description:

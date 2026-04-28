@@ -13,6 +13,15 @@ const { loc } = Astro.props;
 const { Content } = await loc.render();
 const data = loc.data;
 
+// Pick the regional phone for this location. Culpeper rings the (540) line;
+// every other county rings the (434) Charlottesville line. Toll-free is the
+// universal fallback we surface alongside.
+const REGIONAL_PHONE: Record<string, typeof siteConfig.phones.charlottesville> = {
+  culpeper: siteConfig.phones.culpeperFredericksburg,
+};
+const regionalPhone = REGIONAL_PHONE[loc.slug] ?? siteConfig.phones.charlottesville;
+const tollFree = siteConfig.phones.tollFree;
+
 // All case studies in this city
 const allStudies = await getCollection('caseStudies');
 const localStudies = allStudies.filter(
@@ -101,10 +110,13 @@ const serviceSchema = {
         <a href={`/quote/?city=${encodeURIComponent(data.city)}`} class="btn-primary">
           Get a Free Quote in {data.city}
         </a>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">
-          Call {siteConfig.phoneDisplay}
+        <a href={`tel:${regionalPhone.raw}`} class="btn-outline-white">
+          Call {regionalPhone.display}
         </a>
       </div>
+      <p class="mt-3 text-[12px] text-white/65">
+        Or call us anywhere on toll-free <a href={`tel:${tollFree.raw}`} class="font-semibold text-brand-gold-soft hover:underline underline-offset-4 tabular-nums">{tollFree.display}</a>
+      </p>
     </div>
   </section>
 
