@@ -153,6 +153,12 @@ export const POST: APIRoute = async ({ request }) => {
       // Log non-OK status for ops visibility (Vercel function logs)
       const errText = await ghlRes.text().catch(() => '<no body>');
       console.error('[quote] GHL non-OK', ghlRes.status, errText.slice(0, 500));
+      // GHL rejects duplicate contacts (same phone or email) with 400. From
+      // the customer's POV their info reached us — treat as success so they
+      // don't see a scary error for legitimately re-submitting their details.
+      if (ghlRes.status === 400 && /duplicated|matchingField/i.test(errText)) {
+        return Response.json({ ok: true, source: 'ghl', duplicate: true });
+      }
     } catch (err) {
       console.error('[quote] GHL fetch error', err);
     }
