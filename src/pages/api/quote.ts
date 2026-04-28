@@ -25,10 +25,8 @@ interface QuoteBody {
   services?: string[] | string;
   message?: string;
   source?: string;
-  // honeypot — non-semantic name so autofill ignores it; if filled, treat as bot
-  hp_field_x9?: string;
-  // legacy honeypot name kept for any cached form HTML still in flight
-  botcheck?: string;
+  // form-load timestamp (ms epoch) — used for a too-fast-to-be-human check
+  _t?: number | string;
 }
 
 const GHL_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/';
@@ -108,11 +106,18 @@ export const POST: APIRoute = async ({ request }) => {
     return corsJson({ ok: false, error: 'invalid_body' }, { status: 400 });
   }
 
-  // Honeypot — silently 200 so bots think they succeeded and any legit user
-  // accidentally autofilled into it sees the success state, not an error.
-  if (body.hp_field_x9 || body.botcheck) {
-    console.log('[quote] honeypot tripped; silent drop');
-    return corsJson({ ok: true, source: 'silent_drop' });
+  // Time-based bot check. The form stamps Date.now() on load and submits it
+  // back as _t; a real human takes well over 1.5s to fill out a form, bots
+  // fire instantly. Skip the check entirely if _t is missing or unparseable
+  // so we never falsely block someone whose page came out of bfcache or
+  // cached HTML predates this field.
+  const tNum = typeof body._t === 'string' ? Number(body._t) : body._t;
+  if (typeof tNum === 'number' && Number.isFinite(tNum) && tNum > 0) {
+    const deltaMs = Date.now() - tNum;
+    if (deltaMs >= 0 && deltaMs < 1500) {
+      console.log('[quote] too-fast submit blocked, deltaMs=', deltaMs);
+      return corsJson({ ok: false, error: 'too_fast' }, { status: 400 });
+    }
   }
 
   const { firstName, lastName } = splitName(body.name || '', body.firstName, body.lastName);

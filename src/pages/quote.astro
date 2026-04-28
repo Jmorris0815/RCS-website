@@ -127,13 +127,6 @@ import { siteConfig } from '../config/site';
           />
         </label>
 
-        <!-- honeypot — non-semantic name so password managers / autofill ignore it -->
-        <div aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;overflow:hidden">
-          <label>Leave this empty
-            <input type="text" name="hp_field_x9" tabindex="-1" autocomplete="off" />
-          </label>
-        </div>
-
         <div class="pt-3">
           <button type="submit" id="rcs-quote-submit" class="btn-primary w-full sm:w-auto" data-default-label="Send Quote Request">
             Send Quote Request
@@ -209,6 +202,8 @@ import { siteConfig } from '../config/site';
     var form = document.getElementById('rcs-quote-form');
     if (!form || form.dataset.bound) return;
     form.dataset.bound = 'true';
+    // Stamp form-load time for the server-side too-fast bot check.
+    form.dataset.loadedAt = String(Date.now());
 
     var btn = document.getElementById('rcs-quote-submit');
     var successEl = document.getElementById('rcs-quote-success');
@@ -262,6 +257,8 @@ import { siteConfig } from '../config/site';
           else payload[k] = String(v);
         });
         if (services.length) payload.services = services;
+        // Time-based bot check: server rejects if delta < 1500ms.
+        payload._t = Number(form.dataset.loadedAt) || Date.now();
         var apiUrl = window.location.origin + '/api/quote';
         var res = await fetch(apiUrl, {
           method: 'POST',
