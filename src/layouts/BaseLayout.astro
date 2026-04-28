@@ -27,6 +27,13 @@ const {
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
+
+// GHL chat widget (required for A2P 10DLC compliance), suppressed on pages
+// that already collect a phone number so a customer doesn't see two competing
+// "talk to us" surfaces in the same flow.
+const chatWidgetExcludedPaths = ['/quote', '/contact'];
+const normalizedPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const showChatWidget = !chatWidgetExcludedPaths.some((p) => normalizedPath === p || normalizedPath.startsWith(p + '/'));
 ---
 
 <!DOCTYPE html>
@@ -199,5 +206,14 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
 
       document.addEventListener('astro:page-load', rcsInit);
     </script>
+
+    {showChatWidget && (
+      <script
+        src="https://widgets.leadconnectorhq.com/loader.js"
+        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+        data-widget-id="69f0addcb001cc31bb5798ba"
+        data-source="WEB_USER"
+      ></script>
+    )}
   </body>
 </html>
