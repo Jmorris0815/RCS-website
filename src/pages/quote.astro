@@ -245,7 +245,11 @@ import { siteConfig } from '../config/site';
       setState('pending');
       try {
         var fd = new FormData(form);
-        var res = await fetch('/api/quote', {
+        // Always POST to the canonical www host. Hitting the apex
+        // (rcsgutters.com) triggers a 308 -> www redirect that strips
+        // the request body in browser fetch, so the function would
+        // receive an empty payload and the form would silently fail.
+        var res = await fetch('https://www.rcsgutters.com/api/quote', {
           method: 'POST',
           body: fd,
           headers: { 'Accept': 'application/json' },
