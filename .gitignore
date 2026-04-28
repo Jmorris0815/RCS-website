@@ -5,11 +5,14 @@ dist/
 # dependencies
 node_modules/
 
-# env
+# env + credentials
 .env
+.env.*
 .env.production
 .env.local
 .env.*.local
+*credentials*
+ghl_credentials.txt
 
 # logs
 npm-debug.log*
