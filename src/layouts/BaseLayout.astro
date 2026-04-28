@@ -40,6 +40,19 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
       <link rel="preload" as="image" type="image/avif" href={heroImage.replace(/\.(jpg|jpeg|png)$/i, '.avif')} fetchpriority="high" />
     )}
 
+    <!-- Google Tag Manager — same container as the legacy WordPress site so all
+         existing conversion + analytics tags fire here without reconfiguration.
+         GTM bootstraps gtag.js automatically; the phone_call_click dataLayer
+         event below is the trigger for the Google Ads phone-conversion tag
+         (configured inside the GTM dashboard). -->
+    <script is:inline define:vars={{ gtmId: siteConfig.googleTagManagerId }}>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer',gtmId);
+    </script>
+
     <SEO
       title={title}
       description={description}
@@ -58,6 +71,12 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
     <slot name="head" />
   </head>
   <body class="bg-white text-ink-primary font-sans antialiased">
+    <!-- Google Tag Manager (noscript fallback) -->
+    <noscript>
+      <iframe src={`https://www.googletagmanager.com/ns.html?id=${siteConfig.googleTagManagerId}`}
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-brand-primary focus:text-white focus:px-4 focus:py-2 focus:rounded focus:z-[60]"
@@ -142,6 +161,40 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
           window.addEventListener('scroll', onScroll, { passive: true });
           onScroll();
         }
+      }
+
+      // Phone-call conversion tracking. Delegated click listener bound once
+      // on document; survives Astro view transitions. Pushes a `phone_call_click`
+      // event to dataLayer (which GTM listens to) AND fires the same event via
+      // gtag() if it's loaded directly. Scott configures the actual Google Ads
+      // phone-conversion tag inside GTM with this event as the trigger.
+      if (!window.__rcsPhoneTrackBound) {
+        document.addEventListener('click', function (e) {
+          var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"]');
+          if (!a) return;
+          var num = a.getAttribute('href').replace(/^tel:/, '');
+          var loc = a.getAttribute('data-call-location')
+            || (a.closest('[data-call-context]') && a.closest('[data-call-context]').getAttribute('data-call-context'))
+            || (a.closest('header') ? 'header' :
+                a.closest('footer') ? 'footer' :
+                a.closest('[data-sticky-cta]') ? 'sticky_desktop' :
+                a.closest('.sticky-bar-mobile') ? 'sticky_mobile' :
+                'inline');
+          (window.dataLayer = window.dataLayer || []).push({
+            event: 'phone_call_click',
+            phone_number: num,
+            call_location: loc,
+            page_path: window.location.pathname,
+          });
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'phone_call_click', {
+              phone_number: num,
+              call_location: loc,
+              page_path: window.location.pathname,
+            });
+          }
+        }, true);
+        window.__rcsPhoneTrackBound = true;
       }
 
       document.addEventListener('astro:page-load', rcsInit);

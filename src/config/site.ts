@@ -51,6 +51,14 @@ export const siteConfig = {
     youtube: '', // PROVIDE — Scott's YouTube channel for amplification
     google: 'https://www.google.com/maps/place/?q=place_id:CHANGE_ME',
   },
+  // Google Tag Manager container (scraped from the live rcsgutters.com WordPress
+  // site). All Google Ads conversion tags, phone-call conversions, and any future
+  // analytics tags are configured INSIDE this GTM container on Google's servers,
+  // not in this codebase. To wire a new conversion (or change AW- IDs), edit the
+  // GTM dashboard — no code change here. The `phone_call_click` dataLayer event
+  // fired by BaseLayout is the trigger Scott uses for the phone-conversion tag.
+  googleTagManagerId: 'GTM-ND38S235',
+
   // Scott's Virginia contractor license is currently INACTIVE (terminated by
   // Diana). Phase 1 license recovery is in progress. Intentionally empty;
   // do NOT print a license number anywhere on the public site until the
