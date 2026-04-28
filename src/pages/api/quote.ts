@@ -33,6 +33,28 @@ const GHL_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/';
 const GHL_VERSION = '2021-07-28';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
+// GHL custom field id for "Services Needed" — created via API on 2026-04-28.
+// fieldKey: contact.services_needed (LARGE_TEXT). Stable infrastructure value.
+const GHL_FIELD_ID_SERVICES_NEEDED = 'mBRnVJy37TCxM1RTDaqL';
+
+// Map the form's checkbox slug values back to readable labels for the alert
+// email + the contact's "Services Needed" custom field. Unknown slugs pass
+// through unchanged so no lead detail is silently dropped.
+const SERVICE_LABELS: Record<string, string> = {
+  install: 'Seamless gutter installation',
+  guards: 'Gutter guards',
+  cleaning: 'Gutter cleaning',
+  repair: 'Gutter repair',
+  halfround: 'Half-round / copper',
+  commercial: 'Commercial',
+  fascia: 'Fascia / soffit',
+  drainage: 'Drainage / underground',
+};
+function labelForService(slug: string): string {
+  const k = (slug || '').toLowerCase().trim();
+  return SERVICE_LABELS[k] || slug;
+}
+
 // Form may be served from rcsgutters.com (apex) or www.rcsgutters.com. The
 // browser treats those as different origins, so a same-origin POST from apex
 // to /api/quote that ends up at www would be a cross-origin call requiring
@@ -142,6 +164,10 @@ export const POST: APIRoute = async ({ request }) => {
   const ghlLocationId = import.meta.env.GHL_LOCATION_ID;
   const web3FormsKey = import.meta.env.WEB3FORMS_KEY;
 
+  // Human-readable services list for the custom field + the timeline note.
+  const serviceLabels = services.map(labelForService).filter(Boolean);
+  const servicesNeeded = serviceLabels.join(' · ');
+
   // ---- Primary: GHL contacts API ------------------------------------------
   if (ghlToken && ghlLocationId) {
     try {
@@ -158,6 +184,9 @@ export const POST: APIRoute = async ({ request }) => {
         source,
         locationId: ghlLocationId,
         tags,
+        customFields: servicesNeeded
+          ? [{ id: GHL_FIELD_ID_SERVICES_NEEDED, field_value: servicesNeeded }]
+          : undefined,
       };
       // Drop undefined for a cleaner request
       Object.keys(ghlPayload).forEach((k) => ghlPayload[k] === undefined && delete ghlPayload[k]);
@@ -173,6 +202,32 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
       if (ghlRes.ok) {
+        // Fire a follow-up note so the services list + customer message land at
+        // the top of the contact's timeline (the customField alone only shows on
+        // the contact detail panel). Best-effort — failure here doesn't fail
+        // the user-facing submission.
+        try {
+          const created = await ghlRes.clone().json().catch(() => null);
+          const contactId = created?.contact?.id;
+          if (contactId) {
+            const noteLines: string[] = [];
+            if (servicesNeeded) noteLines.push(`Services requested: ${servicesNeeded}`);
+            if (message) noteLines.push('', message);
+            if (noteLines.length) {
+              await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${ghlToken}`,
+                  'Content-Type': 'application/json',
+                  'Version': GHL_VERSION,
+                },
+                body: JSON.stringify({ body: noteLines.join('\n') }),
+              }).catch((err) => console.error('[quote] GHL note POST failed', err));
+            }
+          }
+        } catch (err) {
+          console.error('[quote] post-create note step errored', err);
+        }
         return corsJson({ ok: true, source: 'ghl' });
       }
       // Log non-OK status for ops visibility (Vercel function logs)
@@ -205,7 +260,7 @@ export const POST: APIRoute = async ({ request }) => {
         city,
         state: body.state || 'VA',
         postal_code: body.postalCode || '',
-        services: services.join(', '),
+        services: serviceLabels.join(', '),
         message,
         source,
         _note: 'GHL primary path failed — see Vercel function logs for the GHL error.',
