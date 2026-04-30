@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+
+const leadId = Astro.url.searchParams.get('lead') || '';
+---
+
+<BaseLayout
+  title="Thanks — we'll be in touch | Right Choice Seamless Gutters"
+  description="Your free estimate request has been received. Scott will be in touch within one business day."
+  noindex={true}
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <section class="container-x section">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-success/10 text-accent-success mb-6">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+          <path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <p class="kicker mb-3">Got it</p>
+      <h1 class="mb-5">Scott will be in touch within one business day.</h1>
+      <p class="text-fluid-lg text-ink-muted mb-8 leading-relaxed">
+        Your request landed safely. Someone from our crew will call or text you within one business day to schedule the on-site walk-through. No high-pressure sales — just a real number you can trust.
+      </p>
+
+      <div class="card p-6 bg-brand-cream text-left max-w-md mx-auto">
+        <h2 class="font-bold mb-3 text-lg">Need us sooner?</h2>
+        <p class="text-sm text-ink-muted mb-4">
+          Call or email us directly — we usually pick up Mon–Fri 9–5 and Sat 9–12.
+        </p>
+        <a href={`tel:${siteConfig.phoneRaw}`} data-call-location="thank_you_page" class="btn-primary w-full mb-3">
+          {siteConfig.phoneDisplay}
+        </a>
+        <a
+          href={`mailto:${siteConfig.email}`}
+          class="block text-center text-sm font-semibold text-brand-primary hover:opacity-80"
+        >
+          {siteConfig.email}
+        </a>
+      </div>
+
+      {leadId && (
+        <p class="text-xs text-ink-subtle mt-8">
+          Reference: {leadId}
+        </p>
+      )}
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'lead_thank_you_view' });
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'lead_thank_you_view');
+      }
+    })();
+  </script>
+</BaseLayout>

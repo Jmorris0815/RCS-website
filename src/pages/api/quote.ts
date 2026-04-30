@@ -25,13 +25,65 @@ interface QuoteBody {
   services?: string[] | string;
   message?: string;
   source?: string;
+  // Which on-site form posted this lead (e.g. "free-estimate-landing").
+  // Becomes a contact tag (`source-<slug>`) so dealers can filter leads by
+  // landing page in GHL — without changing existing forms that omit it.
+  formSource?: string;
   // form-load timestamp (ms epoch) — used for a too-fast-to-be-human check
   _t?: number | string;
 }
 
 const GHL_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/';
+const GHL_OPPORTUNITIES_ENDPOINT = 'https://services.leadconnectorhq.com/opportunities/';
+const GHL_PIPELINES_ENDPOINT = 'https://services.leadconnectorhq.com/opportunities/pipelines';
 const GHL_VERSION = '2021-07-28';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+
+// Module-scoped cache for the resolved "New Lead" stage id. Vercel reuses warm
+// function instances, so we only hit the pipelines API once per cold start.
+let resolvedStageId: string | null = null;
+let resolvedStageIdAt = 0;
+const STAGE_CACHE_TTL_MS = 60 * 60 * 1000; // 1h — pipelines change rarely
+
+async function resolveNewLeadStageId(token: string, locationId: string, pipelineId: string): Promise<string | null> {
+  if (resolvedStageId && Date.now() - resolvedStageIdAt < STAGE_CACHE_TTL_MS) {
+    return resolvedStageId;
+  }
+  try {
+    const url = `${GHL_PIPELINES_ENDPOINT}?locationId=${encodeURIComponent(locationId)}`;
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Version': GHL_VERSION,
+        'Accept': 'application/json',
+      },
+    });
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '<no body>');
+      console.error('[quote] pipelines fetch non-OK', res.status, errText.slice(0, 300));
+      return null;
+    }
+    const data: any = await res.json().catch(() => null);
+    const pipelines: any[] = data?.pipelines || [];
+    const pipeline = pipelines.find((p) => p?.id === pipelineId);
+    if (!pipeline) {
+      console.error('[quote] pipeline id not found in pipelines response', pipelineId);
+      return null;
+    }
+    const stage = (pipeline.stages || []).find((s: any) => /new lead/i.test(s?.name || ''));
+    if (!stage?.id) {
+      console.error('[quote] no stage matching /new lead/i in pipeline', pipelineId, 'stages:', (pipeline.stages || []).map((s: any) => s?.name));
+      return null;
+    }
+    resolvedStageId = stage.id as string;
+    resolvedStageIdAt = Date.now();
+    return resolvedStageId;
+  } catch (err) {
+    console.error('[quote] pipelines fetch error', err);
+    return null;
+  }
+}
 
 // GHL custom field id for "Services Needed" — created via API on 2026-04-28.
 // fieldKey: contact.services_needed (LARGE_TEXT). Stable infrastructure value.
@@ -159,9 +211,13 @@ export const POST: APIRoute = async ({ request }) => {
     const sslug = (s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     if (sslug) tags.push(`service-${sslug}`);
   }
+  // Tag by which form sent this lead (e.g. `source-free-estimate-landing`).
+  const formSourceSlug = (body.formSource || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  if (formSourceSlug) tags.push(`source-${formSourceSlug}`);
 
   const ghlToken = import.meta.env.GHL_PRIVATE_INTEGRATION_TOKEN;
   const ghlLocationId = import.meta.env.GHL_LOCATION_ID;
+  const ghlPipelineId = import.meta.env.GHL_PIPELINE_ID;
   const web3FormsKey = import.meta.env.WEB3FORMS_KEY;
 
   // Human-readable services list for the custom field + the timeline note.
@@ -202,14 +258,20 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
       if (ghlRes.ok) {
+        // Capture contact id once; reused by both the timeline-note step and
+        // the new opportunity-create step below.
+        let contactId: string | undefined;
+        try {
+          const created = await ghlRes.clone().json().catch(() => null);
+          contactId = created?.contact?.id;
+        } catch {}
+
         // Fire a follow-up note so the services list + customer message land at
         // the top of the contact's timeline (the customField alone only shows on
         // the contact detail panel). Best-effort — failure here doesn't fail
         // the user-facing submission.
-        try {
-          const created = await ghlRes.clone().json().catch(() => null);
-          const contactId = created?.contact?.id;
-          if (contactId) {
+        if (contactId) {
+          try {
             const noteLines: string[] = [];
             if (servicesNeeded) noteLines.push(`Services requested: ${servicesNeeded}`);
             if (message) noteLines.push('', message);
@@ -224,11 +286,54 @@ export const POST: APIRoute = async ({ request }) => {
                 body: JSON.stringify({ body: noteLines.join('\n') }),
               }).catch((err) => console.error('[quote] GHL note POST failed', err));
             }
+          } catch (err) {
+            console.error('[quote] post-create note step errored', err);
           }
-        } catch (err) {
-          console.error('[quote] post-create note step errored', err);
         }
-        return corsJson({ ok: true, source: 'ghl' });
+
+        // Drop an opportunity into the RCS Sales Pipeline at "New Lead". This
+        // is what fires the W1 lead-notification workflow (Scott + Myriam
+        // alert). Best-effort: any failure logs and we still return success
+        // because the contact already landed — that's the bar.
+        if (contactId && ghlPipelineId) {
+          try {
+            const stageId = await resolveNewLeadStageId(ghlToken, ghlLocationId, ghlPipelineId);
+            if (stageId) {
+              const oppName = `${[firstName, lastName].filter(Boolean).join(' ').trim() || email || phone || 'Web Lead'} — Web Lead`;
+              const oppPayload = {
+                locationId: ghlLocationId,
+                pipelineId: ghlPipelineId,
+                pipelineStageId: stageId,
+                name: oppName,
+                status: 'open',
+                contactId,
+                monetaryValue: 0,
+                source: 'Website Lead Form',
+              };
+              const oppRes = await fetch(GHL_OPPORTUNITIES_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${ghlToken}`,
+                  'Content-Type': 'application/json',
+                  'Version': GHL_VERSION,
+                },
+                body: JSON.stringify(oppPayload),
+              });
+              if (!oppRes.ok) {
+                const errText = await oppRes.text().catch(() => '<no body>');
+                console.error('[quote] GHL opportunity create non-OK', oppRes.status, errText.slice(0, 500));
+              }
+            } else {
+              console.error('[quote] could not resolve New Lead stage id — opportunity skipped');
+            }
+          } catch (err) {
+            console.error('[quote] opportunity create errored', err);
+          }
+        } else if (!ghlPipelineId) {
+          console.warn('[quote] GHL_PIPELINE_ID missing — opportunity create skipped (contact still created)');
+        }
+
+        return corsJson({ ok: true, source: 'ghl', contactId });
       }
       // Log non-OK status for ops visibility (Vercel function logs)
       const errText = await ghlRes.text().catch(() => '<no body>');
@@ -303,5 +408,7 @@ export const GET: APIRoute = async () =>
     ok: true,
     ghl_token_present: !!import.meta.env.GHL_PRIVATE_INTEGRATION_TOKEN,
     ghl_location_id_present: !!import.meta.env.GHL_LOCATION_ID,
+    pipeline_id_present: !!import.meta.env.GHL_PIPELINE_ID,
+    stage_id_resolved: !!resolvedStageId,
     web3forms_key_present: !!import.meta.env.WEB3FORMS_KEY,
   });

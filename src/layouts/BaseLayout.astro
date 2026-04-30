@@ -4,6 +4,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyCTAs from '../components/StickyCTAs.astro';
+import Tracking from '../components/Tracking.astro';
 import { siteConfig } from '../config/site';
 import '../styles/global.css';
 
@@ -77,6 +78,8 @@ const showChatWidget = !chatWidgetExcludedPaths.some((p) => normalizedPath === p
       }}
       twitter={{ card: 'summary_large_image', title, description, image: ogImage }}
     />
+
+    <Tracking />
 
     <ClientRouter />
     <slot name="head" />
