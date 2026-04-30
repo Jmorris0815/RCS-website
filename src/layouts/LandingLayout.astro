@@ -11,10 +11,9 @@ export interface Props {
   canonical?: string;
   noindex?: boolean;
   /**
-   * Optional one-line urgency strip rendered above the header. Used on landing
-   * pages to surface scarcity ("4 install slots left in May"). Pass an empty
-   * string to suppress.
-   * VERIFY WITH SCOTT BEFORE LAUNCH — wording is a commitment.
+   * Optional one-line urgency strip rendered above the header. Default copy
+   * is intentionally evergreen — true every month without manual updates.
+   * Pass an empty string to suppress.
    */
   urgencyStrip?: string;
 }
@@ -25,7 +24,7 @@ const {
   image,
   canonical,
   noindex = false,
-  urgencyStrip = '⚡ MAY: 4 install slots remaining — book your free estimate today',
+  urgencyStrip = '⚡ This month\'s install slots fill in the order calls come in. Lock yours now.',
 } = Astro.props;
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
@@ -83,7 +82,6 @@ const ogImage = image
 
     {urgencyStrip && (
       <div class="bg-brand-primary text-white text-center text-xs sm:text-sm font-semibold py-2 px-4">
-        {/* VERIFY WITH SCOTT BEFORE LAUNCH — slot count is a commitment */}
         <span class="inline-flex items-center gap-2">
           {urgencyStrip}
         </span>
