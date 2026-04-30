@@ -13,12 +13,12 @@ const adsConvId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
 const adsConvLabel = import.meta.env.PUBLIC_GADS_CONVERSION_LABEL || '';
 const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '';
 
-// "Whatever your gutters need" service catalog. Inline SVGs over Lucide React
-// to avoid hydrating a React island per icon.
+// "Whatever your gutters need" service catalog. Inline SVGs avoid hydrating a
+// React island per icon.
 const services = [
   {
     title: 'Seamless Gutter Installation',
-    sub: 'Custom-cut on site. Residential + commercial.',
+    sub: 'Custom-cut on site. Residential and commercial.',
     thumb: '/images/jobs/install-gray-ranch.jpg',
     icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />',
   },
@@ -30,7 +30,7 @@ const services = [
   },
   {
     title: 'Gutter Cleaning',
-    sub: 'Hand-cleared, debris hauled away, flow tested.',
+    sub: 'Hand-cleared. Debris hauled away. Flow tested.',
     thumb: '/images/jobs/cleaning-hand-removal.jpg',
     icon: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z" /><path d="M5 3v4" /><path d="M19 17v4" /><path d="M3 5h4" /><path d="M17 19h4" />',
   },
@@ -54,7 +54,7 @@ const services = [
   },
   {
     title: 'Gutter Repairs',
-    sub: 'Sagging, leaking, pulling away — fixed same week.',
+    sub: 'Sagging, leaking, pulling away. Fixed same week.',
     thumb: '/images/jobs/gutter-pulling-away.jpg',
     icon: '<circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />',
   },
@@ -81,15 +81,15 @@ const gallery = [
 
 <LandingLayout
   title="Free Gutter Estimate — Charlottesville & Albemarle | RCS Gutters"
-  description="Get on Scott's calendar this week. Real written quote on the spot, install in one day, lifetime warranty. Family-run since 2014."
+  description="Install, guards, cleaning, brightening, fascia, drainage, repairs, commercial. One crew across Central Virginia. Real written quote on the spot, this week."
 >
   <ScrollProgress client:load />
 
   {/* ============================ HERO ============================ */}
-  <section class="container-x pt-8 pb-12 lg:pt-14 lg:pb-20 relative overflow-hidden">
+  <section class="container-x pt-6 pb-10 lg:pt-14 lg:pb-20 relative overflow-hidden">
     <div aria-hidden="true" class="absolute -top-32 -right-40 w-[640px] h-[640px] bg-brand-light rounded-full blur-3xl opacity-60 pointer-events-none"></div>
 
-    <div class="relative grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+    <div class="relative grid lg:grid-cols-12 gap-8 lg:gap-14 items-start">
       {/* Hero content — left 7/12 */}
       <div class="lg:col-span-7 lg:pt-4">
         <Reveal client:visible>
@@ -99,55 +99,67 @@ const gallery = [
             <span class="font-bold text-ink-primary">
               <AnimatedCounter to={87} client:visible />+
             </span>
-            <span>Google reviews — and counting</span>
+            <span>Google reviews</span>
+            <span class="text-ink-muted">·</span>
+            <span class="font-bold text-ink-primary">
+              <AnimatedCounter to={200} client:visible />+
+            </span>
+            <span>HomeAdvisor reviews</span>
           </p>
-          <h1 class="text-fluid-4xl lg:text-[clamp(2.75rem,2.2rem+2.6vw,4.5rem)] leading-[1.05] mb-5 font-display">
+          <h1 class="text-fluid-3xl sm:text-fluid-4xl lg:text-[clamp(2.75rem,2.2rem+2.6vw,4.5rem)] leading-[1.05] mb-5 font-display">
             Seamless gutters that <span class="text-brand-primary">actually last 30 years</span>.
           </h1>
           <p class="text-fluid-lg text-ink-muted mb-7 max-w-xl leading-relaxed">
-            In about 30 seconds, get on Scott's calendar this week. Real written quote on the spot. Install in one day. Never think about gutters again. Lifetime warranty included.
+            <strong class="text-ink-primary">Install. Guards. Cleaning. Brightening. Fascia. Drainage. Repairs. Commercial.</strong>
+            One crew handles it all across Charlottesville, Albemarle, and Central Virginia.
+            <strong class="text-ink-primary">In about 30 seconds</strong>, get on the calendar this week and get a real written quote on the spot.
           </p>
         </Reveal>
 
-        {/* Stats row */}
+        {/* Stats row — 4 cells. 2x2 on mobile, 4-col on tablet+ */}
         <Reveal client:visible delay={0.1}>
-          <div class="grid grid-cols-3 gap-4 max-w-xl mb-8 border-y border-line py-5">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-xl mb-8 border-y border-line py-5">
             <div>
-              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary">
-                <AnimatedCounter to={1200} client:visible />+
-              </div>
-              <div class="text-xs uppercase tracking-wide text-ink-muted mt-1">Homes installed</div>
-            </div>
-            <div>
-              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary">
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary leading-none">
                 <AnimatedCounter to={12} client:visible />
               </div>
-              <div class="text-xs uppercase tracking-wide text-ink-muted mt-1">Years in Central VA</div>
+              <div class="text-[10px] sm:text-xs uppercase tracking-wide text-ink-muted mt-2 leading-tight">Years Local</div>
             </div>
             <div>
-              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary">
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary leading-none">
+                <AnimatedCounter to={200} client:visible />+
+              </div>
+              <div class="text-[10px] sm:text-xs uppercase tracking-wide text-ink-muted mt-2 leading-tight">HomeAdvisor Reviews</div>
+            </div>
+            <div>
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary leading-none">
+                4.9<span class="text-amber-500">★</span>
+              </div>
+              <div class="text-[10px] sm:text-xs uppercase tracking-wide text-ink-muted mt-2 leading-tight">Google Average</div>
+            </div>
+            <div>
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary leading-none">
                 <AnimatedCounter to={100} client:visible />%
               </div>
-              <div class="text-xs uppercase tracking-wide text-ink-muted mt-1">Lifetime warranty</div>
+              <div class="text-[10px] sm:text-xs uppercase tracking-wide text-ink-muted mt-2 leading-tight">Lifetime Warranty</div>
             </div>
           </div>
         </Reveal>
 
-        {/* Hero photo — Scott in front of the green truck */}
+        {/* Hero photo — branded service truck, not a personal headshot */}
         <Reveal client:visible delay={0.15}>
           <div class="relative rounded-xl overflow-hidden mb-7 max-w-xl shadow-card">
             <Picture
-              src="/images/team/scott.jpg"
-              alt="Scott Smith, RCS owner — on every estimate personally"
+              src="/images/jobs/truck-jobsite-barn.jpg"
+              alt="Right Choice Seamless Gutters branded service truck — Central Virginia gutter pros since 2014"
               width={800}
-              height={1000}
+              height={533}
               loading="eager"
               fetchpriority="high"
               class="w-full h-auto block"
             />
-            <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/65 to-transparent text-white">
-              <p class="text-sm font-semibold tracking-tight">Scott Smith — Owner</p>
-              <p class="text-xs opacity-85">On every estimate. Personally.</p>
+            <div class="absolute inset-x-0 bottom-0 p-3 sm:p-4 bg-gradient-to-t from-black/65 to-transparent text-white">
+              <p class="text-xs sm:text-sm font-semibold tracking-tight">Real RCS truck. Real Central Virginia jobsite.</p>
             </div>
           </div>
         </Reveal>
@@ -163,7 +175,7 @@ const gallery = [
               </li>
               <li class="flex items-start gap-2">
                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary text-white font-bold flex items-center justify-center text-xs">2</span>
-                <span><strong>Scott calls</strong> within one business day.</span>
+                <span><strong>We call</strong> within one business day.</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary text-white font-bold flex items-center justify-center text-xs">3</span>
@@ -174,20 +186,20 @@ const gallery = [
         </Reveal>
       </div>
 
-      {/* Form column — right 5/12. Stack box anchors visually above the form. */}
+      {/* Form column — right 5/12 */}
       <div class="lg:col-span-5">
         <div class="lg:sticky lg:top-32 space-y-0">
-          {/* HORMOZI STACK — sits above the form, anchored visually */}
+          {/* HORMOZI STACK — visually anchored above the form */}
           <div class="rounded-t-xl bg-brand-cream border-x border-t border-line p-5 lg:p-6">
             <p class="kicker mb-3 text-center">When you submit, you get</p>
             <ul class="space-y-2 text-sm">
               <li class="flex items-start gap-2.5">
                 <svg class="text-brand-primary flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg>
-                <span>Scott on the phone within one business day</span>
+                <span>A call from RCS within one business day</span>
               </li>
               <li class="flex items-start gap-2.5">
                 <svg class="text-brand-primary flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg>
-                <span>15-minute on-site walk-around — at no cost</span>
+                <span>15-minute on-site walk-around at no cost</span>
               </li>
               <li class="flex items-start gap-2.5">
                 <svg class="text-brand-primary flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg>
@@ -195,7 +207,7 @@ const gallery = [
               </li>
               <li class="flex items-start gap-2.5">
                 <svg class="text-brand-primary flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg>
-                <span>No high-pressure sales — sleep on it as long as you want</span>
+                <span>No high-pressure sales. Sleep on it as long as you want</span>
               </li>
               <li class="flex items-start gap-2.5">
                 <svg class="text-brand-primary flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg>
@@ -203,7 +215,6 @@ const gallery = [
               </li>
             </ul>
           </div>
-          {/* The form card sits flush below — share rounded-bottom with stack-top */}
           <div class="[&>form]:rounded-t-none [&>form]:border-t-0">
             <MultiStepForm
               client:load
@@ -220,19 +231,19 @@ const gallery = [
   {/* ============================ TRUST STRIP ============================ */}
   <section class="bg-brand-cream border-y border-line">
     <div class="container-x py-7">
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 text-center">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 text-center">
         {[
-          { value: '★ 4.9', label: 'Google Reviews' },
-          { value: 'BBB A+', label: 'Accredited' },
+          { value: '★ 4.9', label: '87+ Google Reviews' },
+          { value: '★ 200+', label: 'HomeAdvisor Reviews' },
           { value: '$1M', label: 'General Liability Insured' },
-          { value: 'VA Class A', label: 'Licensed Contractor' },
-          { value: '12 Years', label: 'Family-Owned in VA' },
+          { value: 'Since 2014', label: 'Family-Owned' },
           { value: 'Lifetime', label: 'Craftsmanship Warranty' },
+          { value: 'Same-Week', label: 'Free Estimates' },
         ].map((card, i) => (
           <Reveal client:visible delay={i * 0.06}>
             <div class="flex flex-col items-center group">
-              <span class="text-brand-primary font-display font-bold text-xl tracking-tight">{card.value}</span>
-              <span class="text-[11px] text-ink-muted uppercase tracking-wide mt-1 leading-tight">{card.label}</span>
+              <span class="text-brand-primary font-display font-bold text-lg sm:text-xl tracking-tight">{card.value}</span>
+              <span class="text-[10px] sm:text-[11px] text-ink-muted uppercase tracking-wide mt-1 leading-tight">{card.label}</span>
               <span class="block w-8 h-0.5 bg-brand-primary/0 group-hover:bg-brand-primary/60 mt-2 transition-colors"></span>
             </div>
           </Reveal>
@@ -261,17 +272,17 @@ const gallery = [
           { label: 'Same-week scheduling guaranteed (or your install is $200 off)', tag: 'Locked-in week' },
           { label: 'Lifetime craftsmanship warranty', tag: 'As long as you own the home' },
           { label: '$1M general liability insurance protecting your home', tag: 'Included' },
-          { label: 'Background-checked, in-house crew (no day labor)', tag: 'Included' },
+          { label: 'Background-checked, in-house crew', tag: 'Included' },
         ].map((item, i) => (
           <Reveal client:visible delay={i * 0.04}>
-            <li class="flex items-start gap-4 py-4">
+            <li class="flex items-start gap-3 sm:gap-4 py-4">
               <span class="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-accent-success/15 text-accent-success flex items-center justify-center" aria-hidden="true">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M5 12l5 5L20 7" />
                 </svg>
               </span>
-              <span class="flex-1 text-base lg:text-lg">{item.label}</span>
-              <span class="flex-shrink-0 font-display font-semibold text-brand-primary text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap pt-1">
+              <span class="flex-1 text-sm sm:text-base lg:text-lg">{item.label}</span>
+              <span class="hidden sm:inline-block flex-shrink-0 font-display font-semibold text-brand-primary text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap pt-1">
                 {item.tag}
               </span>
             </li>
@@ -311,7 +322,7 @@ const gallery = [
           },
           {
             title: 'Lifetime Craftsmanship',
-            body: 'If our work fails for as long as you own the home, we come back and fix it. Free. No "warranty service fee" tricks.',
+            body: 'If our work fails for as long as you own the home, we come back and fix it. Free. No warranty service fee tricks.',
             icon: (
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" />
@@ -352,14 +363,13 @@ const gallery = [
       </div>
     </Reveal>
 
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 max-w-6xl mx-auto">
       {services.map((svc, i) => (
         <Reveal client:visible delay={i * 0.05}>
           <a
             href="#rcs-fe-form"
             class="group block bg-white border border-line rounded-xl overflow-hidden hover:shadow-card hover:-translate-y-0.5 transition-all duration-200 h-full"
           >
-            {/* Optional thumb in corner */}
             <div class="aspect-[16/9] bg-brand-cream overflow-hidden">
               <Picture
                 src={svc.thumb}
@@ -401,12 +411,12 @@ const gallery = [
       </div>
     </Reveal>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {[
         {
           big: '.032',
           title: 'Heavy-gauge aluminum',
-          body: 'You get .032 aluminum. Most installers cut cost with .027 — thinner metal, faster failure.',
+          body: 'You get .032 aluminum. Most installers cut cost with .027. Thinner metal, faster failure.',
         },
         {
           icon: (
@@ -425,7 +435,7 @@ const gallery = [
             </svg>
           ),
           title: 'Fascia repair included',
-          body: "Find rot on install day? We fix it in-line — no waiting, no surprise change orders.",
+          body: 'Find rot on install day? We fix it in-line. No waiting. No surprise change orders.',
         },
         {
           icon: (
@@ -455,23 +465,26 @@ const gallery = [
     <div class="container-x section">
       <Reveal client:visible>
         <div class="text-center mb-10 max-w-2xl mx-auto">
-          <p class="kicker mb-3">Real Scott. Real crew. Real homes.</p>
-          <h2>Every install we've done. Photographed. Never staged.</h2>
+          <p class="kicker mb-3">Recent installs</p>
+          <h2>Real homes. Real installs. Across Central Virginia.</h2>
         </div>
       </Reveal>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 max-w-6xl mx-auto">
+      {/* Gallery: defensive pattern — no absolute positioning. Image fills its
+          aspect-ratio parent via plain w-full h-full inside Picture. */}
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 max-w-6xl mx-auto">
         {gallery.map((img, i) => (
           <Reveal client:visible delay={i * 0.04}>
-            <figure class="group relative rounded-lg overflow-hidden bg-brand-charcoal aspect-[4/3] cursor-pointer">
-              <Picture
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <figcaption class="absolute bottom-0 left-0 right-0 p-3 text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+            <figure class="group rounded-lg overflow-hidden bg-white shadow-soft">
+              <div class="aspect-[4/3] overflow-hidden bg-brand-cream">
+                <Picture
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                />
+              </div>
+              <figcaption class="text-[11px] sm:text-xs text-ink-muted text-center py-2 px-2 font-medium uppercase tracking-wide">
                 {img.city}
               </figcaption>
             </figure>
@@ -481,11 +494,11 @@ const gallery = [
 
       <Reveal client:visible>
         <p class="text-center mt-10 text-base lg:text-lg text-ink-muted">
-          <strong class="text-ink-primary"><AnimatedCounter to={1247} client:visible /> homes</strong>
+          <strong class="text-ink-primary"><AnimatedCounter to={12} client:visible /> years</strong>
           <span class="mx-2">·</span>
-          <strong class="text-ink-primary"><AnimatedCounter to={87} client:visible /> five-star reviews</strong>
+          <strong class="text-ink-primary"><AnimatedCounter to={87} client:visible />+ Google reviews</strong>
           <span class="mx-2">·</span>
-          <strong class="text-ink-primary">0 lawsuits</strong>
+          <strong class="text-ink-primary"><AnimatedCounter to={200} client:visible />+ HomeAdvisor reviews</strong>
           <span class="mx-2">·</span>
           Family-run since 2014.
         </p>
@@ -501,7 +514,7 @@ const gallery = [
           <span class="text-3xl tracking-widest">★★★★★</span>
         </div>
         <blockquote class="text-fluid-2xl text-ink-primary font-display leading-snug mb-6">
-          “Scott showed up on time. Walked the whole house with me. Didn't try to upsell anything we didn't need. Crew was professional. Gutters are perfect after a year. Worth every dollar.”
+          “Showed up on time. Walked the whole house with us. Didn't try to upsell anything we didn't need. Crew was professional. Gutters are perfect after a year. Worth every dollar.”
         </blockquote>
         <div class="flex items-center justify-center gap-3">
           <div class="w-12 h-12 rounded-full bg-brand-cream border border-line flex items-center justify-center text-brand-primary font-display font-bold">MR</div>
@@ -513,23 +526,23 @@ const gallery = [
       </div>
     </Reveal>
 
-    <div class="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
       {[
         {
           initials: 'KB',
-          quote: '"Fastest quote in town. Scott walked the whole property and answered every question. Crew showed up the day they said. The gutters look great and we haven\'t thought about them since."',
+          quote: '"Fastest quote in town. Walked the whole property and answered every question. Crew showed up the day they said. Gutters look great and we haven\'t thought about them since."',
           name: 'Karen B.',
           city: 'Albemarle',
         },
         {
           initials: 'TH',
-          quote: '"Had three quotes. RCS wasn\'t the cheapest but Scott was the only one who actually crawled in the attic to check for water damage first. That mattered. Glad we went with them."',
+          quote: '"Had three quotes. RCS wasn\'t the cheapest, but they were the only ones who actually crawled in the attic to check for water damage first. That mattered. Glad we went with them."',
           name: 'Tom H.',
           city: 'Lake Monticello',
         },
         {
           initials: 'LP',
-          quote: '"Two-day install on a tricky roofline. They cleaned up after every day. Owner came back to inspect personally. Old-school service, modern install."',
+          quote: '"Two-day install on a tricky roofline. They cleaned up after every day. Came back to inspect personally. Old-school service, modern install."',
           name: 'Linda P.',
           city: 'Crozet',
         },
@@ -551,41 +564,38 @@ const gallery = [
     </div>
   </section>
 
-  {/* ============================ MEET SCOTT ============================ */}
+  {/* ============================ COMPANY ORIGIN STORY ============================ */}
   <section class="bg-brand-cream">
     <div class="container-x section">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center max-w-5xl mx-auto">
         <Reveal client:visible variant="up" className="lg:col-span-5">
-          {/* Polaroid-style framing differentiates from the hero shot */}
-          <div class="bg-white p-3 pb-12 rounded-md shadow-card rotate-[-1.5deg] hover:rotate-0 transition-transform duration-500 max-w-sm mx-auto">
-            <div class="aspect-[4/5] overflow-hidden bg-brand-cream">
+          <div class="rounded-xl overflow-hidden shadow-card max-w-md mx-auto">
+            <div class="aspect-[4/5] bg-brand-cream overflow-hidden">
               <Picture
-                src="/images/team/scott.jpg"
-                alt="Scott Smith, RCS owner — Barboursville, VA"
+                src="/images/jobs/install-copper-brick-home.jpg"
+                alt="Copper gutter install on a brick home in Charlottesville"
                 width={400}
                 height={500}
                 loading="lazy"
-                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                class="w-full h-full object-cover"
               />
             </div>
-            <p class="text-center font-display text-sm text-ink-muted mt-3">— Scott, on a jobsite —</p>
           </div>
         </Reveal>
         <Reveal client:visible delay={0.1} className="lg:col-span-7">
-          <p class="kicker mb-3">Meet Scott</p>
-          <h2 class="mb-5">Scott Smith — RCS owner, on every estimate personally.</h2>
+          <p class="kicker mb-3">The story</p>
+          <h2 class="mb-5">Founded in 2014. Built for Central Virginia weather.</h2>
           <div class="space-y-4 text-base lg:text-lg text-ink-primary leading-relaxed max-w-prose">
             <p>
-              I started Right Choice Seamless Gutters in 2014. Spent years watching cheap-gutter installs fail across Charlottesville. Spike hangers pulling out in the first heavy storm. Thin .027 aluminum buckling under a tree limb. Crews that vanished the moment a warranty call came in.
+              Right Choice Seamless Gutters started in 2014 with one truck and a simple bet: Central Virginia homes deserve gutters that hold up to ice, oak pollen, and the storms that roll out of the Blue Ridge. Without leaks. Without sagging. Without callbacks.
             </p>
             <p>
-              I refuse to send "estimators." When you book RCS, I'm in your driveway. I measure the house. I look at your fascia. I tell you exactly what it'll cost — and I write the number down. Twelve years and 1,200+ installs later, we've never had a lawsuit. That's not luck. That's how we work.
+              Twelve years later we're still family-run, still local, and we still do every part of the gutter system in-house. Install, guards, cleaning, repair, drainage, fascia, commercial.
             </p>
             <p class="font-display font-semibold text-ink-primary">
-              When you book RCS, you get me. That's the difference.
+              One call. One crew. One warranty.
             </p>
           </div>
-          <p class="mt-5 text-sm text-ink-muted italic">— Scott Smith, Owner · Barboursville, VA</p>
         </Reveal>
       </div>
     </div>
@@ -600,7 +610,7 @@ const gallery = [
       </div>
     </Reveal>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 max-w-5xl mx-auto relative">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 max-w-5xl mx-auto relative">
       <div aria-hidden="true" class="hidden lg:block absolute top-7 left-[12%] right-[12%] h-0.5 bg-line"></div>
 
       {[
@@ -615,14 +625,14 @@ const gallery = [
           step: '2',
           label: 'Quick call',
           sub: 'within 1 business day',
-          body: 'We confirm details + book your estimate.',
+          body: 'We confirm details and book your estimate.',
           icon: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z" />',
         },
         {
           step: '3',
           label: 'On-site walk-around',
           sub: '15-20 min',
-          body: 'Scott measures, photographs, and gives you a real written number same day.',
+          body: 'We measure. Photograph. Hand you a real written number same day.',
           icon: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />',
         },
         {
@@ -684,15 +694,24 @@ const gallery = [
     </div>
   </section>
 
-  {/* ============================ FINAL CTA ============================ */}
-  <section class="bg-gradient-to-br from-brand-charcoal via-brand-charcoal to-brand-primary/40 text-white">
-    <div class="container-x section text-center">
+  {/* ============================ FINAL CTA — truck photo background ============================ */}
+  <section class="relative text-white overflow-hidden">
+    <div class="absolute inset-0">
+      <Picture
+        src="/images/jobs/truck-jobsite-barn.jpg"
+        alt=""
+        loading="lazy"
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-br from-brand-charcoal/92 via-brand-charcoal/85 to-brand-primary/55"></div>
+    <div class="relative container-x section text-center">
       <Reveal client:visible>
         <p class="kicker !text-brand-primary mb-4">Ready when you are</p>
         <h2 class="text-white text-fluid-3xl lg:text-fluid-4xl mb-5 max-w-3xl mx-auto leading-tight">
-          Stop the leaks. Stop the climbing. Stop the ladders. <span class="text-brand-primary">One call to Scott</span> — and gutters are off your list for life.
+          Stop the leaks. Stop the climbing. Stop the ladders. <span class="text-brand-primary">One call to RCS</span> — and gutters are off your list for life.
         </h2>
-        <p class="text-fluid-lg text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">
+        <p class="text-fluid-lg text-white/85 mb-10 max-w-xl mx-auto leading-relaxed">
           Free same-week estimate. No pressure. Real number same day.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -707,7 +726,7 @@ const gallery = [
             Or call {siteConfig.phoneDisplay}
           </a>
         </div>
-        <p class="mt-8 text-sm text-white/70 inline-flex items-center gap-2">
+        <p class="mt-8 text-sm text-white/80 inline-flex items-center gap-2">
           <span class="relative flex h-2.5 w-2.5">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-primary"></span>
@@ -722,7 +741,6 @@ const gallery = [
   <footer class="border-t border-line bg-white">
     <div class="container-x py-12">
       <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto items-start">
-        {/* Truck shot — anti-scam signal */}
         <div>
           <div class="aspect-[4/3] rounded-lg overflow-hidden mb-3 bg-brand-cream">
             <Picture
@@ -735,9 +753,9 @@ const gallery = [
           <p class="text-sm text-ink-primary font-semibold">If you don't see this in your driveway, it's not us.</p>
         </div>
 
-        {/* Contact column */}
         <div class="text-center md:text-left">
-          <p class="font-display font-bold text-lg text-ink-primary mb-2">{siteConfig.name}</p>
+          <p class="font-display font-bold text-lg text-ink-primary mb-1">{siteConfig.name}</p>
+          <p class="text-sm text-ink-muted mb-3">Family-Owned Since 2014</p>
           <a
             href={`tel:${siteConfig.phoneRaw}`}
             data-call-location="landing_footer"
@@ -757,7 +775,6 @@ const gallery = [
           </p>
         </div>
 
-        {/* Service area */}
         <div class="text-center md:text-left">
           <p class="text-xs uppercase tracking-wider font-bold text-ink-muted mb-3">Service area</p>
           <svg viewBox="0 0 200 140" class="w-full max-w-[200px] mx-auto md:mx-0 mb-3" aria-label="Service area map — Central Virginia">
@@ -773,8 +790,8 @@ const gallery = [
         </div>
       </div>
 
-      <div class="mt-10 pt-6 border-t border-line text-xs text-ink-muted text-center">
-        <p>{siteConfig.name} · DBA RCS Gutters · VA Class A Licensed · BBB A+ · $1M Insured</p>
+      <div class="mt-10 pt-6 border-t border-line text-xs text-ink-muted text-center leading-relaxed">
+        <p>$1M General Liability Insured · 200+ HomeAdvisor Reviews · 4.9★ Google · Lifetime Craftsmanship Warranty</p>
       </div>
     </div>
   </footer>
