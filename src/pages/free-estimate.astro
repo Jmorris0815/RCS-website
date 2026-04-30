@@ -1,8 +1,14 @@
 ---
 import LandingLayout from '../layouts/LandingLayout.astro';
 import { siteConfig } from '../config/site';
+import MultiStepForm from '../components/landing/MultiStepForm.tsx';
+import Reveal from '../components/landing/Reveal.tsx';
+import AnimatedCounter from '../components/landing/AnimatedCounter.tsx';
+import StickyMobileCTA from '../components/landing/StickyMobileCTA.tsx';
+import ScrollProgress from '../components/landing/ScrollProgress.tsx';
 
-// Surfaced to the inline script below for the Google Ads conversion call.
+// Pre-resolved at build time so the React island gets the value as a string
+// prop (avoids leaking import.meta.env into client bundle indirectly).
 const adsConvId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
 const adsConvLabel = import.meta.env.PUBLIC_GADS_CONVERSION_LABEL || '';
 const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '';
@@ -12,384 +18,609 @@ const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '
   title="Free Gutter Estimate — Charlottesville & Albemarle | RCS Gutters"
   description="Free, same-week gutter estimate. Family-run since 2014, 4.9 stars on Google, lifetime craftsmanship warranty. Seamless gutters built to last 30 years."
 >
-  {/* HERO + FORM */}
-  <section class="container-x pt-10 pb-12 lg:pt-16 lg:pb-20">
-    <div class="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
-      <div class="lg:col-span-3 lg:pt-6">
-        <p class="kicker mb-3">Free Estimate — Charlottesville &amp; Albemarle</p>
-        <h1 class="text-fluid-4xl mb-5">
-          Seamless gutters that <span class="text-brand-primary">actually last 30 years</span>.
-        </h1>
-        <p class="text-fluid-lg text-ink-muted mb-8 max-w-xl leading-relaxed">
-          Family-run since 2014. 4.9 stars on Google. Lifetime craftsmanship warranty. Same-week estimates across Central Virginia.
-        </p>
+  {/* Scroll progress bar — slim red sliver at the top of the viewport. */}
+  <ScrollProgress client:load />
 
-        <ul class="space-y-3 text-base lg:text-lg text-ink-primary max-w-xl">
-          <li class="flex items-start gap-3">
-            <svg class="text-brand-primary mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            <span>15–20 minute walk-around. We measure, photograph, and quote on the spot.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="text-brand-primary mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            <span>Heavy-gauge .032 aluminum + hidden hangers — built like the homes you grew up in.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="text-brand-primary mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            <span>Rotted fascia? Repaired in-line. No surprise upcharges on install day.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="text-brand-primary mt-1 flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            <span>Lifetime craftsmanship warranty for as long as you own the home.</span>
-          </li>
-        </ul>
-      </div>
+  {/* ============================ HERO ============================ */}
+  <section class="container-x pt-8 pb-12 lg:pt-14 lg:pb-20 relative overflow-hidden">
+    {/* Decorative diagonal accent — purely visual */}
+    <div aria-hidden="true" class="absolute -top-32 -right-40 w-[640px] h-[640px] bg-brand-light rounded-full blur-3xl opacity-60 pointer-events-none"></div>
 
-      <div class="lg:col-span-2">
-        <form
-          id="rcs-fe-form"
-          class="card p-6 lg:p-7 space-y-4 bg-white shadow-card scroll-mt-20"
-          action="/api/quote"
-          method="POST"
-          novalidate
-        >
-          <div class="text-center mb-2">
-            <p class="kicker">Get your free estimate</p>
-            <p class="text-sm text-ink-muted mt-1">Takes 30 seconds. No spam, ever.</p>
-          </div>
-
-          <input type="hidden" name="formSource" value="free-estimate-landing" />
-
-          <label class="block">
-            <span class="block text-sm font-semibold mb-1">Your name *</span>
-            <input
-              type="text"
-              name="name"
-              required
-              autocomplete="name"
-              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
-            />
-          </label>
-
-          <label class="block">
-            <span class="block text-sm font-semibold mb-1">Phone *</span>
-            <input
-              type="tel"
-              name="phone"
-              required
-              autocomplete="tel"
-              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
-            />
-          </label>
-
-          <label class="block">
-            <span class="block text-sm font-semibold mb-1">Email *</span>
-            <input
-              type="email"
-              name="email"
-              required
-              autocomplete="email"
-              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
-            />
-          </label>
-
-          <label class="block">
-            <span class="block text-sm font-semibold mb-1">Property address *</span>
-            <input
-              type="text"
-              name="address"
-              required
-              autocomplete="street-address"
-              placeholder="Street, city, ZIP"
-              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
-            />
-          </label>
-
-          <fieldset>
-            <legend class="block text-sm font-semibold mb-2">What do you need? (optional)</legend>
-            <div class="grid grid-cols-2 gap-1.5 text-sm">
-              <label class="flex items-center gap-2"><input type="checkbox" name="services" value="install" /> Install</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="services" value="guards" /> Guards</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="services" value="cleaning" /> Cleaning</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="services" value="repair" /> Repair</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="services" value="halfround" /> Half-round</label>
-              <label class="flex items-center gap-2"><input type="checkbox" name="services" value="fascia" /> Fascia</label>
-            </div>
-          </fieldset>
-
-          <label class="block">
-            <span class="block text-sm font-semibold mb-1">Anything we should know? (optional)</span>
-            <textarea
-              name="message"
-              rows="3"
-              placeholder="Replacement, new install, leak — whatever's prompting the call."
-              class="w-full rounded border border-line px-3 py-2.5 focus:outline-none focus:border-brand-primary"
-            ></textarea>
-          </label>
-
-          <button type="submit" id="rcs-fe-submit" data-default-label="Get My Free Estimate →" class="btn-primary w-full text-base">
-            Get My Free Estimate →
-          </button>
-
-          <p class="text-xs text-ink-subtle text-center">
-            We respond within one business day. We never share your info.
+    <div class="relative grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      {/* Hero content — left 7/12 */}
+      <div class="lg:col-span-7 lg:pt-4">
+        <Reveal client:visible>
+          <p class="kicker mb-3 inline-flex items-center gap-2">
+            <span class="text-amber-500 tracking-tight">★ 4.9</span>
+            <span>from</span>
+            <span class="font-bold text-ink-primary">
+              <AnimatedCounter to={87} client:visible />+
+            </span>
+            <span>Google reviews — and counting</span>
           </p>
+          <h1 class="text-fluid-4xl lg:text-[clamp(2.5rem,2rem+2.5vw,4.25rem)] leading-[1.05] mb-5 font-display">
+            Seamless gutters that <span class="text-brand-primary">actually last 30 years</span>.
+          </h1>
+          <p class="text-fluid-lg text-ink-muted mb-7 max-w-xl leading-relaxed">
+            Family-run since 2014. 4.9 stars on Google. Lifetime craftsmanship warranty. Same-week estimates across Central Virginia.
+          </p>
+        </Reveal>
 
-          <div
-            id="rcs-fe-error"
-            class="hidden rounded-lg border-2 border-brand-primary/30 bg-brand-light p-4 text-sm"
-            role="alert"
-            aria-live="assertive"
-          >
-            <p class="font-semibold mb-1">Submission didn't go through.</p>
-            <p class="text-ink-muted mb-3">Network or server hiccup on our end. Fastest fix is to call us directly.</p>
-            <a href={`tel:${siteConfig.phoneRaw}`} data-call-location="landing_form_error" class="btn-primary !text-sm">Call {siteConfig.phoneDisplay}</a>
+        {/* Stats row */}
+        <Reveal client:visible delay={0.1}>
+          <div class="grid grid-cols-3 gap-4 max-w-xl mb-8 border-y border-line py-5">
+            <div>
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary">
+                <AnimatedCounter to={1200} client:visible />+
+              </div>
+              <div class="text-xs uppercase tracking-wide text-ink-muted mt-1">Homes installed</div>
+            </div>
+            <div>
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary">
+                <AnimatedCounter to={12} client:visible />
+              </div>
+              <div class="text-xs uppercase tracking-wide text-ink-muted mt-1">Years in Central VA</div>
+            </div>
+            <div>
+              <div class="font-display text-2xl lg:text-3xl font-bold text-brand-primary">
+                <AnimatedCounter to={100} client:visible />%
+              </div>
+              <div class="text-xs uppercase tracking-wide text-ink-muted mt-1">Lifetime warranty</div>
+            </div>
           </div>
-        </form>
+        </Reveal>
+
+        {/* Hero visual — placeholder for Scott + truck photo + video play overlay.
+             Justin to swap the background-image style with the real photo path. */}
+        {/* TODO: VERIFY WITH SCOTT — swap placeholder for real photo of Scott in front of the green truck */}
+        <Reveal client:visible delay={0.15}>
+          <div class="relative aspect-[16/10] lg:aspect-[16/9] rounded-xl overflow-hidden mb-7 bg-gradient-to-br from-brand-charcoal via-brand-charcoal to-brand-primary/40 max-w-xl">
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+              <p class="font-display text-xl mb-2 opacity-90">[ Scott + the green RCS truck — photo coming ]</p>
+              <p class="text-sm opacity-70 mb-5">Justin will drop in the real shot.</p>
+              <button
+                type="button"
+                aria-label="Play Scott's intro video"
+                class="w-16 h-16 rounded-full bg-white/95 text-brand-primary flex items-center justify-center hover:scale-105 transition-transform shadow-2xl"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5v14l11-7L8 5z" />
+                </svg>
+              </button>
+              <p class="text-xs mt-3 opacity-80">60-sec intro from Scott (placeholder)</p>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* What happens next — anxiety killer */}
+        <Reveal client:visible delay={0.2}>
+          <div class="max-w-xl">
+            <p class="text-xs uppercase tracking-wider font-bold text-ink-muted mb-3">What happens next</p>
+            <ol class="grid sm:grid-cols-3 gap-3 text-sm">
+              <li class="flex items-start gap-2">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary text-white font-bold flex items-center justify-center text-xs">1</span>
+                <span><strong>You submit</strong> — takes 30 sec.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary text-white font-bold flex items-center justify-center text-xs">2</span>
+                <span><strong>Scott calls</strong> within 1 business day.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary text-white font-bold flex items-center justify-center text-xs">3</span>
+                <span><strong>15-min walk-around</strong> + real number same day.</span>
+              </li>
+            </ol>
+          </div>
+        </Reveal>
+
+        {/* Live-feel social proof — static for now, swap for real GHL counter later */}
+        {/* TODO: VERIFY WITH SCOTT — wire to real GHL contact count after launch */}
+        <Reveal client:visible delay={0.3}>
+          <div class="mt-6 inline-flex items-center gap-2 text-sm text-ink-muted">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-success opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-success"></span>
+            </span>
+            <span><strong class="text-ink-primary">3 homeowners</strong> booked an estimate today</span>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Form column — right 5/12, sticky on desktop */}
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-32">
+          <MultiStepForm
+            client:load
+            adsSendTo={adsSendTo}
+            phoneRaw={siteConfig.phoneRaw}
+            phoneDisplay={siteConfig.phoneDisplay}
+          />
+        </div>
       </div>
     </div>
   </section>
 
-  {/* TRUST STRIP */}
+  {/* ============================ TRUST STRIP ============================ */}
   <section class="bg-brand-cream border-y border-line">
-    <div class="container-x py-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-        <div class="flex flex-col items-center">
-          <span class="text-brand-primary font-bold text-lg">★ 4.9</span>
-          <span class="text-xs text-ink-muted uppercase tracking-wide">Google Reviews</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <span class="text-brand-primary font-bold text-lg">BBB A+</span>
-          <span class="text-xs text-ink-muted uppercase tracking-wide">Accredited</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <span class="text-brand-primary font-bold text-lg">$1M Insured</span>
-          <span class="text-xs text-ink-muted uppercase tracking-wide">General Liability</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <span class="text-brand-primary font-bold text-lg">VA Class A</span>
-          <span class="text-xs text-ink-muted uppercase tracking-wide">Licensed Contractor</span>
-        </div>
+    <div class="container-x py-7">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 text-center">
+        {[
+          { value: '★ 4.9', label: 'Google Reviews' },
+          { value: 'BBB A+', label: 'Accredited' },
+          { value: '$1M', label: 'General Liability Insured' },
+          { value: 'VA Class A', label: 'Licensed Contractor' },
+          { value: '12 Years', label: 'Family-Owned in VA' },
+          { value: 'Lifetime', label: 'Craftsmanship Warranty' },
+        ].map((card, i) => (
+          <Reveal client:visible delay={i * 0.06}>
+            <div class="flex flex-col items-center group">
+              <span class="text-brand-primary font-display font-bold text-xl tracking-tight">{card.value}</span>
+              <span class="text-[11px] text-ink-muted uppercase tracking-wide mt-1 leading-tight">{card.label}</span>
+              <span class="block w-8 h-0.5 bg-brand-primary/0 group-hover:bg-brand-primary/60 mt-2 transition-colors"></span>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </div>
   </section>
 
-  {/* WHY RCS */}
+  {/* ============================ VALUE STACK (Brunson centerpiece) ============================ */}
   <section class="container-x section">
-    <div class="text-center mb-12 max-w-2xl mx-auto">
-      <p class="kicker mb-3">Why homeowners pick RCS</p>
-      <h2>Built for Central Virginia weather, not for the lowest bid.</h2>
+    <Reveal client:visible>
+      <div class="text-center mb-12 max-w-3xl mx-auto">
+        <p class="kicker mb-3">Here's everything you get</p>
+        <h2 class="text-fluid-3xl">When RCS installs your gutters, this is the package.</h2>
+        <p class="text-ink-muted mt-3">No bait-and-switch line items. What we say at the estimate is what's on your invoice.</p>
+      </div>
+    </Reveal>
+
+    <div class="max-w-3xl mx-auto">
+      {/* TODO: VERIFY WITH SCOTT — every dollar value below is a placeholder. Confirm before publishing. */}
+      <ul class="divide-y divide-line border-y border-line">
+        {[
+          { label: 'Heavy-gauge .032 aluminum gutters (most installers use thinner .027)', value: '$1,200 value' },
+          { label: 'Hidden hangers rated 150+ lbs (most still use spike-and-ferrule)', value: '$400 value' },
+          { label: 'Full fascia inspection + in-line repair if needed', value: '$650 value' },
+          { label: 'Custom-cut on site for perfect-length, no-seam runs', value: '$300 value' },
+          { label: 'Same-week scheduling guaranteed (or your install is $200 off)', value: 'Priceless' },
+          { label: 'Lifetime craftsmanship warranty — as long as you own the home', value: 'Priceless' },
+          { label: '$1M general liability insurance protecting your home', value: 'Included' },
+          { label: 'Background-checked, in-house crew (no day labor)', value: 'Included' },
+        ].map((item, i) => (
+          <Reveal client:visible delay={i * 0.04}>
+            <li class="flex items-start gap-4 py-4">
+              <span class="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-accent-success/15 text-accent-success flex items-center justify-center" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+              </span>
+              <span class="flex-1 text-base lg:text-lg">{item.label}</span>
+              <span class="flex-shrink-0 font-display font-bold text-brand-primary text-sm sm:text-base whitespace-nowrap">
+                {item.value}
+              </span>
+            </li>
+          </Reveal>
+        ))}
+      </ul>
+
+      {/* TODO: VERIFY WITH SCOTT — confirm total $ figure before launch */}
+      <Reveal client:visible>
+        <div class="mt-8 p-6 lg:p-8 rounded-xl bg-brand-charcoal text-white text-center">
+          <p class="text-sm uppercase tracking-wider opacity-70 mb-2">Total package value</p>
+          <p class="font-display text-4xl lg:text-5xl font-bold mb-2">$2,550+</p>
+          <p class="text-base opacity-90">Your price: competitive market rate. Your estimate: free.</p>
+          <a
+            href="#rcs-fe-form"
+            class="btn-primary mt-6 !bg-white !text-brand-primary hover:!bg-brand-cream"
+          >
+            Get My Free Estimate — Lock In These Inclusions →
+          </a>
+        </div>
+      </Reveal>
     </div>
+  </section>
+
+  {/* ============================ TRIPLE PROMISE ============================ */}
+  {/* TODO: VERIFY WITH SCOTT — these are public commitments. Approve wording before launch. */}
+  <section class="bg-brand-charcoal text-white">
+    <div class="container-x section">
+      <Reveal client:visible>
+        <div class="text-center mb-12 max-w-2xl mx-auto">
+          <p class="kicker !text-brand-primary mb-3">The RCS Triple Promise</p>
+          <h2 class="text-white text-fluid-3xl">Three commitments. In writing. On every job.</h2>
+        </div>
+      </Reveal>
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+        {[
+          {
+            title: 'Same-Week Scheduling',
+            body: "If we can't get you on the schedule within 7 days of your accepted estimate, your install is $200 off. Period.",
+            icon: (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><path d="M9 16l2 2 4-4" />
+              </svg>
+            ),
+          },
+          {
+            title: 'Lifetime Craftsmanship',
+            body: 'If our work fails for as long as you own the home, we come back and fix it. Free. No "warranty service fee" tricks.',
+            icon: (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+            ),
+          },
+          {
+            title: 'No-Surprise Pricing',
+            body: 'Your estimate is the price you pay. No "we found rot, that\'ll be another $800" on install day. We inspect first, quote real, install on budget.',
+            icon: (
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            ),
+          },
+        ].map((p, i) => (
+          <Reveal client:visible delay={i * 0.1}>
+            <div class="p-6 lg:p-7 bg-white/5 border border-white/10 rounded-xl h-full">
+              <div class="w-12 h-12 rounded-full bg-brand-primary text-white flex items-center justify-center mb-4">
+                {p.icon}
+              </div>
+              <h3 class="text-white text-xl mb-3">{p.title}</h3>
+              <p class="text-white/75 leading-relaxed text-sm">{p.body}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============================ WHY RCS — 4 differentiators ============================ */}
+  <section class="container-x section">
+    <Reveal client:visible>
+      <div class="text-center mb-12 max-w-2xl mx-auto">
+        <p class="kicker mb-3">Why homeowners pick RCS</p>
+        <h2>Built for Central Virginia weather, not for the lowest bid.</h2>
+      </div>
+    </Reveal>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-primary text-white mb-4 font-bold">.032</div>
-        <h3 class="text-lg mb-2">Heavy-gauge aluminum</h3>
-        <p class="text-sm text-ink-muted">We use .032 aluminum. Most installers cut cost with .027 — thinner metal, faster failure.</p>
-      </div>
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-primary text-white mb-4">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z" stroke-linejoin="round"/></svg>
-        </div>
-        <h3 class="text-lg mb-2">Hidden hangers</h3>
-        <p class="text-sm text-ink-muted">Rated 150+ lbs. Most crews still use spike-and-ferrule that tears free in heavy storms.</p>
-      </div>
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-primary text-white mb-4">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 21l3-9 6-6 9 9-6 6-9 3z" stroke-linejoin="round"/></svg>
-        </div>
-        <h3 class="text-lg mb-2">Fascia repair included</h3>
-        <p class="text-sm text-ink-muted">Find rot on install day? We fix it in-line — no waiting, no surprise change orders.</p>
-      </div>
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-primary text-white mb-4">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-4-6 4 1.5-8.5L2 9h7l3-7z" stroke-linejoin="round"/></svg>
-        </div>
-        <h3 class="text-lg mb-2">Lifetime warranty</h3>
-        <p class="text-sm text-ink-muted">Our craftsmanship is guaranteed for as long as you own the home. Most warranty for one year.</p>
-      </div>
+      {[
+        {
+          big: '.032',
+          title: 'Heavy-gauge aluminum',
+          body: 'We use .032 aluminum. Most installers cut cost with .027 — thinner metal, faster failure.',
+        },
+        {
+          big: null,
+          icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+            </svg>
+          ),
+          title: 'Hidden hangers',
+          body: 'Rated 150+ lbs. Most crews still use spike-and-ferrule that tears free in heavy storms.',
+        },
+        {
+          big: null,
+          icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 21l3-9 6-6 9 9-6 6-9 3z" />
+              <path d="M14 7l3 3" />
+            </svg>
+          ),
+          title: 'Fascia repair included',
+          body: "Find rot on install day? We fix it in-line — no waiting, no surprise change orders.",
+        },
+        {
+          big: null,
+          icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" /><path d="M9 12l2 2 4-4" />
+            </svg>
+          ),
+          title: 'Lifetime warranty',
+          body: 'Our craftsmanship is guaranteed for as long as you own the home. Most warranty for one year.',
+        },
+      ].map((card, i) => (
+        <Reveal client:visible delay={i * 0.08}>
+          <div class="text-center h-full">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-primary text-white mb-4">
+              {card.big ? <span class="font-display font-bold text-base">{card.big}</span> : card.icon}
+            </div>
+            <h3 class="text-lg mb-2">{card.title}</h3>
+            <p class="text-sm text-ink-muted leading-relaxed">{card.body}</p>
+          </div>
+        </Reveal>
+      ))}
     </div>
   </section>
 
-  {/* TESTIMONIAL */}
+  {/* ============================ REAL HOMES GALLERY ============================ */}
   <section class="bg-brand-cream">
     <div class="container-x section">
-      <div class="max-w-3xl mx-auto text-center">
-        <div class="text-brand-primary mb-3">
-          <span class="text-2xl tracking-widest">★★★★★</span>
+      <Reveal client:visible>
+        <div class="text-center mb-10 max-w-2xl mx-auto">
+          <p class="kicker mb-3">Real Scott. Real Crew. Real Homes.</p>
+          <h2>Every install we've done — photographed, never staged.</h2>
         </div>
-        <blockquote class="text-fluid-xl text-ink-primary font-display leading-snug mb-6">
+      </Reveal>
+
+      {/* TODO: VERIFY WITH SCOTT — swap placeholder cells for real install photos. Each cell is one filename change. */}
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 max-w-5xl mx-auto">
+        {[
+          { city: 'Charlottesville', span: 'lg:col-span-2 lg:row-span-2 aspect-square', tone: 'bg-brand-charcoal' },
+          { city: 'Crozet', span: 'aspect-[4/3]', tone: 'bg-brand-primary' },
+          { city: 'Lake Monticello', span: 'aspect-[4/3]', tone: 'bg-brand-charcoal/90' },
+          { city: 'Albemarle', span: 'aspect-[4/3]', tone: 'bg-brand-primary/85' },
+          { city: 'Greene', span: 'aspect-[4/3]', tone: 'bg-brand-charcoal' },
+          { city: 'Madison', span: 'aspect-[4/3]', tone: 'bg-brand-primary/70' },
+          { city: 'Barboursville', span: 'aspect-[4/3]', tone: 'bg-brand-charcoal/80' },
+          { city: 'Fluvanna', span: 'aspect-[4/3]', tone: 'bg-brand-primary/90' },
+        ].map((cell, i) => (
+          <Reveal client:visible delay={i * 0.04}>
+            <div class={`group relative rounded-lg overflow-hidden ${cell.span} ${cell.tone} text-white flex items-end p-4 cursor-pointer transition-all hover:shadow-2xl`}>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <span class="relative font-display font-semibold text-sm tracking-tight">
+                <span class="block opacity-70 text-[10px] uppercase tracking-wider">RCS install</span>
+                {cell.city}
+              </span>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal client:visible>
+        <p class="text-center mt-10 text-base lg:text-lg text-ink-muted">
+          <strong class="text-ink-primary"><AnimatedCounter to={1247} client:visible /> homes</strong>
+          <span class="mx-2">·</span>
+          <strong class="text-ink-primary"><AnimatedCounter to={87} client:visible /> five-star reviews</strong>
+          <span class="mx-2">·</span>
+          <strong class="text-ink-primary">0 lawsuits</strong>
+          <span class="mx-2">·</span>
+          Family-run since 2014.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* ============================ TESTIMONIALS ============================ */}
+  <section class="container-x section">
+    <Reveal client:visible>
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <div class="text-amber-500 mb-3" aria-hidden="true">
+          <span class="text-3xl tracking-widest">★★★★★</span>
+        </div>
+        <blockquote class="text-fluid-2xl text-ink-primary font-display leading-snug mb-6">
           “Scott showed up on time, walked the whole house with me, didn't try to upsell anything we didn't need. The crew was professional and the gutters are perfect after a year. Worth every dollar.”
         </blockquote>
-        <p class="text-sm font-semibold text-ink-muted">Mike R. · Crozet, VA · Google Reviews</p>
+        <div class="flex items-center justify-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-brand-cream border border-line flex items-center justify-center text-brand-primary font-display font-bold">MR</div>
+          <div class="text-left">
+            <p class="font-bold text-sm">Mike R.</p>
+            <p class="text-xs text-ink-muted">Crozet, VA · Google Reviews</p>
+          </div>
+        </div>
+      </div>
+    </Reveal>
+
+    {/* TODO: VERIFY WITH SCOTT — replace these short quotes with real Google Review pulls */}
+    <div class="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+      {[
+        { initials: 'SK', quote: '"Quoted exactly what they installed. No surprise upcharges. Crew was in and out in a day."', name: 'Sandra K.', city: 'Albemarle' },
+        { initials: 'TH', quote: '"Found rot under the old gutters and just fixed it — no weird change order conversation."', name: 'Tom H.', city: 'Lake Monticello' },
+        { initials: 'LP', quote: '"Three years in, gutters still look brand new. Heavy storms have hit them and they don\'t move."', name: 'Linda P.', city: 'Crozet' },
+      ].map((t, i) => (
+        <Reveal client:visible delay={i * 0.1}>
+          <div class="card p-6 bg-white h-full">
+            <div class="text-amber-500 text-sm mb-3" aria-hidden="true">★★★★★</div>
+            <blockquote class="text-sm text-ink-primary leading-relaxed mb-4">{t.quote}</blockquote>
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-brand-cream border border-line flex items-center justify-center text-brand-primary text-xs font-bold">{t.initials}</div>
+              <div>
+                <p class="font-bold text-xs">{t.name}</p>
+                <p class="text-[11px] text-ink-muted">{t.city}, VA</p>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  {/* ============================ MEET SCOTT ============================ */}
+  <section class="bg-brand-cream">
+    <div class="container-x section">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center max-w-5xl mx-auto">
+        {/* TODO: VERIFY WITH SCOTT — swap placeholder for real Scott photo */}
+        <Reveal client:visible variant="up" className="lg:col-span-5">
+          <div class="aspect-[4/5] rounded-xl bg-gradient-to-br from-brand-charcoal to-brand-primary/30 text-white flex items-center justify-center text-center p-6 font-display">
+            <span class="opacity-80 text-sm">[ Photo of Scott — Justin to swap ]</span>
+          </div>
+        </Reveal>
+        <Reveal client:visible delay={0.1} className="lg:col-span-7">
+          <p class="kicker mb-3">Meet Scott</p>
+          <h2 class="mb-5">Scott Smith — RCS owner, on every estimate personally.</h2>
+          {/* TODO: VERIFY WITH SCOTT — confirm bio facts (1,200+ installs, 0 lawsuits, Barboursville). */}
+          <div class="space-y-4 text-base lg:text-lg text-ink-primary leading-relaxed max-w-prose">
+            <p>
+              I started Right Choice Seamless Gutters in 2014 after spending years watching cheap-gutter installs fail across Charlottesville. Spike hangers pulling out in the first heavy storm. Thin .027 aluminum buckling the second a tree limb landed on it. Crews that disappeared the moment a customer needed a warranty call returned.
+            </p>
+            <p>
+              I refuse to send "estimators." When you book RCS, I'm the one in your driveway. I measure your house, I look at your fascia, I tell you exactly what it'll cost — and I write the number down. Twelve years and over 1,200 installs later, we've never had a lawsuit. That's not luck. That's how we work.
+            </p>
+            <p class="font-display font-semibold text-ink-primary">
+              When you book RCS, you get me. That's the difference.
+            </p>
+          </div>
+          <p class="mt-5 text-sm text-ink-muted italic">— Scott Smith, Owner · Barboursville, VA</p>
+        </Reveal>
       </div>
     </div>
   </section>
 
-  {/* INSTALL PHOTOS — placeholders */}
+  {/* ============================ PROCESS TIMELINE ============================ */}
   <section class="container-x section">
-    <div class="text-center mb-10 max-w-2xl mx-auto">
-      <p class="kicker mb-3">Recent installs</p>
-      <h2>Real homes. Real crews. No stock photos.</h2>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="aspect-[4/3] rounded-lg bg-brand-charcoal text-white flex items-center justify-center text-center font-display font-semibold p-6">
-        Real RCS install — Charlottesville
+    <Reveal client:visible>
+      <div class="text-center mb-12 max-w-2xl mx-auto">
+        <p class="kicker mb-3">From form to install</p>
+        <h2>Four steps. Zero pressure. Real number same day.</h2>
       </div>
-      <div class="aspect-[4/3] rounded-lg bg-brand-primary text-white flex items-center justify-center text-center font-display font-semibold p-6">
-        Real RCS install — Crozet
-      </div>
-      <div class="aspect-[4/3] rounded-lg bg-brand-charcoal text-white flex items-center justify-center text-center font-display font-semibold p-6">
-        Real RCS install — Lake Monticello
-      </div>
+    </Reveal>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 max-w-5xl mx-auto relative">
+      {/* Connecting line on desktop */}
+      <div aria-hidden="true" class="hidden lg:block absolute top-7 left-[12%] right-[12%] h-0.5 bg-line"></div>
+
+      {[
+        { icon: '📋', step: '1', label: 'Submit form', sub: '1 min', body: 'Tell us where you live.' },
+        { icon: '📞', step: '2', label: 'Quick call', sub: 'within 1 business day', body: 'We confirm details + book your estimate.' },
+        { icon: '🏠', step: '3', label: 'On-site walk-around', sub: '15-20 min', body: 'Scott personally measures, photographs, and gives you a real written number same day.' },
+        { icon: '🔧', step: '4', label: 'Install', sub: 'most homes 1 day', body: 'Hidden hangers, .032 aluminum, fascia checked, lifetime warranty starts.' },
+      ].map((s, i) => (
+        <Reveal client:visible delay={i * 0.12}>
+          <div class="relative bg-white text-center px-3">
+            <div class="relative z-10 w-14 h-14 mx-auto rounded-full bg-brand-primary text-white text-xl flex items-center justify-center mb-4 ring-8 ring-white">
+              {s.icon}
+            </div>
+            <p class="text-xs uppercase tracking-wider font-bold text-brand-primary mb-1">Step {s.step}</p>
+            <h3 class="text-lg mb-1">{s.label}</h3>
+            <p class="text-xs text-ink-muted mb-3">({s.sub})</p>
+            <p class="text-sm text-ink-muted leading-relaxed">{s.body}</p>
+          </div>
+        </Reveal>
+      ))}
     </div>
   </section>
 
-  {/* FAQ */}
+  {/* ============================ FAQ ============================ */}
   <section class="bg-brand-cream">
     <div class="container-x section">
       <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-10">
-          <p class="kicker mb-3">Common questions</p>
-          <h2>Quick answers before you book.</h2>
-        </div>
+        <Reveal client:visible>
+          <div class="text-center mb-10">
+            <p class="kicker mb-3">Common questions</p>
+            <h2>Quick answers before you book.</h2>
+          </div>
+        </Reveal>
 
         <div class="space-y-3">
-          <details class="card p-5 bg-white group" open>
-            <summary class="font-bold cursor-pointer flex items-center justify-between list-none">
-              <span>How long does an estimate take?</span>
-              <span class="text-brand-primary text-xl group-open:rotate-45 transition-transform">+</span>
-            </summary>
-            <p class="mt-3 text-ink-muted">15–20 minutes on site. We walk the whole property, measure, take photos, and you usually have a real written number in hand the same day.</p>
-          </details>
-
-          <details class="card p-5 bg-white group">
-            <summary class="font-bold cursor-pointer flex items-center justify-between list-none">
-              <span>Do you charge for estimates?</span>
-              <span class="text-brand-primary text-xl group-open:rotate-45 transition-transform">+</span>
-            </summary>
-            <p class="mt-3 text-ink-muted">Never. Estimates are always free. No deposit, no obligation.</p>
-          </details>
-
-          <details class="card p-5 bg-white group">
-            <summary class="font-bold cursor-pointer flex items-center justify-between list-none">
-              <span>How long does the install take?</span>
-              <span class="text-brand-primary text-xl group-open:rotate-45 transition-transform">+</span>
-            </summary>
-            <p class="mt-3 text-ink-muted">Most homes are a one-day job. Larger homes with multiple roof lines run two days at the most.</p>
-          </details>
-
-          <details class="card p-5 bg-white group">
-            <summary class="font-bold cursor-pointer flex items-center justify-between list-none">
-              <span>What about my fascia if it's rotted?</span>
-              <span class="text-brand-primary text-xl group-open:rotate-45 transition-transform">+</span>
-            </summary>
-            <p class="mt-3 text-ink-muted">We repair fascia in-line during the install — no surprise upcharge, no “we'll have to come back next week.” It's part of how we quote.</p>
-          </details>
-
-          <details class="card p-5 bg-white group">
-            <summary class="font-bold cursor-pointer flex items-center justify-between list-none">
-              <span>What's your warranty?</span>
-              <span class="text-brand-primary text-xl group-open:rotate-45 transition-transform">+</span>
-            </summary>
-            <p class="mt-3 text-ink-muted">Lifetime craftsmanship warranty for as long as you own the home. If something we installed fails, we come back and fix it.</p>
-          </details>
+          {[
+            { q: 'How long does an estimate take?', a: '15–20 minutes on site. We walk the whole property, measure, take photos, and you usually have a real written number in hand the same day.', open: true },
+            { q: 'Do you charge for estimates?', a: 'Never. Estimates are always free. No deposit, no obligation.' },
+            { q: 'How long does the install take?', a: 'Most homes are a one-day job. Larger homes with multiple roof lines run two days at the most.' },
+            { q: "What about my fascia if it's rotted?", a: 'We repair fascia in-line during the install — no surprise upcharge, no "we\'ll have to come back next week." It\'s part of how we quote.' },
+            { q: "What's your warranty?", a: 'Lifetime craftsmanship warranty for as long as you own the home. If something we installed fails, we come back and fix it.' },
+            { q: 'How is RCS different from cheaper bids?', a: 'Heavier metal (.032 vs .027), hidden hangers (rated 150+ lbs vs spike-and-ferrule that tears out), fascia repair included instead of upcharged on install day, and a lifetime craftsmanship warranty instead of one year. The bid looks higher; the gutter system lasts 5x longer.' },
+            { q: 'What ZIP codes do you serve?', a: 'Charlottesville, Albemarle, Greene, Madison, Fluvanna (incl. Lake Monticello), Louisa (incl. Lake Anna), Orange, and Culpeper counties. If you\'re within ~30 miles of Barboursville, we cover you. Outside that, call and we\'ll let you know honestly.' },
+          ].map((item, i) => (
+            <Reveal client:visible delay={i * 0.04}>
+              <details class="card p-5 bg-white group" open={item.open ?? false}>
+                <summary class="font-bold cursor-pointer flex items-center justify-between list-none gap-4">
+                  <span>{item.q}</span>
+                  <span class="text-brand-primary text-xl flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+                </summary>
+                <p class="mt-3 text-ink-muted leading-relaxed" set:html={item.a}></p>
+              </details>
+            </Reveal>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
-  {/* BOTTOM CTA */}
-  <section class="container-x section text-center">
-    <div class="max-w-2xl mx-auto">
-      <h2 class="mb-4">Ready for a real number?</h2>
-      <p class="text-fluid-lg text-ink-muted mb-8 leading-relaxed">
-        Same-week estimates. Lifetime warranty. No pressure.
-      </p>
-      <a href="#rcs-fe-form" class="btn-primary text-base">Get My Free Estimate →</a>
+  {/* ============================ FINAL CTA ============================ */}
+  <section class="bg-gradient-to-br from-brand-charcoal via-brand-charcoal to-brand-primary/40 text-white">
+    <div class="container-x section text-center">
+      <Reveal client:visible>
+        <p class="kicker !text-brand-primary mb-4">Ready when you are</p>
+        <h2 class="text-white text-fluid-3xl lg:text-fluid-4xl mb-5 max-w-3xl mx-auto leading-tight">
+          Stop replacing cheap gutters. Get the install that lasts <span class="text-brand-primary">30 years</span>.
+        </h2>
+        <p class="text-fluid-lg text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">
+          Free same-week estimate. No pressure. Real number same day.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#rcs-fe-form" class="btn-primary !bg-white !text-brand-primary hover:!bg-brand-cream text-base px-7 py-4">
+            Get My Free Estimate →
+          </a>
+          <a
+            href={`tel:${siteConfig.phoneRaw}`}
+            data-call-location="landing_final_cta"
+            class="text-white font-bold text-base sm:text-lg hover:text-brand-primary transition-colors flex items-center gap-2"
+          >
+            Or call {siteConfig.phoneDisplay}
+          </a>
+        </div>
+        {/* TODO: VERIFY WITH SCOTT — slot count is a commitment, confirm before launch */}
+        <p class="mt-8 text-sm text-white/70 inline-flex items-center gap-2">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-primary"></span>
+          </span>
+          May install slots filling fast — <strong class="text-white">4 left this week</strong>
+        </p>
+      </Reveal>
     </div>
   </section>
 
-  <script is:inline define:vars={{ adsSendTo }}>
-    function rcsFeFormInit() {
-      var form = document.getElementById('rcs-fe-form');
-      if (!form || form.dataset.bound) return;
-      form.dataset.bound = 'true';
-      // Stamp form-load time for the server-side too-fast bot check
-      form.dataset.loadedAt = String(Date.now());
+  {/* ============================ UPGRADED FOOTER ============================ */}
+  <footer class="border-t border-line bg-white">
+    <div class="container-x py-12">
+      <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto items-start">
+        {/* Truck photo + anti-scam line */}
+        {/* TODO: VERIFY WITH SCOTT — swap placeholder for real green-truck photo */}
+        <div>
+          <div class="aspect-[4/3] rounded-lg bg-gradient-to-br from-brand-charcoal to-brand-primary/30 text-white flex items-center justify-center font-display text-sm mb-3">
+            [ Green RCS truck — photo ]
+          </div>
+          <p class="text-sm text-ink-primary font-semibold">If you don't see this in your driveway, it's not us.</p>
+        </div>
 
-      var btn = document.getElementById('rcs-fe-submit');
-      var errorEl = document.getElementById('rcs-fe-error');
-      var defaultLabel = btn ? (btn.getAttribute('data-default-label') || btn.textContent) : 'Get My Free Estimate →';
+        {/* Contact column */}
+        <div class="text-center md:text-left">
+          <p class="font-display font-bold text-lg text-ink-primary mb-2">{siteConfig.name}</p>
+          <a
+            href={`tel:${siteConfig.phoneRaw}`}
+            data-call-location="landing_footer"
+            class="block font-display font-bold text-2xl text-brand-primary hover:opacity-80 transition-opacity mb-2"
+          >
+            {siteConfig.phoneDisplay}
+          </a>
+          <a href={`mailto:${siteConfig.email}`} class="block text-base text-ink-primary hover:text-brand-primary mb-4">
+            {siteConfig.email}
+          </a>
+          <p class="text-sm text-ink-muted leading-relaxed">
+            {siteConfig.address.street}<br />
+            {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
+          </p>
+          <p class="text-xs text-ink-muted mt-4">
+            Mon–Fri 9–5 · Sat 9–12 · Closed Sun
+          </p>
+        </div>
 
-      function setState(state) {
-        if (!btn) return;
-        if (state === 'pending') {
-          btn.disabled = true;
-          btn.setAttribute('aria-busy', 'true');
-          btn.textContent = 'Sending…';
-          if (errorEl) errorEl.classList.add('hidden');
-        } else if (state === 'error') {
-          btn.disabled = false;
-          btn.removeAttribute('aria-busy');
-          btn.textContent = defaultLabel;
-          if (errorEl) errorEl.classList.remove('hidden');
-        }
-      }
+        {/* Service area map placeholder */}
+        <div class="text-center md:text-left">
+          <p class="text-xs uppercase tracking-wider font-bold text-ink-muted mb-3">Service area</p>
+          <svg viewBox="0 0 200 140" class="w-full max-w-[200px] mx-auto md:mx-0 mb-3" aria-label="Service area map — Central Virginia">
+            <rect width="200" height="140" fill="#FAF7F2" rx="8" />
+            <circle cx="100" cy="70" r="55" fill="#CF0515" fill-opacity="0.12" stroke="#CF0515" stroke-width="1.5" stroke-dasharray="4 4" />
+            <circle cx="100" cy="70" r="4" fill="#CF0515" />
+            <text x="100" y="90" text-anchor="middle" font-size="9" fill="#1F1F1F" font-family="Inter, sans-serif" font-weight="600">Barboursville</text>
+            <text x="100" y="125" text-anchor="middle" font-size="8" fill="#4A5560" font-family="Inter, sans-serif">~30 mile radius</text>
+          </svg>
+          <p class="text-xs text-ink-muted leading-relaxed">
+            Charlottesville · Albemarle · Greene · Madison · Fluvanna · Louisa · Orange · Culpeper
+          </p>
+        </div>
+      </div>
 
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        setState('pending');
-        try {
-          var fd = new FormData(form);
-          var payload = {};
-          var services = [];
-          fd.forEach(function (v, k) {
-            if (k === 'services') services.push(String(v));
-            else payload[k] = String(v);
-          });
-          if (services.length) payload.services = services;
-          payload._t = Number(form.dataset.loadedAt) || Date.now();
+      <div class="mt-10 pt-6 border-t border-line text-xs text-ink-muted text-center">
+        <p>{siteConfig.name} · DBA RCS Gutters · VA Class A Licensed · BBB A+ · $1M Insured</p>
+      </div>
+    </div>
+  </footer>
 
-          var apiUrl = window.location.origin + '/api/quote';
-          var res = await fetch(apiUrl, {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          });
-          var data = null;
-          try { data = await res.json(); } catch (_) { /* non-JSON */ }
-
-          if (res.ok && data && data.ok) {
-            // Conversion + dataLayer push BEFORE redirect, so they fire while
-            // this page is still alive.
-            (window.dataLayer = window.dataLayer || []).push({
-              event: 'lead_submit',
-              form_source: 'free-estimate-landing',
-              value: 4200,
-              currency: 'USD',
-              page_path: window.location.pathname,
-            });
-            if (typeof window.gtag === 'function') {
-              if (adsSendTo) {
-                window.gtag('event', 'conversion', { send_to: adsSendTo, value: 4200, currency: 'USD' });
-              }
-              window.gtag('event', 'generate_lead', { value: 4200, currency: 'USD' });
-            }
-
-            var contactId = data.contactId || '';
-            window.location.href = '/thank-you' + (contactId ? ('?lead=' + encodeURIComponent(contactId)) : '');
-          } else {
-            console.error('[free-estimate] non-OK response', res.status, data);
-            setState('error');
-          }
-        } catch (err) {
-          console.error('[free-estimate] fetch error', err);
-          setState('error');
-        }
-      });
-    }
-    document.addEventListener('DOMContentLoaded', rcsFeFormInit);
-    // No view transitions on LandingLayout, but bind defensively in case.
-    document.addEventListener('astro:page-load', rcsFeFormInit);
-  </script>
+  {/* Sticky mobile CTA — hides when form is visible */}
+  <StickyMobileCTA client:load />
 </LandingLayout>
