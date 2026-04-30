@@ -1,0 +1,27 @@
+---
+// GA4 + Google Ads gtag bootstrap. GTM is wired separately in BaseLayout +
+// LandingLayout (the same container as the legacy WordPress site, hardcoded in
+// siteConfig). This file ONLY adds direct gtag.js for GA4 + Ads conversions
+// when their env vars are set — useful for landing pages that want to fire
+// `conversion` and `generate_lead` events without depending on GTM tag setup.
+//
+// Renders nothing when both env vars are empty, so dev / preview pages stay
+// clean and the site continues to function without any tracking configured.
+const ga4Id = import.meta.env.PUBLIC_GA4_ID || '';
+const adsId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
+const primaryId = ga4Id || adsId;
+---
+
+{primaryId && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${primaryId}`}></script>
+    <script is:inline define:vars={{ ga4Id, adsId }}>
+      {`window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        if (ga4Id) gtag('config', ga4Id, { send_page_view: true });
+        if (adsId) gtag('config', adsId);`}
+    </script>
+  </>
+)}
