@@ -198,6 +198,8 @@ import { siteConfig } from '../config/site';
 <script is:inline>
   // Submit /api/quote via fetch, swap to inline success/error state.
   // Bind once per page, re-bind on Astro view-transition swaps.
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
   function rcsQuoteFormInit() {
     var form = document.getElementById('rcs-quote-form');
     if (!form || form.dataset.bound) return;
@@ -208,7 +210,54 @@ import { siteConfig } from '../config/site';
     var btn = document.getElementById('rcs-quote-submit');
     var successEl = document.getElementById('rcs-quote-success');
     var errorEl = document.getElementById('rcs-quote-error');
+    var errorBodyEl = errorEl ? errorEl.querySelector('p:nth-of-type(2)') : null;
     var defaultLabel = btn ? (btn.getAttribute('data-default-label') || btn.textContent) : 'Send Quote Request';
+
+    // Field-level error rendering. Looks up the input by `name`, walks up to
+    // its enclosing label/wrapper, drops a small red message under it, and
+    // marks the input red. Cleared when the user starts editing.
+    function clearAllFieldErrors() {
+      form.querySelectorAll('.field-error').forEach(function (n) { n.remove(); });
+      form.querySelectorAll('[data-field-errored]').forEach(function (input) {
+        input.classList.remove('border-red-500');
+        input.removeAttribute('data-field-errored');
+        input.removeAttribute('aria-invalid');
+      });
+    }
+
+    function setFieldError(fieldName, msg) {
+      var input = form.querySelector('[name="' + fieldName + '"]');
+      if (!input) return;
+      var wrap = input.closest('label') || input.parentElement;
+      if (!wrap) return;
+      var existing = wrap.querySelector('.field-error');
+      if (existing) existing.remove();
+      var el = document.createElement('div');
+      el.className = 'field-error text-sm text-red-600 mt-1';
+      el.setAttribute('role', 'alert');
+      el.textContent = msg;
+      wrap.appendChild(el);
+      input.classList.add('border-red-500');
+      input.setAttribute('data-field-errored', 'true');
+      input.setAttribute('aria-invalid', 'true');
+    }
+
+    // Wire onInput on every input so its field error clears as soon as the
+    // user starts fixing it. One handler bound once.
+    form.addEventListener('input', function (e) {
+      var input = e.target;
+      if (!input || !input.name) return;
+      if (input.getAttribute('data-field-errored')) {
+        var wrap = input.closest('label') || input.parentElement;
+        if (wrap) {
+          var existing = wrap.querySelector('.field-error');
+          if (existing) existing.remove();
+        }
+        input.classList.remove('border-red-500');
+        input.removeAttribute('data-field-errored');
+        input.removeAttribute('aria-invalid');
+      }
+    });
 
     function setState(state) {
       if (!btn) return;
@@ -224,8 +273,6 @@ import { siteConfig } from '../config/site';
         btn.textContent = defaultLabel;
         if (successEl) successEl.classList.remove('hidden');
         if (errorEl) errorEl.classList.add('hidden');
-        // Push a conversion event GTM can map to a Google Ads form-submit
-        // conversion (separate from the phone-call conversion).
         (window.dataLayer = window.dataLayer || []).push({
           event: 'quote_form_submit',
           page_path: window.location.pathname,
@@ -239,16 +286,38 @@ import { siteConfig } from '../config/site';
       }
     }
 
+    function showErrorBanner(msg) {
+      if (errorBodyEl && msg) errorBodyEl.textContent = msg;
+      setState('error');
+    }
+
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      clearAllFieldErrors();
+
+      // Client-side validation pass — same rules as the server. Catches the
+      // common bad-email case before the API round-trip and gives the user a
+      // field-level message.
+      var clientErrs = {};
+      var nameVal = ((form.elements['name'] && form.elements['name'].value) || '').trim();
+      var phoneVal = ((form.elements['phone'] && form.elements['phone'].value) || '').trim();
+      var emailVal = ((form.elements['email'] && form.elements['email'].value) || '').trim();
+      var addressVal = ((form.elements['address'] && form.elements['address'].value) || '').trim();
+      if (!nameVal) clientErrs.name = 'Name is required';
+      if (!phoneVal) clientErrs.phone = 'Phone is required';
+      else if (phoneVal.replace(/\D/g, '').length < 10) clientErrs.phone = 'Please enter a 10-digit phone number';
+      if (!emailVal) clientErrs.email = 'Email is required';
+      else if (!EMAIL_RE.test(emailVal)) clientErrs.email = 'Please enter a valid email address';
+      if (!addressVal) clientErrs.address = 'Property address is required';
+      if (Object.keys(clientErrs).length) {
+        Object.keys(clientErrs).forEach(function (k) { setFieldError(k, clientErrs[k]); });
+        var firstBadInput = form.querySelector('[data-field-errored]');
+        if (firstBadInput) firstBadInput.focus();
+        return;
+      }
+
       setState('pending');
       try {
-        // Send JSON, not FormData. Astro's default CSRF protection rejects
-        // multipart/form-data POSTs whose Origin header doesn't match the
-        // destination host (which happens whenever a customer lands on the
-        // apex rcsgutters.com — it 308s to www but the browser keeps the
-        // apex Origin). JSON content-type isn't a "simple form" type per the
-        // CSRF spec, so it's exempt.
         var fd = new FormData(form);
         var payload = {};
         var services = [];
@@ -257,7 +326,6 @@ import { siteConfig } from '../config/site';
           else payload[k] = String(v);
         });
         if (services.length) payload.services = services;
-        // Time-based bot check: server rejects if delta < 1500ms.
         payload._t = Number(form.dataset.loadedAt) || Date.now();
         var apiUrl = window.location.origin + '/api/quote';
         var res = await fetch(apiUrl, {
@@ -270,12 +338,33 @@ import { siteConfig } from '../config/site';
         if (res.ok && data && data.ok) {
           setState('success');
           form.reset();
-          // Scroll the success card into view in case it's below the fold
           if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-          console.error('[quote] non-OK response', res.status, data);
-          setState('error');
+          return;
         }
+
+        // Server-side validation: surface per-field errors instead of the
+        // generic "Submission didn't go through" banner.
+        if (data && data.error === 'validation_failed' && data.fields) {
+          Object.keys(data.fields).forEach(function (k) { setFieldError(k, String(data.fields[k])); });
+          var firstBad = form.querySelector('[data-field-errored]');
+          if (firstBad) firstBad.focus();
+          // Reset button state without showing the big red error card.
+          if (btn) {
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+            btn.textContent = defaultLabel;
+          }
+          return;
+        }
+
+        // GHL itself rejected a field. Show the detail in the banner.
+        if (data && data.error === 'ghl_validation' && data.detail) {
+          showErrorBanner('One of the fields needs another look: ' + data.detail);
+          return;
+        }
+
+        console.error('[quote] non-OK response', res.status, data);
+        showErrorBanner('Couldn’t submit just now. The fastest path is to call us directly.');
       } catch (err) {
         console.error('[quote] fetch error', err);
         setState('error');

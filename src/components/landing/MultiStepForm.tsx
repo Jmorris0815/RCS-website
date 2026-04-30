@@ -18,12 +18,15 @@ const SERVICE_OPTIONS: Array<{ value: string; label: string }> = [
   { value: 'fascia', label: 'Fascia' },
 ];
 
+// Mirrors the regex in /api/quote.ts so the client and server agree.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 type Step = 1 | 2;
 type Status = 'idle' | 'pending' | 'error';
 
 /**
- * Two-step lead form. Step 1 gathers name + ZIP (low friction → "Continue").
- * Step 2 gathers phone, email, address, services, message → POST /api/quote.
+ * Two-step lead form. Step 1 gathers name + ZIP. Step 2 gathers phone, email,
+ * address, services, message → POST /api/quote.
  *
  * The CRITICAL behavior preserved from the original single-step form:
  *   - Server-side time-based bot check via `_t` (form-load timestamp)
@@ -36,6 +39,10 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
   const [step, setStep] = useState<Step>(1);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // Per-field error messages (server-returned validation OR client-side checks).
+  // Cleared on the next keystroke in that field so we don't yell at the user
+  // while they're fixing it.
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const loadedAt = useRef<number>(Date.now());
 
   const [name, setName] = useState('');
@@ -46,14 +53,32 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
   const [services, setServices] = useState<string[]>([]);
   const [message, setMessage] = useState('');
 
-  // Bind the load timestamp on first mount only — re-renders shouldn't
-  // reset the value the server uses for the bot check.
   useEffect(() => {
     loadedAt.current = Date.now();
   }, []);
 
+  // Helper: clear a single field's error (call from onChange so it disappears
+  // as soon as the user starts fixing it).
+  const clearFieldError = (field: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
+
   const goToStep2 = () => {
-    if (!name.trim() || !postalCode.trim()) return;
+    const errs: Record<string, string> = {};
+    if (!name.trim()) errs.name = 'Name is required';
+    const zipDigits = postalCode.trim().replace(/\D/g, '');
+    if (!postalCode.trim()) errs.postalCode = 'ZIP code is required';
+    else if (zipDigits.length < 5) errs.postalCode = 'Please enter a valid ZIP';
+    if (Object.keys(errs).length) {
+      setFieldErrors(errs);
+      return;
+    }
+    setFieldErrors({});
     setStep(2);
   };
 
@@ -63,10 +88,23 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone.trim() || !email.trim() || !address.trim()) return;
+
+    // Client-side validation pass — same rules as the server. Catches the
+    // common cases before we burn an API round-trip.
+    const errs: Record<string, string> = {};
+    if (!phone.trim()) errs.phone = 'Phone is required';
+    else if (phone.replace(/\D/g, '').length < 10) errs.phone = 'Please enter a 10-digit phone number';
+    if (!email.trim()) errs.email = 'Email is required';
+    else if (!EMAIL_RE.test(email.trim())) errs.email = 'Please enter a valid email address';
+    if (!address.trim()) errs.address = 'Property address is required';
+    if (Object.keys(errs).length) {
+      setFieldErrors(errs);
+      return;
+    }
 
     setStatus('pending');
     setErrorMessage(null);
+    setFieldErrors({});
 
     const payload = {
       name: name.trim(),
@@ -112,12 +150,28 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
         return;
       }
 
+      // Server-side field validation — surface per-field errors in the form.
+      if (data?.error === 'validation_failed' && data?.fields && typeof data.fields === 'object') {
+        setFieldErrors(data.fields as Record<string, string>);
+        setStatus('idle');
+        return;
+      }
+
+      // GHL itself rejected a field (e.g. malformed email it caught even
+      // though our regex passed). Show the detail in the inline banner so
+      // the user knows which field to fix.
+      if (data?.error === 'ghl_validation' && typeof data?.detail === 'string') {
+        setStatus('error');
+        setErrorMessage(`One of the fields needs another look: ${data.detail}`);
+        return;
+      }
+
       console.error('[free-estimate] non-OK response', res.status, data);
       setStatus('error');
       setErrorMessage(
         data?.error === 'too_fast'
           ? 'Whoa — that was quick. Take a breath and submit again, or call us directly.'
-          : 'Submission didn’t go through. The fastest fix is to call us.',
+          : "Couldn't submit just now. The fastest path is to call us — we'll get you scheduled.",
       );
     } catch (err) {
       console.error('[free-estimate] fetch error', err);
@@ -126,8 +180,21 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
     }
   };
 
-  const inputClass =
-    'w-full rounded-lg border border-line px-3.5 py-3 text-base focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition';
+  const inputBase =
+    'w-full rounded-lg border px-3.5 py-3 text-base focus:outline-none focus:ring-2 transition';
+  const inputClass = (field: string) =>
+    `${inputBase} ${
+      fieldErrors[field]
+        ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+        : 'border-line focus:border-brand-primary focus:ring-brand-primary/20'
+    }`;
+
+  const FieldError = ({ field }: { field: string }) =>
+    fieldErrors[field] ? (
+      <div className="text-sm text-red-600 mt-1" role="alert" aria-live="polite">
+        {fieldErrors[field]}
+      </div>
+    ) : null;
 
   return (
     <form
@@ -142,7 +209,6 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
           Step <span className="font-bold text-brand-primary">{step}</span> of 2 ·
           <span className="ml-1">Takes 30 seconds.</span>
         </p>
-        {/* Progress dots */}
         <div className="mt-3 flex justify-center gap-1.5" aria-hidden="true">
           <span className={`h-1.5 rounded-full transition-all duration-300 ${step === 1 ? 'w-8 bg-brand-primary' : 'w-2 bg-line-dark'}`} />
           <span className={`h-1.5 rounded-full transition-all duration-300 ${step === 2 ? 'w-8 bg-brand-primary' : 'w-2 bg-line-dark'}`} />
@@ -167,9 +233,11 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
                   required
                   autoComplete="name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => { setName(e.target.value); clearFieldError('name'); }}
+                  className={inputClass('name')}
+                  aria-invalid={!!fieldErrors.name}
                 />
+                <FieldError field="name" />
               </label>
               <label className="block">
                 <span className="block text-sm font-semibold mb-1">ZIP code</span>
@@ -180,15 +248,16 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
                   maxLength={10}
                   autoComplete="postal-code"
                   value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => { setPostalCode(e.target.value); clearFieldError('postalCode'); }}
+                  className={inputClass('postalCode')}
+                  aria-invalid={!!fieldErrors.postalCode}
                 />
+                <FieldError field="postalCode" />
               </label>
               <button
                 type="button"
                 onClick={goToStep2}
-                disabled={!name.trim() || !postalCode.trim()}
-                className="btn-primary w-full text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary w-full text-base"
               >
                 Continue →
               </button>
@@ -222,9 +291,11 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
                   required
                   autoComplete="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => { setPhone(e.target.value); clearFieldError('phone'); }}
+                  className={inputClass('phone')}
+                  aria-invalid={!!fieldErrors.phone}
                 />
+                <FieldError field="phone" />
               </label>
 
               <label className="block">
@@ -234,9 +305,11 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
                   required
                   autoComplete="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => { setEmail(e.target.value); clearFieldError('email'); }}
+                  className={inputClass('email')}
+                  aria-invalid={!!fieldErrors.email}
                 />
+                <FieldError field="email" />
               </label>
 
               <label className="block">
@@ -247,9 +320,11 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
                   autoComplete="street-address"
                   placeholder="Street, city"
                   value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => { setAddress(e.target.value); clearFieldError('address'); }}
+                  className={inputClass('address')}
+                  aria-invalid={!!fieldErrors.address}
                 />
+                <FieldError field="address" />
               </label>
 
               <fieldset>
@@ -288,7 +363,7 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
                   placeholder="Replacement, new install, leak — whatever's prompting the call."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className={inputClass}
+                  className={inputBase + ' border-line focus:border-brand-primary focus:ring-brand-primary/20'}
                 />
               </label>
 
