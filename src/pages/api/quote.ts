@@ -260,6 +260,37 @@ export const POST: APIRoute = async ({ request }) => {
     }
   }
 
+  // Required-field validation BEFORE we hit GHL. If we let GHL reject a bad
+  // email it returns a 422 and our fallback path may not be configured —
+  // resulting in a lost lead. Validate here so the form can highlight the
+  // problem field cleanly instead of showing a generic error.
+  const fieldErrors: Record<string, string> = {};
+
+  const fullNameForValidation = (body.name || `${body.firstName || ''} ${body.lastName || ''}`).trim();
+  if (!fullNameForValidation) fieldErrors.name = 'Name is required';
+
+  const phoneDigits = (body.phone || '').replace(/\D/g, '');
+  if (!phoneDigits) fieldErrors.phone = 'Phone is required';
+  else if (phoneDigits.length < 10) fieldErrors.phone = 'Please enter a 10-digit phone number';
+
+  const emailVal = (body.email || '').trim();
+  // Pragmatic email regex: requires local@domain.tld, no spaces, TLD ≥ 2 chars.
+  // Rejects "Google Ads", "asdf", missing TLD, etc. Doesn't try to catch every
+  // edge case — server is the safety net; GHL still gets the final say.
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailVal) fieldErrors.email = 'Email is required';
+  else if (!EMAIL_RE.test(emailVal)) fieldErrors.email = 'Please enter a valid email address';
+
+  const addressVal = (body.address || '').trim();
+  if (!addressVal) fieldErrors.address = 'Property address is required';
+
+  if (Object.keys(fieldErrors).length) {
+    return corsJson(
+      { ok: false, error: 'validation_failed', fields: fieldErrors },
+      { status: 400 },
+    );
+  }
+
   const { firstName, lastName } = splitName(body.name || '', body.firstName, body.lastName);
   const phone = toE164(body.phone || '');
   const email = (body.email || '').trim();
@@ -375,6 +406,22 @@ export const POST: APIRoute = async ({ request }) => {
       // Log non-OK status for ops visibility (Vercel function logs)
       const errText = await ghlRes.text().catch(() => '<no body>');
       console.error('[quote] GHL non-OK', ghlRes.status, errText.slice(0, 500));
+
+      // 422 = GHL validation error (e.g. malformed email that slipped through
+      // our pre-check, or a field GHL didn't like). Surface the problem field
+      // to the form instead of falling through to the unconfigured fallback.
+      if (ghlRes.status === 422) {
+        let ghlMsg = 'One of the fields needs another look.';
+        try {
+          const j = JSON.parse(errText);
+          if (Array.isArray(j?.message) && j.message.length) ghlMsg = j.message.join(' · ');
+          else if (typeof j?.message === 'string') ghlMsg = j.message;
+        } catch {}
+        return corsJson(
+          { ok: false, error: 'ghl_validation', detail: ghlMsg },
+          { status: 400 },
+        );
+      }
     } catch (err) {
       console.error('[quote] GHL fetch error', err);
     }
@@ -418,6 +465,24 @@ export const POST: APIRoute = async ({ request }) => {
     console.error('[quote] WEB3FORMS_KEY missing — fallback unavailable');
   }
 
+  // Last resort: log the full lead so it can be recovered from Vercel logs
+  // even if both GHL and Web3Forms paths failed. We'd rather have ops noise
+  // than a lost lead — Justin can scrape this line from logs to manually
+  // recover any leads that fell through during a GHL outage.
+  console.error('[quote] ALERT_LOST_LEAD', JSON.stringify({
+    firstName,
+    lastName,
+    email,
+    phone,
+    address1,
+    city,
+    services,
+    message,
+    source,
+    formSource: body.formSource || null,
+    ts: new Date().toISOString(),
+  }));
+
   // Both failed — surface this so the client UI can show a phone-call CTA.
   return corsJson(
     { ok: false, error: 'delivery_failed', message: 'Lead delivery failed; please call us directly.' },
@@ -442,4 +507,8 @@ export const GET: APIRoute = async () =>
     pipeline_id_present: !!import.meta.env.GHL_PIPELINE_ID,
     stage_id_resolved: !!resolvedStageId,
     web3forms_key_present: !!import.meta.env.WEB3FORMS_KEY,
+    // Flip this to false once Justin sets WEB3FORMS_KEY in Vercel — until
+    // then, GHL outages mean lost leads (only the ALERT_LOST_LEAD log line
+    // can recover them).
+    web3forms_recommended: !import.meta.env.WEB3FORMS_KEY,
   });
