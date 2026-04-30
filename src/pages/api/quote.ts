@@ -33,7 +33,12 @@ interface QuoteBody {
   _t?: number | string;
 }
 
-const GHL_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/';
+// Contacts: we POST to /contacts/upsert (not /contacts/) so a duplicate
+// phone/email returns the existing contact id instead of a 400. Without this,
+// duplicate submitters land on /thank-you but never get an opportunity created
+// → W1 never fires → silent lead loss. Critical with the 8k-contact GHL import.
+const GHL_CREATE_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/';
+const GHL_UPSERT_ENDPOINT = 'https://services.leadconnectorhq.com/contacts/upsert';
 const GHL_OPPORTUNITIES_ENDPOINT = 'https://services.leadconnectorhq.com/opportunities/';
 const GHL_PIPELINES_ENDPOINT = 'https://services.leadconnectorhq.com/opportunities/pipelines';
 const GHL_VERSION = '2021-07-28';
@@ -44,6 +49,67 @@ const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 let resolvedStageId: string | null = null;
 let resolvedStageIdAt = 0;
 const STAGE_CACHE_TTL_MS = 60 * 60 * 1000; // 1h — pipelines change rarely
+
+// Always create an opportunity after the contact is upserted — for both new
+// contacts AND re-submits of existing contacts. This is what fires W1
+// (Scott + Myriam alert). Best-effort: any failure logs and we still return
+// success because the contact already landed; ops can recover from the log.
+async function createOpportunity(
+  contactId: string,
+  ghlToken: string,
+  ghlLocationId: string,
+  contactName: string,
+): Promise<void> {
+  const pipelineId = import.meta.env.GHL_PIPELINE_ID;
+  if (!pipelineId) {
+    console.warn('[quote] GHL_PIPELINE_ID env var missing — skipping opportunity creation');
+    return;
+  }
+
+  const stageId = await resolveNewLeadStageId(ghlToken, ghlLocationId, pipelineId);
+  if (!stageId) {
+    console.warn('[quote] Could not resolve "New Lead" stage ID — skipping opportunity');
+    return;
+  }
+
+  try {
+    const oppRes = await fetch(GHL_OPPORTUNITIES_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${ghlToken}`,
+        'Content-Type': 'application/json',
+        'Version': GHL_VERSION,
+      },
+      body: JSON.stringify({
+        locationId: ghlLocationId,
+        pipelineId,
+        pipelineStageId: stageId,
+        name: `${contactName || 'Web Lead'} — Web Form`,
+        status: 'open',
+        contactId,
+        monetaryValue: 0,
+        source: 'Website Lead Form',
+      }),
+    });
+
+    if (!oppRes.ok) {
+      const errText = await oppRes.text().catch(() => '<no body>');
+      // GHL refuses to create a second open opportunity for the same contact
+      // ("Can not create duplicate opportunity for the contact"). This is
+      // expected behavior when a contact resubmits while their previous opp
+      // is still open — Scott has already been alerted on the existing one
+      // and the timeline note above records the resubmit. Log at INFO level
+      // so it doesn't clutter ops alerting.
+      if (oppRes.status === 400 && /duplicate opportunity/i.test(errText)) {
+        console.log('[quote] Opportunity already open for contact', contactId, '— skipped (resubmit, note added to timeline)');
+      } else {
+        console.error('[quote] Opportunity create failed', oppRes.status, errText.slice(0, 500));
+      }
+    }
+  } catch (err) {
+    console.error('[quote] Opportunity create threw', err);
+  }
+}
 
 async function resolveNewLeadStageId(token: string, locationId: string, pipelineId: string): Promise<string | null> {
   if (resolvedStageId && Date.now() - resolvedStageIdAt < STAGE_CACHE_TTL_MS) {
@@ -247,7 +313,7 @@ export const POST: APIRoute = async ({ request }) => {
       // Drop undefined for a cleaner request
       Object.keys(ghlPayload).forEach((k) => ghlPayload[k] === undefined && delete ghlPayload[k]);
 
-      const ghlRes = await fetch(GHL_ENDPOINT, {
+      const ghlRes = await fetch(GHL_UPSERT_ENDPOINT, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${ghlToken}`,
@@ -258,92 +324,57 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
       if (ghlRes.ok) {
-        // Capture contact id once; reused by both the timeline-note step and
-        // the new opportunity-create step below.
-        let contactId: string | undefined;
+        const created = await ghlRes.json().catch(() => null);
+        const contactId: string | undefined = created?.contact?.id;
+        // Upsert response includes `new: true` for fresh contacts and
+        // `new: false` (or omits it) when matching an existing record.
+        const wasExisting = created?.new === false;
+
+        if (!contactId) {
+          console.error('[quote] GHL upsert returned 200 but no contact.id', JSON.stringify(created).slice(0, 300));
+          return corsJson({ ok: false, error: 'no_contact_id' }, { status: 502 });
+        }
+
+        // Timeline note — runs for both new and existing contacts. Resubmits
+        // get an extra marker line so Scott can tell them apart on the
+        // contact's activity timeline. Best-effort.
         try {
-          const created = await ghlRes.clone().json().catch(() => null);
-          contactId = created?.contact?.id;
-        } catch {}
-
-        // Fire a follow-up note so the services list + customer message land at
-        // the top of the contact's timeline (the customField alone only shows on
-        // the contact detail panel). Best-effort — failure here doesn't fail
-        // the user-facing submission.
-        if (contactId) {
-          try {
-            const noteLines: string[] = [];
-            if (servicesNeeded) noteLines.push(`Services requested: ${servicesNeeded}`);
-            if (message) noteLines.push('', message);
-            if (noteLines.length) {
-              await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${ghlToken}`,
-                  'Content-Type': 'application/json',
-                  'Version': GHL_VERSION,
-                },
-                body: JSON.stringify({ body: noteLines.join('\n') }),
-              }).catch((err) => console.error('[quote] GHL note POST failed', err));
-            }
-          } catch (err) {
-            console.error('[quote] post-create note step errored', err);
+          const noteLines: string[] = [];
+          if (servicesNeeded) noteLines.push(`Services requested: ${servicesNeeded}`);
+          if (message) noteLines.push('', message);
+          if (wasExisting) noteLines.push('', '(Resubmitted via web form — existing contact)');
+          if (noteLines.length) {
+            await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${ghlToken}`,
+                'Content-Type': 'application/json',
+                'Version': GHL_VERSION,
+              },
+              body: JSON.stringify({ body: noteLines.join('\n') }),
+            }).catch((err) => console.error('[quote] GHL note POST failed', err));
           }
+        } catch (err) {
+          console.error('[quote] post-create note step errored', err);
         }
 
-        // Drop an opportunity into the RCS Sales Pipeline at "New Lead". This
-        // is what fires the W1 lead-notification workflow (Scott + Myriam
-        // alert). Best-effort: any failure logs and we still return success
-        // because the contact already landed — that's the bar.
-        if (contactId && ghlPipelineId) {
-          try {
-            const stageId = await resolveNewLeadStageId(ghlToken, ghlLocationId, ghlPipelineId);
-            if (stageId) {
-              const oppName = `${[firstName, lastName].filter(Boolean).join(' ').trim() || email || phone || 'Web Lead'} — Web Lead`;
-              const oppPayload = {
-                locationId: ghlLocationId,
-                pipelineId: ghlPipelineId,
-                pipelineStageId: stageId,
-                name: oppName,
-                status: 'open',
-                contactId,
-                monetaryValue: 0,
-                source: 'Website Lead Form',
-              };
-              const oppRes = await fetch(GHL_OPPORTUNITIES_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${ghlToken}`,
-                  'Content-Type': 'application/json',
-                  'Version': GHL_VERSION,
-                },
-                body: JSON.stringify(oppPayload),
-              });
-              if (!oppRes.ok) {
-                const errText = await oppRes.text().catch(() => '<no body>');
-                console.error('[quote] GHL opportunity create non-OK', oppRes.status, errText.slice(0, 500));
-              }
-            } else {
-              console.error('[quote] could not resolve New Lead stage id — opportunity skipped');
-            }
-          } catch (err) {
-            console.error('[quote] opportunity create errored', err);
-          }
-        } else if (!ghlPipelineId) {
-          console.warn('[quote] GHL_PIPELINE_ID missing — opportunity create skipped (contact still created)');
-        }
+        // CRITICAL: opportunity is created for BOTH new and existing contacts.
+        // Every submit gets a fresh opportunity in "New Lead" stage, which
+        // fires W1 (Scott + Myriam alert).
+        const fullName = [firstName, lastName].filter(Boolean).join(' ').trim()
+          || email || phone || 'Web Lead';
+        await createOpportunity(contactId, ghlToken, ghlLocationId, fullName);
 
-        return corsJson({ ok: true, source: 'ghl', contactId });
+        return corsJson({
+          ok: true,
+          source: 'ghl',
+          contactId,
+          duplicate: wasExisting,
+        });
       }
       // Log non-OK status for ops visibility (Vercel function logs)
       const errText = await ghlRes.text().catch(() => '<no body>');
       console.error('[quote] GHL non-OK', ghlRes.status, errText.slice(0, 500));
-      // GHL rejects duplicate contacts (same phone or email) with 400. From
-      // the customer's POV their info reached us — treat as success so they
-      // don't see a scary error for legitimately re-submitting their details.
-      if (ghlRes.status === 400 && /duplicated|matchingField/i.test(errText)) {
-        return corsJson({ ok: true, source: 'ghl', duplicate: true });
-      }
     } catch (err) {
       console.error('[quote] GHL fetch error', err);
     }
