@@ -130,6 +130,13 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
 
       if (res.ok && data && data.ok) {
         const w = window as any;
+        const contactId = data.contactId || '';
+        const thankYouUrl = '/thank-you' + (contactId ? `?lead=${encodeURIComponent(contactId)}` : '');
+        const goToThankYou = () => {
+          window.location.href = thankYouUrl;
+        };
+
+        // Fire generate_lead and dataLayer push first — they don't gate the redirect.
         w.dataLayer = w.dataLayer || [];
         w.dataLayer.push({
           event: 'lead_submit',
@@ -139,14 +146,32 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
           page_path: '/free-estimate',
         });
         if (typeof w.gtag === 'function') {
-          if (adsSendTo) {
-            w.gtag('event', 'conversion', { send_to: adsSendTo, value: 4200, currency: 'USD' });
-          }
           w.gtag('event', 'generate_lead', { value: 4200, currency: 'USD' });
         }
 
-        const contactId = data.contactId || '';
-        window.location.href = '/thank-you' + (contactId ? `?lead=${encodeURIComponent(contactId)}` : '');
+        // Fire the Ads conversion with event_callback so the redirect waits
+        // for the beacon to actually depart. Without this, the synchronous
+        // navigation cancels the in-flight request to googleads.g.doubleclick.net
+        // and the conversion never reaches Google — which is why "RCS Lead Form
+        // Submit" stayed Inactive in Google Ads since 2026-04-29.
+        if (typeof w.gtag === 'function' && adsSendTo) {
+          let redirected = false;
+          const safeRedirect = () => {
+            if (redirected) return;
+            redirected = true;
+            goToThankYou();
+          };
+          w.gtag('event', 'conversion', {
+            send_to: adsSendTo,
+            value: 4200,
+            currency: 'USD',
+            event_callback: safeRedirect,
+          });
+          // Fallback: ad blocker, network glitch, or gtag never confirms — go anyway.
+          setTimeout(safeRedirect, 2000);
+        } else {
+          goToThankYou();
+        }
         return;
       }
 
