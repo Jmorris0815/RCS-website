@@ -7,6 +7,17 @@ interface MultiStepFormProps {
   /** Phone number to surface in the error fallback CTA. */
   phoneRaw: string;
   phoneDisplay: string;
+  /**
+   * Tag attached to the GHL contact + analytics events so we can segment
+   * which page the lead came from. Defaults to the original /free-estimate
+   * value so existing usage is unchanged.
+   */
+  formSource?: string;
+  /**
+   * page_path sent on the dataLayer `lead_submit` event. Defaults to the
+   * original /free-estimate value so existing usage is unchanged.
+   */
+  pagePath?: string;
 }
 
 const SERVICE_OPTIONS: Array<{ value: string; label: string }> = [
@@ -35,7 +46,13 @@ type Status = 'idle' | 'pending' | 'error';
  *     then redirect to /thank-you?lead=<contactId>
  *   - `formSource: 'free-estimate-landing'` tag (becomes a GHL contact tag)
  */
-export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }: MultiStepFormProps) {
+export default function MultiStepForm({
+  adsSendTo = '',
+  phoneRaw,
+  phoneDisplay,
+  formSource = 'free-estimate-landing',
+  pagePath = '/free-estimate',
+}: MultiStepFormProps) {
   const [step, setStep] = useState<Step>(1);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -115,7 +132,7 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
       state: 'VA',
       services,
       message: message.trim(),
-      formSource: 'free-estimate-landing',
+      formSource,
       _t: loadedAt.current,
     };
 
@@ -140,10 +157,10 @@ export default function MultiStepForm({ adsSendTo = '', phoneRaw, phoneDisplay }
         w.dataLayer = w.dataLayer || [];
         w.dataLayer.push({
           event: 'lead_submit',
-          form_source: 'free-estimate-landing',
+          form_source: formSource,
           value: 4200,
           currency: 'USD',
-          page_path: '/free-estimate',
+          page_path: pagePath,
         });
         if (typeof w.gtag === 'function') {
           w.gtag('event', 'generate_lead', { value: 4200, currency: 'USD' });
