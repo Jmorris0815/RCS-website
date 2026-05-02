@@ -24,6 +24,11 @@ export default defineConfig({
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
+      // /thank-you/ is post-conversion (already noindex but pollutes the
+      // sitemap), and /quote/ is the deprecated form route being phased out
+      // in favor of /free-estimate/. Neither belongs in the sitemap submitted
+      // to Google Search Console.
+      filter: (page) => !page.includes('/thank-you/') && !page.includes('/quote/'),
     }),
   ],
   build: {
