@@ -1,0 +1,611 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picture from '../../components/Picture.astro';
+import MultiStepForm from '../../components/landing/MultiStepForm.tsx';
+import Reveal from '../../components/landing/Reveal.tsx';
+import { siteConfig } from '../../config/site';
+
+// Pre-resolved at build so the React island gets the value as a string prop.
+const adsConvId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
+const adsConvLabel = import.meta.env.PUBLIC_GADS_CONVERSION_LABEL || '';
+const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '';
+
+// The 3 Leaf Solution products RCS installs. Hard-coded here (not pulled from
+// the content collection) so the comparison data on this hub stays in lockstep
+// with the marketing copy and doesn't drift if a sub-page is edited. Sub-pages
+// at /products/<slug>/ remain the source of truth for deep product detail.
+const products = [
+  {
+    slug: 'new-wave-gutter-guard',
+    name: 'New Wave Gutter Guard',
+    tier: 'Smart-Value',
+    tierClass: 'standard',
+    oneLiner: 'Punched aluminum panel for hardwood-debris homes — the right pick when stainless micro-mesh is more than the job needs.',
+    image: '/images/products/leafsolution/new-wave/installed-fall-wide.jpg',
+    imageAlt: 'New Wave punched-aluminum gutter guard installed on a shingle roof with fall trees in the background',
+    gpm: '40 GPM',
+    warranty: '20-year limited',
+    material: 'Punched aluminum panel',
+    colors: 'Bronze',
+    bestFor: 'Oak, maple, tulip poplar — low or no pine',
+    install: 'Mounts under shingle, fastened to gutter front',
+    snow: 'Rigid panel — sheds snow load reliably',
+    fineDebris: 'Blocks leaves, twigs, animals — small grit can pass',
+    priceRange: '$1,000 – $2,500',
+    priceTier: '$',
+    bullets: [
+      'Hardwood canopies (oak, maple, tulip poplar, redbud)',
+      'Newer subdivisions where pine is essentially absent',
+      'Bronze-trim homes — the finish disappears',
+      'Customers who want real protection at a lower price point',
+    ],
+    avoidIf: "Your lot has heavy pine, sycamore bark, or eyebrow-level architectural visibility where the bronze finish would clash.",
+  },
+  {
+    slug: 'xtreme-gutter-guard',
+    name: 'Xtreme Gutter Guard',
+    tier: 'Premium · Most Installed',
+    tierClass: 'premium',
+    oneLiner: 'Surgical-grade stainless steel micro-mesh on an aluminum frame — the workhorse for pine-heavy and mixed-debris properties.',
+    image: '/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg',
+    imageAlt: 'Xtreme stainless steel micro-mesh gutter guard installed at an outside corner miter on a Central Virginia home',
+    gpm: '60 GPM',
+    warranty: '25-year limited',
+    material: 'Stainless steel micro-mesh on aluminum frame',
+    colors: 'Mill (silver), Black',
+    bestFor: 'Pine-heavy and mixed properties (Greene, lake areas)',
+    install: 'Mesh bonded to aluminum frame, mounts to gutter top',
+    snow: 'Aluminum frame keeps mesh flat under snow',
+    fineDebris: 'Sheds pine needles, pollen, roof grit, sycamore bark',
+    priceRange: '$1,500 – $3,500',
+    priceTier: '$$',
+    bullets: [
+      'Pine concentration anywhere on the lot (loblolly, white pine, cedar)',
+      'Sycamore, hickory, walnut, oak — finer particulate',
+      'Lake-area properties with mixed debris all year',
+      'Customers who want the longest run between rinses',
+    ],
+    avoidIf: "Your home is fully open with no overhanging trees — guards are usually unnecessary, and a cleaning subscription costs less.",
+  },
+  {
+    slug: 'evelyns-leaf-solution',
+    name: "Evelyn's Leaf Solution",
+    tier: 'Architectural Flagship',
+    tierClass: 'luxury',
+    oneLiner: 'Patented capillary-dip micro-mesh in six color choices — the architectural pick when the gutter line is at eye level.',
+    image: '/images/products/leafsolution/evelyns/installed-fall-hero.jpg',
+    imageAlt: "Evelyn's Leaf Solution capillary-dip panel installed on a shingle roof, fall trees behind",
+    gpm: '60 GPM',
+    warranty: '25-year limited (transferable)',
+    material: 'Capillary-dip stainless micro-mesh',
+    colors: 'Mill, Black, Bronze, Brown, White, Custom',
+    bestFor: 'High-visibility rooflines, HOA color rules, heavy pollen',
+    install: 'Capillary-dip leading edge, color-matched to trim',
+    snow: 'Engineered for snow load and high-wind environments',
+    fineDebris: 'Best-in-class — sheds pollen, fines, and roof grit',
+    priceRange: '$2,000 – $4,500',
+    priceTier: '$$$',
+    bullets: [
+      'Single-story homes where the gutter line is at guest eye level',
+      'HOAs or design boards that push back on visible silver mesh',
+      'Vineyards, custom builds, architect-designed retreats',
+      'Properties pairing with half-round or architectural gutter installs',
+    ],
+    avoidIf: "Your project is budget-driven and a cheaper product handles your debris mix. We don't recommend Evelyn's just because it costs more.",
+  },
+];
+
+// FAQ — written long-hand for this page. Schema markup mirrors what's visible
+// on the page so we don't trip Helpful Content's "FAQ schema with no FAQ" flag.
+const faqs = [
+  {
+    q: 'Do gutter guards eliminate cleaning entirely?',
+    a: 'Honest answer: no. They eliminate the dangerous part — climbing a ladder to scoop a gutter trough full of wet debris. With Xtreme or Evelyn\'s, you may still want an annual top-rinse to clear pollen film and roof grit off the mesh. With New Wave on a hardwood lot, most homeowners go years between any maintenance at all. We\'ll tell you which category your house falls into.',
+  },
+  {
+    q: 'Will guards damage my roof or void the roofing warranty?',
+    a: 'No. Our installs are gutter-mounted — we don\'t lift shingles, don\'t fasten into the roof deck, don\'t touch the underlayment. If a competing installer wants to slide their guard up under your shingles, ask them in writing whether their method is permitted by your specific shingle manufacturer. Most aren\'t.',
+  },
+  {
+    q: 'How do guards handle Central Virginia oak pollen and tree debris?',
+    a: 'It depends on which product. Oak catkins and tulip poplar pods are coarse — every one of these guards blocks them. Spring oak pollen is fine particulate — Evelyn\'s sheds it best, Xtreme handles it well, New Wave can develop a temporary surface film that self-clears with the next hard rain. Pine needles? Stainless mesh (Xtreme or Evelyn\'s) only.',
+  },
+  {
+    q: 'Are gutter guards worth it for a single-story home?',
+    a: 'Two ways to look at it. If you\'re happy paying $200–$300 a year for a cleaning service, you don\'t need guards. If you\'re tired of climbing a ladder, or your house has overhanging trees, guards pay back over 5–7 years and stay in the system for 20+. Single-story Evelyn\'s installs are also where the color match matters most — guests walk up and see the gutter line.',
+  },
+  {
+    q: 'What\'s the warranty on labor versus the product itself?',
+    a: 'The product warranty is from the manufacturer (Leaf Solution, factory in Rochelle, VA). 20 years on New Wave, 25 years on Xtreme and Evelyn\'s. Our craftsmanship warranty is lifetime — for as long as you own the home, if anything we installed fails because of how we installed it, we come back and fix it.',
+  },
+  {
+    q: 'Can I install these myself?',
+    a: 'Leaf Solution only sells through authorized dealers, so the answer is no — the products aren\'t available DIY. That\'s deliberate on their end and one of the reasons we partnered with them. The failures we see in the field are almost always cheaper non-Leaf Solution guards installed by handymen or homeowners.',
+  },
+  {
+    q: 'How long does install take?',
+    a: 'Most homes are a one-day job. A guard-only install on existing gutters typically runs 4–6 hours. If we\'re doing a full gutter replacement plus guards, plan on a full day. Larger or multi-roof homes can run two days at most.',
+  },
+  {
+    q: 'What if my gutters need to be replaced first?',
+    a: 'We replace and add guards in one visit. Trying to install a quality guard on bent, undersized, or sagging gutters is a waste of money — the guard outlives the gutter underneath it. We\'ll inspect the existing gutters at the estimate and tell you which path makes sense.',
+  },
+  {
+    q: 'How do guards handle snow and ice?',
+    a: 'Aluminum-frame products (Xtreme, Evelyn\'s) and rigid panels (New Wave) all hold up well under Central Virginia snow loads. We pitch the install correctly so meltwater drains rather than refreezing into the gutter trough. We don\'t install gutter guards on homes with chronic ice-dam problems without first solving the attic insulation issue causing them.',
+  },
+  {
+    q: 'Are Evelyn\'s colors HOA-friendly?',
+    a: 'Six standard colors plus custom orders cover almost every HOA palette we\'ve seen in Central VA — Glenmore, Keswick Estates, parts of Old Trail, vineyard estates. We bring color samples to the estimate and hold them against your existing trim before locking the choice. If your HOA needs a written spec sheet for review, we\'ll provide it.',
+  },
+];
+
+// Schema. Mirrors the visible page (no fabricated reviews, no FAQ entries that
+// aren't on-page). Helpful Content rater rule.
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+    { '@type': 'ListItem', position: 2, name: 'Gutter Guards', item: `${siteConfig.url}/gutter-guards/` },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const trustSignals = [
+  { value: '4.9', label: '87+ Google Reviews' },
+  { value: '200+', label: 'HomeAdvisor Reviews' },
+  { value: 'Since 2014', label: 'Family-Owned' },
+  { value: '$1M', label: 'General Liability' },
+  { value: 'Lifetime', label: 'Workmanship Warranty' },
+  { value: 'Same-Week', label: 'Free Estimates' },
+];
+---
+
+<BaseLayout
+  title="Gutter Guards in Central Virginia | The 3 Leaf Solution Systems We Install | RCS Gutters"
+  description="Authorized Leaf Solution dealer for Central Virginia. Compare New Wave, Xtreme, and Evelyn's Leaf Solution side by side. Family-owned since 2014. Free same-week estimates."
+  heroImage="/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
+
+  {/* ============================ HERO ============================ */}
+  <section class="container-x pt-8 pb-12 lg:pt-16 lg:pb-20 relative overflow-hidden">
+    <div aria-hidden="true" class="absolute -top-32 -right-40 w-[640px] h-[640px] bg-brand-light rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+
+    <div class="relative grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <div class="lg:col-span-7">
+        <Reveal client:visible>
+          <p class="kicker mb-3">Authorized Leaf Solution Dealer · Central Virginia</p>
+          <h1 class="text-fluid-3xl sm:text-fluid-4xl lg:text-[clamp(2.5rem,2rem+2.4vw,4rem)] leading-[1.07] mb-5 font-display">
+            The 3 gutter guard systems we install — and how to pick the right one for your home.
+          </h1>
+          <p class="text-fluid-lg text-ink-muted mb-7 max-w-xl leading-relaxed">
+            Leaf Solution is built 30 minutes from our shop in Rochelle, VA, and they only sell through authorized dealers. We carry their full lineup. See all three side by side, compare the data, and book a free 15-minute walk-around with Scott&rsquo;s crew.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#gutter-guards-form" class="btn-primary text-base">Get a free walk-around →</a>
+            <a href="#compare" class="btn-secondary text-base">Compare all 3 systems</a>
+          </div>
+        </Reveal>
+
+        {/* Trust badges row */}
+        <Reveal client:visible delay={0.12}>
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+            <span class="inline-flex items-center gap-2">
+              <span class="text-amber-500 text-base tracking-tight">★ 4.9</span>
+              <span class="text-ink-muted">from <strong class="text-ink-primary">87+</strong> Google reviews</span>
+            </span>
+            <span class="text-ink-muted">·</span>
+            <span class="text-ink-muted"><strong class="text-ink-primary">200+</strong> HomeAdvisor reviews</span>
+            <span class="text-ink-muted">·</span>
+            <span class="text-ink-muted"><strong class="text-ink-primary">Family-owned since 2014</strong></span>
+          </div>
+        </Reveal>
+      </div>
+
+      <div class="lg:col-span-5">
+        <Reveal client:visible delay={0.15}>
+          <div class="relative rounded-2xl overflow-hidden shadow-card">
+            <Picture
+              src="/images/products/OUTSIIDE-CORNER-MITER-INSTALLED.jpg"
+              alt="Stainless steel micro-mesh gutter guard installed on a Central Virginia home, autumn trees in the background"
+              width={900}
+              height={600}
+              loading="eager"
+              fetchpriority="high"
+              class="w-full h-auto block"
+            />
+            <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/65 to-transparent text-white">
+              <p class="text-sm font-semibold tracking-tight">Real RCS install. Real Central Virginia roofline.</p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* ============================ 3-PRODUCT OVERVIEW ROW ============================ */}
+  <section class="bg-brand-cream border-y border-line">
+    <div class="container-x section">
+      <Reveal client:visible>
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <p class="kicker mb-3">Three products. One that's right for your house.</p>
+          <h2 class="text-fluid-3xl">All built by Leaf Solution. All installed by us.</h2>
+          <p class="text-ink-muted mt-3 text-base">
+            We don't sell the most expensive product by default. We match the product to your tree mix, your roofline, and your budget — and we tell you which one we'd put on our own house.
+          </p>
+        </div>
+      </Reveal>
+
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-7 max-w-6xl mx-auto">
+        {products.map((p, i) => (
+          <Reveal client:visible delay={i * 0.08}>
+            <a
+              href={`/products/${p.slug}/`}
+              class="group block bg-white border border-line rounded-2xl overflow-hidden hover:shadow-card hover:-translate-y-0.5 transition-all duration-200 h-full"
+            >
+              <div class="aspect-[16/10] overflow-hidden bg-brand-warm-gray">
+                <Picture
+                  src={p.image}
+                  alt={p.imageAlt}
+                  width={800}
+                  height={500}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                />
+              </div>
+              <div class="p-6 lg:p-7">
+                <div class="text-[11px] font-bold uppercase text-brand-primary tracking-wider mb-2">
+                  {p.tier}
+                </div>
+                <h3 class="text-xl lg:text-2xl font-bold mb-3 group-hover:text-brand-primary transition leading-tight">
+                  {p.name}
+                </h3>
+                <p class="text-sm text-ink-muted leading-relaxed mb-5">{p.oneLiner}</p>
+                <div class="grid grid-cols-2 gap-3 text-xs text-ink-muted border-t border-line pt-4 mb-4">
+                  <div>
+                    <div class="text-[10px] uppercase tracking-wider text-ink-subtle">Throughput</div>
+                    <div class="font-bold text-ink-primary tabular-nums text-sm mt-0.5">{p.gpm}</div>
+                  </div>
+                  <div>
+                    <div class="text-[10px] uppercase tracking-wider text-ink-subtle">Warranty</div>
+                    <div class="font-bold text-ink-primary tabular-nums text-sm mt-0.5">{p.warranty}</div>
+                  </div>
+                </div>
+                <span class="text-brand-primary font-semibold text-sm group-hover:translate-x-1 inline-block transition-transform">
+                  See full product detail →
+                </span>
+              </div>
+            </a>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ============================ COMPARISON TABLE ============================ */}
+  <section id="compare" class="container-x section">
+    <Reveal client:visible>
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <p class="kicker mb-3">Side-by-side comparison</p>
+        <h2 class="text-fluid-3xl">Same manufacturer. Different jobs.</h2>
+        <p class="text-ink-muted mt-3">
+          Pricing ranges are typical for a single-family home in our service area. Final number depends on linear feet, roof complexity, and whether your existing gutters need replacement first.
+        </p>
+      </div>
+    </Reveal>
+
+    {/* Desktop comparison table */}
+    <div class="hidden md:block max-w-5xl mx-auto overflow-x-auto rounded-2xl border border-line shadow-soft">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-brand-cream border-b border-line">
+            <th class="text-left p-4 font-bold text-ink-primary w-[22%]">Feature</th>
+            {products.map((p) => (
+              <th class="text-left p-4 font-bold text-ink-primary align-top">
+                <div class="text-[10px] uppercase tracking-wider text-brand-primary mb-1">{p.tier}</div>
+                <div class="text-base font-display leading-tight">{p.name}</div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            { label: 'Price tier', getter: (p: typeof products[number]) => p.priceTier },
+            { label: 'Typical price range', getter: (p: typeof products[number]) => p.priceRange },
+            { label: 'Material', getter: (p: typeof products[number]) => p.material },
+            { label: 'Throughput', getter: (p: typeof products[number]) => p.gpm },
+            { label: 'Warranty (product)', getter: (p: typeof products[number]) => p.warranty },
+            { label: 'Color options', getter: (p: typeof products[number]) => p.colors },
+            { label: 'Best for', getter: (p: typeof products[number]) => p.bestFor },
+            { label: 'Install method', getter: (p: typeof products[number]) => p.install },
+            { label: 'Snow / ice handling', getter: (p: typeof products[number]) => p.snow },
+            { label: 'Fine-debris (pollen, grit)', getter: (p: typeof products[number]) => p.fineDebris },
+          ].map((row, idx) => (
+            <tr class={idx % 2 === 0 ? 'bg-white' : 'bg-brand-cream/40'}>
+              <td class="p-4 font-semibold text-ink-primary border-t border-line align-top">{row.label}</td>
+              {products.map((p) => (
+                <td class="p-4 text-ink-muted border-t border-line align-top">{row.getter(p)}</td>
+              ))}
+            </tr>
+          ))}
+          <tr class="bg-brand-light/40">
+            <td class="p-4 border-t border-line"></td>
+            {products.map((p) => (
+              <td class="p-4 border-t border-line">
+                <a href={`/products/${p.slug}/`} class="text-brand-primary font-semibold text-sm hover:underline">
+                  Read full {p.name.split(' ')[0]} page →
+                </a>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    {/* Mobile comparison: stacked spec cards */}
+    <div class="md:hidden grid gap-4 max-w-md mx-auto">
+      {products.map((p) => (
+        <div class="rounded-2xl border border-line bg-white shadow-soft overflow-hidden">
+          <div class="bg-brand-cream p-4 border-b border-line">
+            <div class="text-[10px] uppercase tracking-wider text-brand-primary mb-1">{p.tier}</div>
+            <div class="text-lg font-display font-bold leading-tight">{p.name}</div>
+          </div>
+          <dl class="divide-y divide-line text-sm">
+            {[
+              ['Price tier', p.priceTier],
+              ['Typical range', p.priceRange],
+              ['Material', p.material],
+              ['Throughput', p.gpm],
+              ['Warranty', p.warranty],
+              ['Colors', p.colors],
+              ['Best for', p.bestFor],
+              ['Snow / ice', p.snow],
+              ['Fine debris', p.fineDebris],
+            ].map(([label, val]) => (
+              <div class="flex items-start gap-3 px-4 py-2.5">
+                <dt class="font-semibold text-ink-primary w-[42%] flex-shrink-0">{label}</dt>
+                <dd class="text-ink-muted">{val}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="p-4 border-t border-line">
+            <a href={`/products/${p.slug}/`} class="text-brand-primary font-semibold text-sm">
+              Read full {p.name.split(' ')[0]} page →
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ============================ PER-PRODUCT SECTIONS ============================ */}
+  {products.map((p, i) => (
+    <section
+      id={p.slug}
+      class={`${i % 2 === 0 ? 'bg-brand-cream border-y border-line' : 'bg-white'}`}
+    >
+      <div class="container-x section">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start max-w-6xl mx-auto">
+          <Reveal client:visible className={`lg:col-span-6 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+            <div class="rounded-2xl overflow-hidden shadow-card">
+              <Picture
+                src={p.image}
+                alt={p.imageAlt}
+                width={900}
+                height={600}
+                loading="lazy"
+                class="w-full h-auto block"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal client:visible delay={0.08} className={`lg:col-span-6 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+            <p class="kicker mb-3">{p.tier}</p>
+            <h2 class="text-fluid-3xl mb-4 leading-tight">{p.name}</h2>
+            <span class="section-divider"></span>
+            <p class="text-base lg:text-lg text-ink-primary leading-relaxed mb-6">
+              {p.oneLiner}
+            </p>
+
+            <div class="grid grid-cols-2 gap-4 mb-6 max-w-md">
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-ink-subtle">Throughput</div>
+                <div class="font-display font-bold text-ink-primary text-xl tabular-nums">{p.gpm}</div>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-ink-subtle">Warranty</div>
+                <div class="font-display font-bold text-ink-primary text-xl tabular-nums">{p.warranty}</div>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-ink-subtle">Typical range</div>
+                <div class="font-display font-bold text-ink-primary text-base">{p.priceRange}</div>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase tracking-wider text-ink-subtle">Colors</div>
+                <div class="font-display font-bold text-ink-primary text-base leading-tight">{p.colors}</div>
+              </div>
+            </div>
+
+            <p class="text-xs uppercase tracking-wider font-bold text-ink-muted mb-2">Best for</p>
+            <ul class="space-y-2 mb-6">
+              {p.bullets.map((b) => (
+                <li class="flex items-start gap-2.5 text-sm text-ink-primary">
+                  <span class="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="rounded-xl bg-white border border-line p-4 mb-6">
+              <p class="text-xs uppercase tracking-wider font-bold text-ink-muted mb-2">Skip this one if</p>
+              <p class="text-sm text-ink-primary leading-relaxed">{p.avoidIf}</p>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <a href={`/products/${p.slug}/`} class="btn-primary text-sm">
+                Full {p.name.split(' ')[0]} detail →
+              </a>
+              <a href="#gutter-guards-form" class="btn-secondary text-sm">
+                Get a quote
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  {/* ============================ TRUST BAND ============================ */}
+  <section class="bg-brand-charcoal text-white">
+    <div class="container-x section">
+      <Reveal client:visible>
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <p class="kicker !text-brand-primary mb-3">Why Leaf Solution + RCS</p>
+          <h2 class="text-white text-fluid-3xl">A local factory and a local crew. Both 30 minutes from your house.</h2>
+          <p class="text-white/75 mt-3 text-base leading-relaxed">
+            Leaf Solution&rsquo;s factory is in Rochelle, VA &mdash; about thirty minutes from our shop in Barboursville. They only sell through authorized dealers. That&rsquo;s why we chose them as our partner, and it&rsquo;s why we&rsquo;re comfortable putting their name in front of every customer.
+          </p>
+        </div>
+      </Reveal>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 max-w-5xl mx-auto">
+        {trustSignals.map((card, i) => (
+          <Reveal client:visible delay={i * 0.05}>
+            <div class="text-center">
+              <div class="font-display font-bold text-brand-primary text-xl lg:text-2xl tracking-tight">
+                {card.value}
+              </div>
+              <div class="text-[10px] sm:text-[11px] text-white/70 uppercase tracking-wide mt-1.5 leading-tight">
+                {card.label}
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal client:visible delay={0.4}>
+        <p class="text-center text-sm text-white/60 mt-10 max-w-2xl mx-auto leading-relaxed">
+          Authorized Leaf Solution dealer. Manufacturer&rsquo;s 20&ndash;25 year product warranty plus our lifetime workmanship warranty on every install. $1M general liability insurance carried at all times.
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  {/* ============================ CONFIGURATOR CTA ============================ */}
+  <section class="bg-brand-cream border-y border-line">
+    <div class="container-x section-tight">
+      <div class="grid lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto">
+        <Reveal client:visible className="lg:col-span-7">
+          <p class="kicker mb-3">Not sure which one fits?</p>
+          <h2 class="text-fluid-2xl mb-3 leading-tight">Try the 4-question gutter guard quiz.</h2>
+          <p class="text-ink-muted leading-relaxed">
+            Tell us your tree mix, your design constraints, and your budget. We&rsquo;ll tell you which of the three Leaf Solution systems we&rsquo;d quote on your house &mdash; before you ever pick up the phone.
+          </p>
+        </Reveal>
+        <Reveal client:visible delay={0.1} className="lg:col-span-5">
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-end">
+            <a href="/configurator/" class="btn-primary text-base w-full lg:w-auto text-center">
+              Start the configurator →
+            </a>
+            <a href="#gutter-guards-form" class="btn-secondary text-base w-full lg:w-auto text-center">
+              Or skip ahead and book the walk-around
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* ============================ FAQ ============================ */}
+  <section class="container-x section">
+    <Reveal client:visible>
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <p class="kicker mb-3">Common questions</p>
+        <h2 class="text-fluid-3xl">Straight answers before you book.</h2>
+      </div>
+    </Reveal>
+
+    <div class="max-w-3xl mx-auto space-y-3">
+      {faqs.map((item, i) => (
+        <Reveal client:visible delay={i * 0.03}>
+          <details class="card p-5 bg-white group" open={i === 0}>
+            <summary class="font-bold cursor-pointer flex items-center justify-between list-none gap-4">
+              <span>{item.q}</span>
+              <span class="text-brand-primary text-xl flex-shrink-0 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 text-ink-muted leading-relaxed">{item.a}</p>
+          </details>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  {/* ============================ FINAL CTA + FORM ============================ */}
+  <section class="bg-brand-cream border-y border-line">
+    <div class="container-x section">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start max-w-6xl mx-auto">
+        <Reveal client:visible className="lg:col-span-6">
+          <p class="kicker mb-3">Get a real recommendation</p>
+          <h2 class="text-fluid-3xl mb-4 leading-tight">
+            Get a real recommendation for your house — free, no pressure.
+          </h2>
+          <p class="text-base lg:text-lg text-ink-primary leading-relaxed mb-6">
+            Scott&rsquo;s crew will be at your place within the week. 15-minute walk-around. Real written quote on the spot. Lifetime workmanship warranty on the install &mdash; for as long as you own the home.
+          </p>
+
+          <ul class="space-y-3 mb-6">
+            {[
+              'A call within one business day',
+              '15-minute on-site walk-around at no cost',
+              'A real written quote, same day',
+              'No high-pressure sales — sleep on it as long as you want',
+              'If you book: install often within the same week',
+            ].map((item) => (
+              <li class="flex items-start gap-2.5 text-sm">
+                <svg class="text-brand-primary flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                <span class="text-ink-primary">{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="rounded-xl bg-white border border-line p-4 text-sm text-ink-muted">
+            Prefer to talk first?
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              data-call-location="gutter_guards_hub_inline"
+              class="ml-1 text-brand-primary font-semibold hover:underline"
+            >
+              Call {siteConfig.phoneDisplay}
+            </a>
+            <span> — Mon–Sat 9–5.</span>
+          </div>
+        </Reveal>
+
+        <div class="lg:col-span-6" id="gutter-guards-form">
+          <MultiStepForm
+            client:visible
+            adsSendTo={adsSendTo}
+            phoneRaw={siteConfig.phoneRaw}
+            phoneDisplay={siteConfig.phoneDisplay}
+            formSource="gutter-guards-hub"
+            pagePath="/gutter-guards/"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
