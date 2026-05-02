@@ -3,6 +3,11 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FAQ from '../../components/FAQ.astro';
 import { siteConfig } from '../../config/site';
+import MultiStepForm from '../../components/landing/MultiStepForm.tsx';
+
+const adsConvId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
+const adsConvLabel = import.meta.env.PUBLIC_GADS_CONVERSION_LABEL || '';
+const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '';
 
 export async function getStaticPaths() {
   const locations = await getCollection('locations');
@@ -107,7 +112,7 @@ const serviceSchema = {
       </p>
       <p class="text-white/85 text-fluid-base max-w-3xl leading-relaxed">{data.populationContext}</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href={`/quote/?city=${encodeURIComponent(data.city)}`} class="btn-primary">
+        <a href="#location-quote-form" class="btn-primary">
           Get a Free Quote in {data.city}
         </a>
         <a href={`tel:${regionalPhone.raw}`} class="btn-outline-white">
@@ -165,7 +170,7 @@ const serviceSchema = {
             Average drive from our Barboursville shop to most {data.city} addresses: <strong class="text-brand-primary">~{data.responseTimeMinutes} minutes</strong>. We typically book on-site estimates within 5-7 days of your call.
           </p>
         </div>
-        <a href={`/quote/?city=${encodeURIComponent(data.city)}`} class="btn-primary w-full justify-center">
+        <a href="#location-quote-form" class="btn-primary w-full justify-center">
           Get a Quote in {data.city}
         </a>
       </aside>
@@ -263,17 +268,26 @@ const serviceSchema = {
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section class="section bg-brand-primary text-white">
-    <div class="container-x text-center max-w-2xl mx-auto reveal">
-      <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
-      <h2 class="font-display text-white text-balance mb-5">Local crew. Local accountability.</h2>
-      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
-        Free written estimate at your {data.city} home. Usually scheduled within a week.
-      </p>
-      <a href={`/quote/?city=${encodeURIComponent(data.city)}`} class="btn-accent">
-        Request a Quote in {data.city}
-      </a>
+  <!-- Final CTA — embedded form for direct conversion -->
+  <section id="location-quote-form" class="section bg-brand-primary">
+    <div class="container-x">
+      <div class="max-w-2xl mx-auto text-center text-white mb-8 reveal">
+        <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
+        <h2 class="font-display text-white text-balance mb-5">Free written estimate in {data.city}</h2>
+        <p class="text-white/95 text-fluid-lg leading-relaxed">
+          Local crew. Local accountability. Usually scheduled within a week.
+        </p>
+      </div>
+      <div class="max-w-xl mx-auto bg-white rounded-2xl shadow-card p-6 sm:p-8">
+        <MultiStepForm
+          client:visible
+          adsSendTo={adsSendTo}
+          phoneRaw={siteConfig.phoneRaw}
+          phoneDisplay={siteConfig.phoneDisplay}
+          formSource={`location-${loc.slug}`}
+          pagePath={`/locations/${loc.slug}`}
+        />
+      </div>
     </div>
   </section>
 </BaseLayout>

@@ -137,9 +137,51 @@ async function resolveNewLeadStageId(token: string, locationId: string, pipeline
       console.error('[quote] pipeline id not found in pipelines response', pipelineId);
       return null;
     }
-    const stage = (pipeline.stages || []).find((s: any) => /new lead/i.test(s?.name || ''));
+    const stages: any[] = pipeline.stages || [];
+    if (!stages.length) {
+      console.error('[quote] pipeline has no stages', pipelineId);
+      return null;
+    }
+
+    // Try a series of progressively-broader name patterns. First match wins.
+    // Order matters: most-specific intent → first stage as last-resort fallback.
+    // This makes the lead funnel resilient to stage renames in GHL — the W1
+    // workflow only needs to be triggered, the exact stage name is cosmetic.
+    const STAGE_PATTERNS: RegExp[] = [
+      /new\s*lead/i,        // "New Lead", "New-Lead", "NewLead"
+      /^\s*lead\s*$/i,      // "Lead" exact
+      /inbound/i,           // "Inbound", "Inbound Lead"
+      /^\s*inquir/i,        // "Inquiry", "Inquiries"
+      /needs?\s*estimate/i, // "Needs Estimate"
+      /needs?\s*contact/i,  // "Needs Contact"
+      /unqualified/i,       // first stage in some HubSpot-style pipelines
+      /^\s*new\b/i,         // any stage starting with "new"
+    ];
+
+    let stage: any = null;
+    for (const pattern of STAGE_PATTERNS) {
+      stage = stages.find((s: any) => pattern.test(s?.name || ''));
+      if (stage?.id) {
+        console.log('[quote] resolved stage by pattern', pattern.toString(), '→', stage.name, stage.id);
+        break;
+      }
+    }
+
+    // Last-resort fallback: use the first stage in the pipeline. The W1
+    // workflow trigger condition should be "opportunity created in <pipeline>"
+    // not stage-specific, so any stage works to fire the alert. Better to
+    // create an opportunity in the wrong stage than to silently drop the lead.
     if (!stage?.id) {
-      console.error('[quote] no stage matching /new lead/i in pipeline', pipelineId, 'stages:', (pipeline.stages || []).map((s: any) => s?.name));
+      stage = stages[0];
+      console.warn(
+        '[quote] no stage matched any pattern, falling back to first stage',
+        '— stages:', stages.map((s: any) => s?.name),
+        '— using:', stage?.name,
+      );
+    }
+
+    if (!stage?.id) {
+      console.error('[quote] could not resolve any stage id in pipeline', pipelineId);
       return null;
     }
     resolvedStageId = stage.id as string;
@@ -498,17 +540,55 @@ export const OPTIONS: APIRoute = async () =>
   new Response(null, { status: 204, headers: CORS_HEADERS });
 
 // Allow simple GET for healthcheck (returns whether env vars are present;
-// never echoes the values themselves).
-export const GET: APIRoute = async () =>
-  corsJson({
+// never echoes the values themselves). When ?probe=stage is passed, this also
+// hits the GHL pipelines API to actually resolve the stage id, so ops can
+// verify the full opportunity-creation chain without submitting a real lead.
+export const GET: APIRoute = async ({ url }) => {
+  const ghlToken = import.meta.env.GHL_PRIVATE_INTEGRATION_TOKEN;
+  const ghlLocationId = import.meta.env.GHL_LOCATION_ID;
+  const ghlPipelineId = import.meta.env.GHL_PIPELINE_ID;
+
+  let stageProbe: { resolved: boolean; stage_id?: string; stage_name?: string; all_stages?: string[]; error?: string } | undefined;
+  if (url.searchParams.get('probe') === 'stage' && ghlToken && ghlLocationId && ghlPipelineId) {
+    try {
+      const pipelinesRes = await fetch(
+        `${GHL_PIPELINES_ENDPOINT}?locationId=${encodeURIComponent(ghlLocationId)}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${ghlToken}`,
+            'Version': GHL_VERSION,
+            'Accept': 'application/json',
+          },
+        },
+      );
+      if (!pipelinesRes.ok) {
+        stageProbe = { resolved: false, error: `pipelines_fetch_${pipelinesRes.status}` };
+      } else {
+        const data: any = await pipelinesRes.json().catch(() => null);
+        const pipelines: any[] = data?.pipelines || [];
+        const pipeline = pipelines.find((p) => p?.id === ghlPipelineId);
+        const allStages: string[] = (pipeline?.stages || []).map((s: any) => s?.name);
+        const stageId = await resolveNewLeadStageId(ghlToken, ghlLocationId, ghlPipelineId);
+        const stageName = (pipeline?.stages || []).find((s: any) => s?.id === stageId)?.name;
+        stageProbe = { resolved: !!stageId, stage_id: stageId || undefined, stage_name: stageName, all_stages: allStages };
+      }
+    } catch (err) {
+      stageProbe = { resolved: false, error: 'probe_threw' };
+    }
+  }
+
+  return corsJson({
     ok: true,
-    ghl_token_present: !!import.meta.env.GHL_PRIVATE_INTEGRATION_TOKEN,
-    ghl_location_id_present: !!import.meta.env.GHL_LOCATION_ID,
-    pipeline_id_present: !!import.meta.env.GHL_PIPELINE_ID,
+    ghl_token_present: !!ghlToken,
+    ghl_location_id_present: !!ghlLocationId,
+    pipeline_id_present: !!ghlPipelineId,
     stage_id_resolved: !!resolvedStageId,
     web3forms_key_present: !!import.meta.env.WEB3FORMS_KEY,
     // Flip this to false once Justin sets WEB3FORMS_KEY in Vercel — until
     // then, GHL outages mean lost leads (only the ALERT_LOST_LEAD log line
     // can recover them).
     web3forms_recommended: !import.meta.env.WEB3FORMS_KEY,
+    stage_probe: stageProbe,
   });
+};
