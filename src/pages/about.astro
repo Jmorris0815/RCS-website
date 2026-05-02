@@ -3,6 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import LocalBusinessSchema from '../components/schemas/LocalBusinessSchema.astro';
 import PictureHero from '../components/PictureHero.astro';
 import { siteConfig } from '../config/site';
+import MultiStepForm from '../components/landing/MultiStepForm.tsx';
+
+// Pre-resolved at build time so the React island gets the value as a string prop.
+const adsConvId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
+const adsConvLabel = import.meta.env.PUBLIC_GADS_CONVERSION_LABEL || '';
+const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '';
 ---
 
 <BaseLayout
@@ -22,7 +28,7 @@ import { siteConfig } from '../config/site';
           We're a small Central Virginia gutter company that has been doing this work the right way since {siteConfig.foundingYear}. No franchise pressure, no commission-driven sales, no products we wouldn't put on our own homes.
         </p>
         <div class="mt-7 flex flex-wrap gap-3">
-          <a href="/quote/" class="btn-primary">Request a Quote</a>
+          <a href="#about-quote-form" class="btn-primary">Request a Quote</a>
           <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary">Call {siteConfig.phoneDisplay}</a>
         </div>
       </div>
@@ -122,17 +128,23 @@ import { siteConfig } from '../config/site';
     </div>
   </section>
 
-  <section class="section bg-brand-primary text-white">
-    <div class="container-x text-center max-w-2xl mx-auto">
-      <h2 class="text-white">Want us to come look at your house?</h2>
-      <p class="text-white/95 mt-3 mb-6">
-        Free estimate. Honest recommendations. No pressure.
-      </p>
-      <div class="flex flex-wrap justify-center gap-3">
-        <a href="/quote/" class="btn-accent">Request a Quote</a>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary !text-white !border-white hover:!bg-white hover:!text-brand-primary">
-          Call {siteConfig.phoneDisplay}
-        </a>
+  <section id="about-quote-form" class="section bg-brand-primary">
+    <div class="container-x">
+      <div class="max-w-2xl mx-auto text-center text-white mb-8">
+        <h2 class="text-white">Want us to come look at your house?</h2>
+        <p class="text-white/95 mt-3">
+          Free estimate. Honest recommendations. No pressure.
+        </p>
+      </div>
+      <div class="max-w-xl mx-auto bg-white rounded-2xl shadow-card p-6 sm:p-8">
+        <MultiStepForm
+          client:visible
+          adsSendTo={adsSendTo}
+          phoneRaw={siteConfig.phoneRaw}
+          phoneDisplay={siteConfig.phoneDisplay}
+          formSource="about-page"
+          pagePath="/about"
+        />
       </div>
     </div>
   </section>

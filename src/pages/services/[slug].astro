@@ -4,6 +4,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FAQ from '../../components/FAQ.astro';
 import PictureHero from '../../components/PictureHero.astro';
 import { siteConfig } from '../../config/site';
+import MultiStepForm from '../../components/landing/MultiStepForm.tsx';
+
+const adsConvId = import.meta.env.PUBLIC_GADS_CONVERSION_ID || '';
+const adsConvLabel = import.meta.env.PUBLIC_GADS_CONVERSION_LABEL || '';
+const adsSendTo = adsConvId && adsConvLabel ? `${adsConvId}/${adsConvLabel}` : '';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -173,7 +178,7 @@ const serviceSchema = {
         <span class="hero-underline !mt-0 mb-6"></span>
         <p class="text-fluid-lg text-ink-muted leading-relaxed">{data.tagline}</p>
         <div class="mt-7 flex flex-wrap gap-3">
-          <a href="/quote/" class="btn-primary">Get a Free Quote</a>
+          <a href="#service-quote-form" class="btn-primary">Get a Free Quote</a>
           <a href={`tel:${siteConfig.phoneRaw}`} class="btn-secondary">Call {siteConfig.phoneDisplay}</a>
         </div>
       </div>
@@ -224,7 +229,7 @@ const serviceSchema = {
           <p class="text-sm text-ink-muted mb-5 leading-relaxed">
             On-site walk-through, measurements, and a written quote either same-day or within 24 hours. Same pricing across our entire 9-county service area.
           </p>
-          <a href="/quote/" class="btn-primary w-full justify-center">Request Quote</a>
+          <a href="#service-quote-form" class="btn-primary w-full justify-center">Request Quote</a>
           <a href={`tel:${siteConfig.phoneRaw}`} class="block text-center mt-3 text-brand-primary font-semibold hover:text-brand-red-deep transition-colors">
             Or call {siteConfig.phoneDisplay}
           </a>
@@ -256,17 +261,25 @@ const serviceSchema = {
   <!-- FAQ -->
   <FAQ faqs={data.faqs} kicker="Frequently asked" heading={`${data.title}. What people ask`} />
 
-  <!-- Final CTA -->
-  <section class="section bg-brand-primary text-white">
-    <div class="container-x text-center max-w-2xl mx-auto reveal">
-      <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
-      <h2 class="font-display text-white text-balance mb-5">Real local crew. Real local accountability.</h2>
-      <p class="text-white/95 text-fluid-lg mb-7 leading-relaxed">
-        Free written estimate. Honest recommendations. No "today only" pricing.
-      </p>
-      <div class="flex flex-wrap justify-center gap-3">
-        <a href="/quote/" class="btn-accent">Get a Quote</a>
-        <a href={`tel:${siteConfig.phoneRaw}`} class="btn-outline-white">Call {siteConfig.phoneDisplay}</a>
+  <!-- Final CTA — embedded form for direct conversion -->
+  <section id="service-quote-form" class="section bg-brand-primary">
+    <div class="container-x">
+      <div class="max-w-2xl mx-auto text-center text-white mb-8 reveal">
+        <p class="kicker !text-brand-gold-soft mb-3">Ready when you are</p>
+        <h2 class="font-display text-white text-balance mb-5">Get your free written estimate</h2>
+        <p class="text-white/95 text-fluid-lg leading-relaxed">
+          Real local crew. No "today only" pricing. Honest recommendations.
+        </p>
+      </div>
+      <div class="max-w-xl mx-auto bg-white rounded-2xl shadow-card p-6 sm:p-8">
+        <MultiStepForm
+          client:visible
+          adsSendTo={adsSendTo}
+          phoneRaw={siteConfig.phoneRaw}
+          phoneDisplay={siteConfig.phoneDisplay}
+          formSource={`service-${svc.slug}`}
+          pagePath={`/services/${svc.slug}`}
+        />
       </div>
     </div>
   </section>
